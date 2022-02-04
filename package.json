@@ -21,6 +21,7 @@
   "homepage": "https://github.com/daniel2828/XacoMeter#readme",
   "dependencies": {
     "concurrently": "^7.0.0",
+    "mongoose": "^6.2.0",
     "nodemon": "^2.0.15"
   }
 }
