@@ -5,6 +5,7 @@ export default function AuthPage() {
   const [isRegister, setIsRegister] = useState(false);
   return (
     <>
+      
       {!isRegister && <LoginForm setIsRegister={setIsRegister} />}
       {isRegister && <RegisterForm setIsRegister ={setIsRegister} />}
     </>

@@ -1,7 +1,7 @@
 
 import axios from "axios";
-const urlBase = "http://localhost:3977/api/v1/users"
+import { BASE_PATH, API_VERSION } from "./config";
 export const signIn =async (body)=>{
-   const data = await axios.post(`${urlBase}/sign-in`, body)
+   const data = await axios.post(`${BASE_PATH}/${API_VERSION}/sign-in`, body)
    console.log(data);
 }
