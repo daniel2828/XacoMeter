@@ -1,44 +1,80 @@
-import * as React from 'react';
-import Avatar from '@mui/material/Avatar';
-import Button from '@mui/material/Button';
-import CssBaseline from '@mui/material/CssBaseline';
-import TextField from '@mui/material/TextField';
-import FormControlLabel from '@mui/material/FormControlLabel';
-import Checkbox from '@mui/material/Checkbox';
-import Link from '@mui/material/Link';
-import Grid from '@mui/material/Grid';
-import Box from '@mui/material/Box';
-import LockOutlinedIcon from '@mui/icons-material/LockOutlined';
-import Typography from '@mui/material/Typography';
-import Container from '@mui/material/Container';
-import { createTheme, ThemeProvider } from '@mui/material/styles';
+import React, { useState } from "react";
+import Avatar from "@mui/material/Avatar";
+import Button from "@mui/material/Button";
+import CssBaseline from "@mui/material/CssBaseline";
+import TextField from "@mui/material/TextField";
+import FormControlLabel from "@mui/material/FormControlLabel";
+import Checkbox from "@mui/material/Checkbox";
+import Link from "@mui/material/Link";
+import Grid from "@mui/material/Grid";
+import Box from "@mui/material/Box";
+import LockOutlinedIcon from "@mui/icons-material/LockOutlined";
+import Typography from "@mui/material/Typography";
+import Container from "@mui/material/Container";
+import { createTheme, ThemeProvider } from "@mui/material/styles";
+import { signUp } from "../api/users";
+import Snackbar from "@mui/material/Snackbar";
+import MuiAlert from "@mui/material/Alert";
+import Slide from "@mui/material/Slide";
+import Grow from "@mui/material/Grow";
 
+function SlideTransition(props) {
+  return <Slide {...props} direction="up" />;
+}
+const Alert = React.forwardRef(function Alert(props, ref) {
+  return <MuiAlert elevation={6} ref={ref} variant="filled" {...props} />;
+});
 function Copyright(props) {
   return (
-    <Typography variant="body2" color="text.secondary" align="center" {...props}>
-      {'Copyright © '}
+    <Typography
+      variant="body2"
+      color="text.secondary"
+      align="center"
+      {...props}
+    >
+      {"Copyright © "}
       <Link color="inherit" href="#">
-        Xacometer 
-      </Link>{' '}
+        Xacometer
+      </Link>{" "}
       {new Date().getFullYear()}
-      {'.'}
+      {"."}
     </Typography>
   );
 }
 
 const theme = createTheme();
 
-export default function RegisterForm({setIsRegister}) {
+export default function RegisterForm({ setIsRegister }) {
+  const [alertOpen, setAlertOpen] = useState(false);
+  const [responseMessage, setResponseMessage] = useState({});
   const handleSubmit = (event) => {
     event.preventDefault();
     const data = new FormData(event.currentTarget);
     // eslint-disable-next-line no-console
-    console.log({
-      email: data.get('email'),
-      password: data.get('password'),
-    });
+    const body = {
+      name: data.get("firstName"),
+      lastName: data.get("lastName"),
+      email: data.get("email"),
+      password: data.get("password"),
+      repeatPassword: data.get("repeatPassword"),
+    };
+    signUp(body)
+      .then((res) => {
+        setAlertOpen(true);
+        setResponseMessage(res);
+      })
+      .catch((err) => {
+        setAlertOpen(true);
+        setResponseMessage(err.response);
+      });
   };
-
+  const handleClose = () => {
+    if (responseMessage.status === 200) {
+      setIsRegister(false);
+    } else {
+      setAlertOpen(false);
+    }
+  };
   return (
     <ThemeProvider theme={theme}>
       <Container component="main" maxWidth="xs">
@@ -46,19 +82,41 @@ export default function RegisterForm({setIsRegister}) {
         <Box
           sx={{
             marginTop: 8,
-            display: 'flex',
-            flexDirection: 'column',
-            alignItems: 'center',
+            display: "flex",
+            flexDirection: "column",
+            alignItems: "center",
           }}
         >
-          <Avatar sx={{ m: 1, bgcolor: 'secondary.main' }}>
+          <Avatar sx={{ m: 1, bgcolor: "secondary.main" }}>
             <LockOutlinedIcon />
           </Avatar>
           <Typography component="h1" variant="h5">
             Xacometer Sign up
           </Typography>
-          <Box component="form" noValidate onSubmit={handleSubmit} sx={{ mt: 3 }}>
+          <Box
+            component="form"
+            noValidate
+            onSubmit={handleSubmit}
+            sx={{ mt: 3 }}
+          >
             <Grid container spacing={2}>
+              <Snackbar
+                open={alertOpen}
+                autoHideDuration={6000}
+                onClose={handleClose}
+                anchorOrigin={{ vertical: "top", horizontal: "center" }}
+                TransitionComponent={SlideTransition}
+              >
+                <Alert
+                  onClose={handleClose}
+                  severity={
+                    responseMessage?.status === 200 ? "success" : "error"
+                  }
+                  sx={{ width: "100%" }}
+                >
+                  {responseMessage?.data?.message}
+                </Alert>
+              </Snackbar>
               <Grid item xs={12} sm={6}>
                 <TextField
                   autoComplete="given-name"
@@ -102,9 +160,13 @@ export default function RegisterForm({setIsRegister}) {
                 />
               </Grid>
               <Grid item xs={12}>
-                <FormControlLabel
-                  control={<Checkbox value="allowExtraEmails" color="primary" />}
-                  label="I want to receive inspiration, marketing promotions and updates via email."
+                <TextField
+                  required
+                  fullWidth
+                  name="repeatPassword"
+                  label="Repeat Password"
+                  type="password"
+                  id="repeatPassword"
                 />
               </Grid>
             </Grid>
@@ -114,11 +176,15 @@ export default function RegisterForm({setIsRegister}) {
               variant="contained"
               sx={{ mt: 3, mb: 2 }}
             >
-               Sign Up
+              Sign Up
             </Button>
             <Grid container justifyContent="flex-end">
               <Grid item>
-                <Link onClickCapture={()=>setIsRegister(false)} href="#" variant="body2">
+                <Link
+                  onClickCapture={() => setIsRegister(false)}
+                  href="#"
+                  variant="body2"
+                >
                   Already have an account? Sign in
                 </Link>
               </Grid>

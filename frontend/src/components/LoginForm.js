@@ -13,6 +13,7 @@ import Typography from '@mui/material/Typography';
 import Container from '@mui/material/Container';
 import { createTheme, ThemeProvider } from '@mui/material/styles';
 import { signIn } from '../api/users';
+import {Redirect} from "react-router-dom";
 function Copyright(props) {
   return (
     <Typography variant="body2" color="text.secondary" align="center" {...props}>
@@ -38,7 +39,11 @@ export default function LoginForm({setIsRegister}) {
         password: data.get('password')
     }
   
-    signIn(body)
+    signIn(body).then(res=>{
+      localStorage.setItem("ACCESS_TOKEN", res.data.accessToken)
+      localStorage.setItem("REFRESH_TOKEN", res.data.refreshToken)
+      window.location.href = "/data";
+    })
   };
   
   return (

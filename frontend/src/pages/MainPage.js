@@ -1,13 +1,14 @@
-import React, { useState } from "react";
-import LoginForm from "../components/LoginForm";
-import RegisterForm from "../components/RegisterForm";
-export default function AuthPage() {
-  const [isRegister, setIsRegister] = useState(false);
-  return (
-    <>
-      
-      {!isRegister && <LoginForm setIsRegister={setIsRegister} />}
-      {isRegister && <RegisterForm setIsRegister ={setIsRegister} />}
-    </>
-  );
+import React from "react";
+import { getAccessTokenApi } from "../api/auth";
+import { Redirect } from 'react-router';
+export default function MainPage() {
+  if (!getAccessTokenApi()) {
+    return <Redirect to="/"></Redirect>;
+  } else {
+    return (
+      <>
+         <p>Main page</p>
+      </>
+    );
+  }
 }
