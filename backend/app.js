@@ -6,7 +6,7 @@ const app = express();
 const port = process.env.PORT || 3977;
 // Routes
 const userRoutes = require("./routes/user");
-
+const twitterRoutes = require("./routes/twitterApi");
 app.use(bodyParser.urlencoded({ extended: false }));
 app.use(bodyParser.json());
 // Configure Header HTTP
@@ -23,6 +23,7 @@ app.use((req, res, next) => {
 
 // Basic Routes
 app.use(`/api/${API_VERSION}/users`, userRoutes);
+app.use(`/api/${API_VERSION}/twitter`, twitterRoutes);
 
 // Connect mongo and express
 mongoose

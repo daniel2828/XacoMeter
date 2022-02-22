@@ -13,17 +13,7 @@ import Typography from "@mui/material/Typography";
 import Container from "@mui/material/Container";
 import { createTheme, ThemeProvider } from "@mui/material/styles";
 import { signUp } from "../api/users";
-import Snackbar from "@mui/material/Snackbar";
-import MuiAlert from "@mui/material/Alert";
-import Slide from "@mui/material/Slide";
-import Grow from "@mui/material/Grow";
-
-function SlideTransition(props) {
-  return <Slide {...props} direction="up" />;
-}
-const Alert = React.forwardRef(function Alert(props, ref) {
-  return <MuiAlert elevation={6} ref={ref} variant="filled" {...props} />;
-});
+import Notification from "./Notification";
 function Copyright(props) {
   return (
     <Typography
@@ -100,23 +90,12 @@ export default function RegisterForm({ setIsRegister }) {
             sx={{ mt: 3 }}
           >
             <Grid container spacing={2}>
-              <Snackbar
-                open={alertOpen}
-                autoHideDuration={6000}
-                onClose={handleClose}
-                anchorOrigin={{ vertical: "top", horizontal: "center" }}
-                TransitionComponent={SlideTransition}
-              >
-                <Alert
-                  onClose={handleClose}
-                  severity={
-                    responseMessage?.status === 200 ? "success" : "error"
-                  }
-                  sx={{ width: "100%" }}
-                >
-                  {responseMessage?.data?.message}
-                </Alert>
-              </Snackbar>
+              <Notification
+                alertOpen={alertOpen}
+                handleClose={handleClose}
+                status={responseMessage?.status}
+                message={responseMessage?.data?.message}
+              />
               <Grid item xs={12} sm={6}>
                 <TextField
                   autoComplete="given-name"
