@@ -7,7 +7,7 @@ const TweetsSchema = Schema({
     unique: true,
   },
   hashtag: String,
-  text: String,
+  tweet: Object,
 });
 
 module.exports = mongoose.model("Tweets", TweetsSchema);

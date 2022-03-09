@@ -1,6 +1,7 @@
 // const { TwitterApi } = require("twitter-api-v2");
 // const clientID = "UDdTNjFjcGptVGJ2ZV9YZWlsakI6MTpjaQ";
 // const clientSecret = "yvtV-D3CVWdzYpvzhRyGSIjM5iLf21EeA8TXJTGSVm4G0o_nKp";
+const Tweets = require("../models/tweets");
 const { appOnlyClient } = require("../config");
 async function testAPI(req, res) {
   // OAuth2 (app-only or user context)
@@ -38,18 +39,37 @@ async function searchByQuery(req, res) {
 
   // OR - you can also create a app-only client from your consumer keys -
   // const appOnlyClientFromConsumer = await userClient.appLogin();
-  const buenCaminoSearch = await appOnlyClient.v2.search("BuenCamino", {
+  const buenCaminoSearch = await appOnlyClient.v2.search("#BuenCamino", {
+    max_results: 100,
     "media.fields": "url",
-    expansions: "geo.place_id",
+    expansions: "author_id,geo.place_id",
     "place.fields":
       "contained_within,country,country_code,full_name,geo,id,name,place_type",
     "tweet.fields":
       "attachments,author_id,context_annotations,conversation_id,created_at,entities,geo,id,in_reply_to_user_id,lang,public_metrics,possibly_sensitive,referenced_tweets,reply_settings,source,text,withheld",
   });
+  let tweetsArray = [];
+  for await (const tweet of buenCaminoSearch) {
+    console.log("TWEET", tweet);
+    tweetsArray.push(tweet);
+  }
+  // 1501207584631844869
+  // 1501087786316800001
+  tweetsArray.forEach((tweet) => {
+    const tweets = new Tweets();
+    console.log("TWEET");
+    tweets.id_tweet = tweet.id;
+    tweets.hashtag = "BuenCamino";
+    tweets.tweet = tweet;
+    console.log(tweet);
+    tweets.save((err, tweetStored) => {
+      console.log("STORED");
+    });
+  });
   // Read+Write level
   // const { query, max_results } = req.body;
   // const rwClient = appOnlyClient.readWrite;
-  console.log(buenCaminoSearch);
+
   // const result = await rwClient.v2
   //   .get("searchByQuery", {
   //     query: query,
