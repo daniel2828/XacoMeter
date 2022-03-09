@@ -15,7 +15,7 @@ async function testAPI(req, res) {
   const rwClient = appOnlyClient.readWrite;
 
   const result = await rwClient.v2
-    .get("tweets/search/recent", {
+    .get("tweets/search/all", {
       query: "BuenCamino",
       max_results: 10,
     })
@@ -38,31 +38,37 @@ async function searchByQuery(req, res) {
 
   // OR - you can also create a app-only client from your consumer keys -
   // const appOnlyClientFromConsumer = await userClient.appLogin();
-  /*const jsTweets = await appOnlyClient.v2.search("JavaScript", {
+  const buenCaminoSearch = await appOnlyClient.v2.search("BuenCamino", {
     "media.fields": "url",
-  });*/
+    expansions: "geo.place_id",
+    "place.fields":
+      "contained_within,country,country_code,full_name,geo,id,name,place_type",
+    "tweet.fields":
+      "attachments,author_id,context_annotations,conversation_id,created_at,entities,geo,id,in_reply_to_user_id,lang,public_metrics,possibly_sensitive,referenced_tweets,reply_settings,source,text,withheld",
+  });
   // Read+Write level
-  const { query, max_results } = req.body;
-  const rwClient = appOnlyClient.readWrite;
+  // const { query, max_results } = req.body;
+  // const rwClient = appOnlyClient.readWrite;
+  console.log(buenCaminoSearch);
+  // const result = await rwClient.v2
+  //   .get("searchByQuery", {
+  //     query: query,
+  //     max_results: max_results,
+  //   })
+  //   .catch((err) => {
+  //     console.log("ERROR", err);
 
-  const result = await rwClient.v2
-    .get("tweets/search/recent", {
-      query: query,
-      max_results: max_results,
-    })
-    .catch((err) => {
-      console.log("ERROR", err);
-
-      return err;
-    });
-  console.log(result.data);
+  //     return err;
+  //   });
+  //console.log(result.data);
   //console.log(result.data);
   // Consume every possible tweet of jsTweets (until rate limit is hit)
   // for await (const tweet of jsTweets) {
   //   console.log(tweet);
   // }
-  res.status(200).send(result);
+  res.status(200).send(buenCaminoSearch);
 }
 module.exports = {
   testAPI,
+  searchByQuery,
 };
