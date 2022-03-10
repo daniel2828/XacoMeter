@@ -6,4 +6,5 @@ const api = express.Router();
 
 api.post("/test", TwitterController.testAPI);
 api.post("/searchByQuery", TwitterController.searchByQuery);
+api.get("/getTweetsByHashtag", TwitterController.getTweetsByHashtag);
 module.exports = api;

@@ -1,5 +1,5 @@
 import logo from "./logo.svg";
-import "./App.css";
+import "./App.scss";
 import AuthPage from "./pages/AuthPage";
 import { BrowserRouter, Routes, Route, Switch } from "react-router-dom";
 import MainPage from "./pages/MainPage";
