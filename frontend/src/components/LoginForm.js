@@ -34,6 +34,11 @@ function Copyright(props) {
 
 const theme = createTheme();
 
+/**
+ * Login form component
+ * @param {setIsRegister} - Function to switch between register and login 
+ * @returns LoginForm component
+ */
 export default function LoginForm({ setIsRegister }) {
   const [responseMessage, setResponseMessage] = useState({});
   const [alertOpen, setAlertOpen] = useState(false);

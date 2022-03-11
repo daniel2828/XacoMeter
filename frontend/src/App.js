@@ -1,4 +1,4 @@
-import logo from "./logo.svg";
+
 import "./App.scss";
 import AuthPage from "./pages/AuthPage";
 import { BrowserRouter, Routes, Route, Switch } from "react-router-dom";

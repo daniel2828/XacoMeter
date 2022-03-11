@@ -63,20 +63,28 @@ async function searchByQuery(req, res) {
       });
       const {hashtag} = req.body;
   
-      Tweets.find({},(err, tweets)=>{
-        res.status(200).send(tweets);
-      })
+      const tweets = await Tweets.find({}).sort( { id_tweet: 1 } )
+      
+      
+      res.status(200).send(tweets);
+     
       //res.status(200).send(buenCaminoSearch);
   })
  
    
 }
-async function getTweetsByHashtag(req, res) {
-  
+// async function getGrouped(req, res) {
+//   const tweets = await Tweets.aggregate( [
+//     {
+//       $group: {
+//          _id: {},
+//       }
+//     }
+//   ] )
  
-}
+// }
 module.exports = {
   testAPI,
   searchByQuery,
-  getTweetsByHashtag
+ // getGrouped
 };
