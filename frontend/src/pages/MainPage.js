@@ -17,6 +17,8 @@ import {
 } from "recharts";
 import Grid from "@mui/material/Grid";
 import "./MainPages.scss";
+import PieChartComp from "../components/PieChartComp"
+
 /**
  * Main page where the data of tweets is displayed
  * @returns MainPage component
@@ -24,7 +26,8 @@ import "./MainPages.scss";
 export default function MainPage() {
   // States
   const [tweetData, setTweetData] = useState([]);
-  const [data, setData] = useState([]);
+  const [daysData, setDaysData] = useState([]);
+  const [languageData, setLanguageData] = useState([])
   // Handle changes into the hashtag
   const handleChange = async (e = undefined) => {
     e?.preventDefault();
@@ -42,7 +45,24 @@ export default function MainPage() {
     var countsExtended = Object.keys(counts).map((k) => {
       return { name: k, uv: counts[k] };
     });
-    setData(countsExtended);
+
+    console.log("DATA", tweets)
+
+    setDaysData(countsExtended);
+    // Get the language counted
+    var languageCounts = tweets.data.reduce((p, c) => {
+      var name = c.tweet.lang;
+      if (!p.hasOwnProperty(name)) {
+        p[name] = 0;
+      }
+      p[name]++;
+      return p;
+    }, {});
+    var languageCountsExtended = Object.keys(languageCounts).map((k) => {
+      return { name: k, value: languageCounts[k] };
+    });
+    console.log("language", languageCountsExtended)
+    setLanguageData(languageCountsExtended);
   };
   // Effects
   useEffect(async () => {
@@ -67,14 +87,14 @@ export default function MainPage() {
           <MenuItem value={"BuenCamino"}>#BuenCamino</MenuItem>
         </Select>
         <h2>
-          Number of tweets registered since {data[0]?.name}
+          Number of tweets registered since {daysData[0]?.name}
           {tweetData?.data?.length}
         </h2>
         <Grid container spacing={2}>
-          <Grid item xs={6} md={8}>
+          <Grid item xs={6} md={6}>
             <div className="history-tweets">
               <h3>History of tweets</h3>
-              <LineChart width={600} height={300} data={data}>
+              <LineChart width={600} height={300} data={daysData}>
                 <Line type="monotone" dataKey="uv" stroke="#8884d8" />
                 <CartesianGrid stroke="#ccc" strokeDasharray="5 5" />
                 <XAxis dataKey="name" />
@@ -83,7 +103,14 @@ export default function MainPage() {
               </LineChart>
             </div>
           </Grid>
-          <Grid item xs={6} md={4}></Grid>
+          <Grid item xs={6} md={6}>
+            
+            <h2>
+              Language distribution. Number of different languages detected: {languageData?.length}
+              
+            </h2>
+            <PieChartComp data={languageData} />
+          </Grid>
           <Grid item xs={6} md={4}></Grid>
           <Grid item xs={6} md={8}></Grid>
         </Grid>
