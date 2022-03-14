@@ -18,7 +18,7 @@ import {
 import Grid from "@mui/material/Grid";
 import "./MainPages.scss";
 import PieChartComp from "../components/PieChartComp"
-
+import {words} from "../utils/words"; 
 /**
  * Main page where the data of tweets is displayed
  * @returns MainPage component
@@ -31,10 +31,21 @@ export default function MainPage() {
   // Handle changes into the hashtag
   const handleChange = async (e = undefined) => {
     e?.preventDefault();
-    const tweets = await getTweetsByHashtag("BuenCamino");
+    const tweetsPrev = await getTweetsByHashtag("BuenCamino")
+
+    const tweets = tweetsPrev?.data?.filter(element=>{
+
+      let includes = false;
+      words.forEach(word=>{
+        if (element.tweet.text.includes(word)){
+          includes = true;
+        }
+      })
+      return includes;
+    });
     setTweetData(tweets);
     // Use reduce
-    var counts = tweets.data.reduce((p, c) => {
+    var counts = tweets.reduce((p, c) => {
       var name = c.tweet.created_at.substring(0, 10);
       if (!p.hasOwnProperty(name)) {
         p[name] = 0;
@@ -45,12 +56,9 @@ export default function MainPage() {
     var countsExtended = Object.keys(counts).map((k) => {
       return { name: k, uv: counts[k] };
     });
-
-    console.log("DATA", tweets)
-
     setDaysData(countsExtended);
     // Get the language counted
-    var languageCounts = tweets.data.reduce((p, c) => {
+    var languageCounts = tweets.reduce((p, c) => {
       var name = c.tweet.lang;
       if (!p.hasOwnProperty(name)) {
         p[name] = 0;
