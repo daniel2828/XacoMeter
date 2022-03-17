@@ -1,9 +1,7 @@
 import React, { useEffect, useState } from "react";
 import { getAccessTokenApi } from "../api/auth";
 import { Redirect } from "react-router";
-import Box from "@mui/material/Box";
-import TextField from "@mui/material/TextField";
-import Button from "@mui/material/Button";
+
 import { getTweetsByHashtag } from "../api/tweets";
 import MenuItem from "@mui/material/MenuItem";
 import Select from "@mui/material/Select";
@@ -16,9 +14,11 @@ import {
   Tooltip,
 } from "recharts";
 import Grid from "@mui/material/Grid";
-import "./MainPages.scss";
+//import "./MainPages.scss";
 import PieChartComp from "../components/PieChartComp"
 import {words} from "../utils/words"; 
+import WordCloud from "../components/Graphs/WordCloud";
+import TabMain from "../components/Tabs/TabMain";
 /**
  * Main page where the data of tweets is displayed
  * @returns MainPage component
@@ -95,33 +95,11 @@ export default function MainPage() {
           <MenuItem value={"BuenCamino"}>#BuenCamino</MenuItem>
         </Select>
         <h2>
-          Number of tweets registered since {daysData[0]?.name}
-          {tweetData?.data?.length}
+          Number of tweets registered since {daysData[0]?.name}: 
+        
         </h2>
-        <Grid container spacing={2}>
-          <Grid item xs={6} md={6}>
-            <div className="history-tweets">
-              <h3>History of tweets</h3>
-              <LineChart width={600} height={300} data={daysData}>
-                <Line type="monotone" dataKey="uv" stroke="#8884d8" />
-                <CartesianGrid stroke="#ccc" strokeDasharray="5 5" />
-                <XAxis dataKey="name" />
-                <YAxis />
-                <Tooltip />
-              </LineChart>
-            </div>
-          </Grid>
-          <Grid item xs={6} md={6}>
-            
-            <h2>
-              Language distribution. Number of different languages detected: {languageData?.length}
-              
-            </h2>
-            <PieChartComp data={languageData} />
-          </Grid>
-          <Grid item xs={6} md={4}></Grid>
-          <Grid item xs={6} md={8}></Grid>
-        </Grid>
+        <h2>  {tweetData?.length}</h2>
+        <TabMain tweetData={tweetData}></TabMain>
       </>
     );
   }
