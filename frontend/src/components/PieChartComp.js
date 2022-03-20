@@ -10,9 +10,10 @@ import { PieChart, Pie, Sector, Cell, ResponsiveContainer } from 'recharts';
 const COLORS = ['#0088FE', '#00C49F', '#FFBB28', '#FF8042'];
 
 export default function PieChartComp ({data}){
-  const  renderLabel = function(entry) {
-    return `${entry.name} (${entry.value})`;
-}
+    const  renderLabel = function(entry) {
+        console.log("RENDER", entry)
+        return `${entry.name} (${entry.value})`;
+    }
     const demoUrl = 'https://codesandbox.io/s/pie-chart-with-padding-angle-7ux0o';
 
     const onPieEnter=()=>{}
@@ -27,6 +28,7 @@ export default function PieChartComp ({data}){
           fill="#8884d8"
           paddingAngle={5}
           dataKey="value"
+          isAnimationActive={false}
           label ={renderLabel}
         >
           {data.map((entry, index) => (

@@ -12,7 +12,6 @@ import Grid from "@mui/material/Grid";
 import "./Graphs.scss";
 import PieChartComp from "../../../components/PieChartComp"
 import {words} from "../../../utils/words"; 
-import WordCloud from "../../../components/Graphs/WordCloud";
 /**
  * Main page where the data of tweets is displayed
  * @returns MainPage component
@@ -86,7 +85,7 @@ export default function MainPage({tweetData}) {
             <PieChartComp data={languageData} />
           </Grid>
           <Grid item xs={12} md={12}>
-            <WordCloud  tweetData={tweetData}/>
+            
           </Grid>
           <Grid item xs={6} md={8}></Grid>
         </Grid>
