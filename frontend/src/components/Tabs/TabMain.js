@@ -7,9 +7,10 @@ import Box from '@mui/material/Box';
 import GraphsTab from "./TabElement/GraphsTab";
 
 import WordCloud from "../Graphs/WordCloud";
+import { useTranslation } from "react-i18next";
 function TabPanel(props) {
   const { children, value, index, ...other } = props;
-
+  const { t } = useTranslation();
   return (
     <div
       role="tabpanel"
