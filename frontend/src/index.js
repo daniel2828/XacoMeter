@@ -9,7 +9,8 @@ ReactDOM.render(
   <I18nextProvider>
   <React.StrictMode>
     <App />
-  </React.StrictMode></I18nextProvider>
+  </React.StrictMode>
+  </I18nextProvider>
   , document.getElementById('root')
 );
 

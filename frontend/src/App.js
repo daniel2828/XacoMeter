@@ -5,11 +5,13 @@ import { BrowserRouter, Routes, Route, Switch } from "react-router-dom";
 import MainPage from "./pages/MainPage";
 
 import { useTranslation, initReactI18next } from "react-i18next";
-
+import NavBar from "./components/NavBar/NavBar";
 
 function App() {
-  const { t } = useTranslation();
+
   return (
+    <>
+    <NavBar/>
     <BrowserRouter>
       <Switch>
         <Route path="/" exact={true}>
@@ -19,10 +21,11 @@ function App() {
           <MainPage />
         </Route>
         <Route path="/translation" exact={true}>
-          <p>{t('welcome')}</p>
+          <p>{}</p>
         </Route>
       </Switch>
     </BrowserRouter>
+    </>
   );
 }
 

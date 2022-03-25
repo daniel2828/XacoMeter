@@ -12,12 +12,15 @@ import Grid from "@mui/material/Grid";
 import "./Graphs.scss";
 import PieChartComp from "../../../components/PieChartComp"
 import {words} from "../../../utils/words"; 
+import { useTranslation } from "react-i18next";
 /**
  * Main page where the data of tweets is displayed
  * @returns MainPage component
  */
 export default function MainPage({tweetData}) {
-  // States
+  // States  
+  const { t , i18n} = useTranslation();
+ 
   const [daysData, setDaysData] = useState([]);
   const [languageData, setLanguageData] = useState([])
   // Handle changes into the hashtag
@@ -66,7 +69,7 @@ export default function MainPage({tweetData}) {
         <Grid container spacing={2}>
           <Grid item xs={6} md={6}>
             <div className="history-tweets">
-              <h3>History of tweets</h3>
+              <h3> {t('GraphsTab.header')}</h3>
               <LineChart width={600} height={300} data={daysData}>
                 <Line type="monotone" dataKey="uv" stroke="#8884d8" />
                 <CartesianGrid stroke="#ccc" strokeDasharray="5 5" />

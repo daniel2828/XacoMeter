@@ -19,12 +19,14 @@ import PieChartComp from "../components/PieChartComp"
 import {words} from "../utils/words"; 
 import WordCloud from "../components/Graphs/WordCloud";
 import TabMain from "../components/Tabs/TabMain";
+import { useTranslation } from "react-i18next";
 /**
  * Main page where the data of tweets is displayed
  * @returns MainPage component
  */
 export default function MainPage() {
   // States
+  const {t,i18n} = useTranslation();
   const [tweetData, setTweetData] = useState([]);
   const [daysData, setDaysData] = useState([]);
   const [languageData, setLanguageData] = useState([])
@@ -79,12 +81,14 @@ export default function MainPage() {
   /**
    * Check the tokens to know if you need a re-login
    */
+ 
   if (!getAccessTokenApi()) {
     return <Redirect to="/"></Redirect>;
   } else {
     return (
       <>
-        <h1>Select the hashtag to display data.</h1>
+        <h1>{t("Select the hashtag to display data.")}</h1>
+        
         <Select
           labelId="select-hashtag"
           id="select-hashtag"
@@ -95,7 +99,7 @@ export default function MainPage() {
           <MenuItem value={"BuenCamino"}>#BuenCamino</MenuItem>
         </Select>
         <h2>
-          Number of tweets registered since {daysData[0]?.name}: 
+        {t("Number of tweets registered since")} {daysData[0]?.name}: 
         
         </h2>
         <h2>  {tweetData?.length}</h2>

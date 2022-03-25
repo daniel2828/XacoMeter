@@ -36,7 +36,9 @@ i18n
     debug: false,
 
     whitelist: availableLanguages,
-
+    react: { 
+      useSuspense: false //   <---- this will do the magic
+    },
     interpolation: {
       escapeValue: false
     }
