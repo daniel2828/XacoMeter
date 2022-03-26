@@ -10,7 +10,7 @@ import WordCloud from "../Graphs/WordCloud";
 import { useTranslation } from "react-i18next";
 function TabPanel(props) {
   const { children, value, index, ...other } = props;
-  const { t } = useTranslation();
+ 
   return (
     <div
       role="tabpanel"
@@ -39,7 +39,7 @@ function a11yProps(index) {
 
 export default function TabMain({tweetData}) {
   const [value, setValue] = React.useState(0);
-
+  const { t } = useTranslation();
   const handleChange = (event, newValue) => {
     setValue(newValue);
   };
@@ -48,9 +48,9 @@ export default function TabMain({tweetData}) {
     <Box sx={{ width: '80%' , marginLeft:"10%" ,marginRight:"10%"}}>
       <Box sx={{ borderBottom: 1, borderColor: 'divider' }}>
         <Tabs value={value} onChange={handleChange} aria-label="basic tabs example">
-          <Tab label="Graphs" {...a11yProps(0)} />
-          <Tab label="Last tweets" {...a11yProps(1)} />
-          <Tab label="Sentiment Analisys" {...a11yProps(2)} />
+          <Tab label={t("Graphs")} {...a11yProps(0)} />
+          <Tab label={t("Last tweets")} {...a11yProps(1)} />
+          <Tab label={t("Sentiment Analisys")} {...a11yProps(2)} />
         </Tabs>
       </Box>
       <TabPanel value={value} index={0}>
@@ -60,7 +60,7 @@ export default function TabMain({tweetData}) {
         <WordCloud  tweetData={tweetData}/>
       </TabPanel>
       <TabPanel value={value} index={2}>
-        Sentiment Analisys
+      {t("Sentiment Analisys")}
       </TabPanel>
     </Box>
   );

@@ -82,7 +82,7 @@ export default function MainPage({tweetData}) {
           <Grid item xs={6} md={6}>
             
             <h2>
-              Language distribution. Number of different languages detected: {languageData?.length}
+              {t("Language distribution. Number of different languages detected:")} {languageData?.length}
               
             </h2>
             <PieChartComp data={languageData} />

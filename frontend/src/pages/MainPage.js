@@ -39,7 +39,7 @@ export default function MainPage() {
 
       let includes = false;
       words.forEach(word=>{
-        if (element.tweet.text.includes(word)){
+        if (element.tweet.text.totoLowerCase().includes(word)){
           includes = true;
         }
       })
@@ -96,6 +96,7 @@ export default function MainPage() {
           label="Hashtag"
           onChange={handleChange}
         >
+          <MenuItem value={"BuenCamino"}>#BuenCamino</MenuItem>
           <MenuItem value={"BuenCamino"}>#BuenCamino</MenuItem>
         </Select>
         <h2>
