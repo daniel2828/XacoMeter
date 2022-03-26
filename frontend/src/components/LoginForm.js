@@ -14,6 +14,7 @@ import Container from "@mui/material/Container";
 import { createTheme, ThemeProvider } from "@mui/material/styles";
 import { signIn } from "../api/users";
 import Notification from "./Notification";
+import {useTranslation} from "react-i18next";
 function Copyright(props) {
   return (
     <Typography
@@ -34,9 +35,15 @@ function Copyright(props) {
 
 const theme = createTheme();
 
+/**
+ * Login form component
+ * @param {setIsRegister} - Function to switch between register and login 
+ * @returns LoginForm component
+ */
 export default function LoginForm({ setIsRegister }) {
   const [responseMessage, setResponseMessage] = useState({});
   const [alertOpen, setAlertOpen] = useState(false);
+  const {t} = useTranslation();
   const handleSubmit = (event) => {
     event.preventDefault();
     const data = new FormData(event.currentTarget);
@@ -78,7 +85,7 @@ export default function LoginForm({ setIsRegister }) {
             <LockOutlinedIcon />
           </Avatar>
           <Typography component="h1" variant="h5">
-            Xacometer Sign In
+          {t("Xacometer Sign In")}
           </Typography>
           <Notification
             alertOpen={alertOpen}
@@ -97,7 +104,7 @@ export default function LoginForm({ setIsRegister }) {
               required
               fullWidth
               id="email"
-              label="Email Address"
+              label={t("Email Address")}
               name="email"
               autoComplete="email"
               autoFocus
@@ -107,36 +114,29 @@ export default function LoginForm({ setIsRegister }) {
               required
               fullWidth
               name="password"
-              label="Password"
+              label={t("Password")}
               type="password"
               id="password"
               autoComplete="current-password"
             />
-            <FormControlLabel
-              control={<Checkbox value="remember" color="primary" />}
-              label="Remember me"
-            />
+           
             <Button
               type="submit"
               fullWidth
               variant="contained"
               sx={{ mt: 3, mb: 2 }}
             >
-              Sign In
+              {t("Sign In")}
             </Button>
             <Grid container>
-              <Grid item xs>
-                <Link href="#" variant="body2">
-                  Forgot password?
-                </Link>
-              </Grid>
+             
               <Grid item>
                 <Link
                   onClickCapture={() => setIsRegister(true)}
                   href="#"
                   variant="body2"
                 >
-                  {"Don't have an account? Sign Up"}
+                  {t("Don't have an account? Sign Up")}
                 </Link>
               </Grid>
             </Grid>

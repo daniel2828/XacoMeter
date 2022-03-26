@@ -3,8 +3,6 @@ import Avatar from "@mui/material/Avatar";
 import Button from "@mui/material/Button";
 import CssBaseline from "@mui/material/CssBaseline";
 import TextField from "@mui/material/TextField";
-import FormControlLabel from "@mui/material/FormControlLabel";
-import Checkbox from "@mui/material/Checkbox";
 import Link from "@mui/material/Link";
 import Grid from "@mui/material/Grid";
 import Box from "@mui/material/Box";
@@ -14,6 +12,7 @@ import Container from "@mui/material/Container";
 import { createTheme, ThemeProvider } from "@mui/material/styles";
 import { signUp } from "../api/users";
 import Notification from "./Notification";
+import {useTranslation} from "react-i18next";
 function Copyright(props) {
   return (
     <Typography
@@ -34,7 +33,13 @@ function Copyright(props) {
 
 const theme = createTheme();
 
+/**
+ * 
+ * @param {setIsRegister} - Function to switch with login  
+ * @returns RegisterForm
+ */
 export default function RegisterForm({ setIsRegister }) {
+  const {t} = useTranslation();
   const [alertOpen, setAlertOpen] = useState(false);
   const [responseMessage, setResponseMessage] = useState({});
   const handleSubmit = (event) => {
@@ -81,7 +86,7 @@ export default function RegisterForm({ setIsRegister }) {
             <LockOutlinedIcon />
           </Avatar>
           <Typography component="h1" variant="h5">
-            Xacometer Sign up
+            {t("Xacometer Sign up")}
           </Typography>
           <Box
             component="form"
@@ -103,7 +108,7 @@ export default function RegisterForm({ setIsRegister }) {
                   required
                   fullWidth
                   id="firstName"
-                  label="First Name"
+                  label={t("First Name")}
                   autoFocus
                 />
               </Grid>
@@ -112,7 +117,7 @@ export default function RegisterForm({ setIsRegister }) {
                   required
                   fullWidth
                   id="lastName"
-                  label="Last Name"
+                  label={t("Last Name")}
                   name="lastName"
                   autoComplete="family-name"
                 />
@@ -122,7 +127,7 @@ export default function RegisterForm({ setIsRegister }) {
                   required
                   fullWidth
                   id="email"
-                  label="Email Address"
+                  label={t("Email Address")}
                   name="email"
                   autoComplete="email"
                 />
@@ -132,7 +137,7 @@ export default function RegisterForm({ setIsRegister }) {
                   required
                   fullWidth
                   name="password"
-                  label="Password"
+                  label={t("Password")}
                   type="password"
                   id="password"
                   autoComplete="new-password"
@@ -143,7 +148,7 @@ export default function RegisterForm({ setIsRegister }) {
                   required
                   fullWidth
                   name="repeatPassword"
-                  label="Repeat Password"
+                  label={t("Repeat Password")}
                   type="password"
                   id="repeatPassword"
                 />
@@ -155,7 +160,7 @@ export default function RegisterForm({ setIsRegister }) {
               variant="contained"
               sx={{ mt: 3, mb: 2 }}
             >
-              Sign Up
+              {t("Sign Up")}
             </Button>
             <Grid container justifyContent="flex-end">
               <Grid item>
@@ -164,7 +169,7 @@ export default function RegisterForm({ setIsRegister }) {
                   href="#"
                   variant="body2"
                 >
-                  Already have an account? Sign in
+                  {t("Already have an account? Sign in")}
                 </Link>
               </Grid>
             </Grid>

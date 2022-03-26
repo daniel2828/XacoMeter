@@ -9,6 +9,14 @@ function SlideTransition(props) {
 const Alert = React.forwardRef(function Alert(props, ref) {
   return <MuiAlert elevation={6} ref={ref} variant="filled" {...props} />;
 });
+/**
+ * Notification component
+ * @param {alertOpen} - Status of the alert.
+ * @param {handleClose} - Fucntion to handle the close of notification.
+ * @param {status} - Status of the call.
+ * @param {message} - Message to display.
+ * @returns Notification component
+ */
 export default function Notification({
   alertOpen,
   handleClose,
