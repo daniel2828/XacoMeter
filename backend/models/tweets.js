@@ -1,13 +1,11 @@
 const mongoose = require("mongoose");
 const Schema = mongoose.Schema;
 
-const TweetsSchema = Schema({
-  id_tweet: {
-    type: String,
-    unique: true,
-  },
+let TweetsSchema = Schema({
+  id_tweet:String,
+ 
   hashtag: String,
   tweet: Object,
 });
-
+TweetsSchema.index({id_tweet:1, hashtag:1}, {unique: true})
 module.exports = mongoose.model("Tweets", TweetsSchema);

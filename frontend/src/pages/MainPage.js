@@ -5,19 +5,8 @@ import { Redirect } from "react-router";
 import { getTweetsByHashtag } from "../api/tweets";
 import MenuItem from "@mui/material/MenuItem";
 import Select from "@mui/material/Select";
-import {
-  LineChart,
-  Line,
-  CartesianGrid,
-  XAxis,
-  YAxis,
-  Tooltip,
-} from "recharts";
-import Grid from "@mui/material/Grid";
-//import "./MainPages.scss";
-import PieChartComp from "../components/PieChartComp"
-import {words} from "../utils/words"; 
-import WordCloud from "../components/Graphs/WordCloud";
+
+import { words } from "../utils/words";
 import TabMain from "../components/Tabs/TabMain";
 import { useTranslation } from "react-i18next";
 /**
@@ -26,23 +15,26 @@ import { useTranslation } from "react-i18next";
  */
 export default function MainPage() {
   // States
-  const {t,i18n} = useTranslation();
+  const [hashtag, setHashtag] = useState("BuenCamino");
+  const { t} = useTranslation();
   const [tweetData, setTweetData] = useState([]);
   const [daysData, setDaysData] = useState([]);
-  const [languageData, setLanguageData] = useState([])
+  const [languageData, setLanguageData] = useState([]);
   // Handle changes into the hashtag
-  const handleChange = async (e = undefined) => {
+  const handleChange = async (e) => {
     e?.preventDefault();
-    const tweetsPrev = await getTweetsByHashtag("BuenCamino")
 
-    const tweets = tweetsPrev?.data?.filter(element=>{
+    const tweetsPrev = await getTweetsByHashtag(
+      e?.target?.value ? e?.target?.value : "BuenCamino"
+    );
 
+    const tweets = tweetsPrev?.data?.filter((element) => {
       let includes = false;
-      words.forEach(word=>{
-        if (element.tweet.text.totoLowerCase().includes(word)){
+      words.forEach((word) => {
+        if (element.tweet.text.toLowerCase().includes(word)) {
           includes = true;
         }
-      })
+      });
       return includes;
     });
     setTweetData(tweets);
@@ -71,8 +63,9 @@ export default function MainPage() {
     var languageCountsExtended = Object.keys(languageCounts).map((k) => {
       return { name: k, value: languageCounts[k] };
     });
-    console.log("language", languageCountsExtended)
+   
     setLanguageData(languageCountsExtended);
+    setHashtag(e?.target?.value ? e?.target?.value : "BuenCamino");
   };
   // Effects
   useEffect(async () => {
@@ -81,29 +74,28 @@ export default function MainPage() {
   /**
    * Check the tokens to know if you need a re-login
    */
- 
+
   if (!getAccessTokenApi()) {
     return <Redirect to="/"></Redirect>;
   } else {
     return (
       <>
         <h1>{t("Select the hashtag to display data.")}</h1>
-        
+
         <Select
           labelId="select-hashtag"
           id="select-hashtag"
-          value={"BuenCamino"}
+          value={hashtag}
           label="Hashtag"
           onChange={handleChange}
         >
           <MenuItem value={"BuenCamino"}>#BuenCamino</MenuItem>
-          <MenuItem value={"BuenCamino"}>#BuenCamino</MenuItem>
+          <MenuItem value={"CaminoDeSantiago"}>#CaminoDeSantiago</MenuItem>
         </Select>
         <h2>
-        {t("Number of tweets registered since")} {daysData[0]?.name}: 
-        
+          {t("Number of tweets registered since")} {daysData[0]?.name}:
         </h2>
-        <h2>  {tweetData?.length}</h2>
+        <h2> {tweetData?.length}</h2>
         <TabMain tweetData={tweetData}></TabMain>
       </>
     );

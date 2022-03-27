@@ -1,3 +1,5 @@
 export const words = [
-    "caminosantiago","santiago", "xacobeo", "peregrino", "galicia", "peregrinaje", "compostelana"
+    "santiago", "xacobeo", "peregrino", "galicia", "peregrinaje", "compostelana", "caminodesantiago", "camino de santiago",
+   
+    "jacobi", "viajacobi" ,"compostela"
 ]

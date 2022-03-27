@@ -7,7 +7,7 @@ export default function WordCloud({tweetData}) {
     <TagCloud
               minSize={12}
               maxSize={35}
-              tags={tweetData.slice(-10).map(element=>{
+              tags={tweetData.slice(-100).map(element=>{
                   return {value: element.tweet.text, count:20}
               })}
               onClick={tag => alert(`'${tag.value}' was selected!`)}
