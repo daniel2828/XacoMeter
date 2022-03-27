@@ -5,11 +5,11 @@ import { BrowserRouter, Route, Switch } from "react-router-dom";
 import MainPage from "./pages/MainPage";
 
 import NavBar from "./components/NavBar/NavBar";
-
+import AuthProvider from "./providers/AuthProvider";
 function App() {
 
   return (
-    <>
+    <AuthProvider>
     <NavBar/>
     
     <BrowserRouter >
@@ -24,7 +24,7 @@ function App() {
       </Switch>
     </BrowserRouter>
     
-    </>
+    </AuthProvider>
   );
 }
 

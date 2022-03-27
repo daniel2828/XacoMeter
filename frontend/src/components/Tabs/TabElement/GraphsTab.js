@@ -65,9 +65,9 @@ export default function MainPage({ tweetData }) {
   return (
     <>
       <Grid container spacing={2}>
-        <Grid item xs={6} md={6}>
+        <Grid item xs={12} md={6}>
           <div className="history-tweets">
-            <h3> {t("GraphsTab.header")}</h3>
+            <h3> {t("History of tweets")}</h3>
             <LineChart width={600} height={300} data={daysData}>
               <Line type="monotone" dataKey="uv" stroke="#8884d8" />
               <CartesianGrid stroke="#ccc" strokeDasharray="5 5" />
@@ -77,7 +77,7 @@ export default function MainPage({ tweetData }) {
             </LineChart>
           </div>
         </Grid>
-        <Grid item xs={6} md={6}>
+        <Grid item xs={12} md={6}>
           <h2>
             {t(
               "Language distribution. Number of different languages detected:"
