@@ -23,9 +23,10 @@ export default function MainPage() {
   // Handle changes into the hashtag
   const handleChange = async (e) => {
     e?.preventDefault();
-
+    const accessToken = getAccessTokenApi();
     const tweetsPrev = await getTweetsByHashtag(
-      e?.target?.value ? e?.target?.value : "BuenCamino"
+      e?.target?.value ? e?.target?.value : "BuenCamino",
+      accessToken
     );
 
     const tweets = tweetsPrev?.data?.filter((element) => {
