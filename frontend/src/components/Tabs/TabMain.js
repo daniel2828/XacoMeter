@@ -1,16 +1,14 @@
-import * as React from 'react';
-import PropTypes from 'prop-types';
-import Tabs from '@mui/material/Tabs';
-import Tab from '@mui/material/Tab';
-import Typography from '@mui/material/Typography';
-import Box from '@mui/material/Box';
+import * as React from "react";
+import PropTypes from "prop-types";
+import Tabs from "@mui/material/Tabs";
+import Tab from "@mui/material/Tab";
+import Box from "@mui/material/Box";
 import GraphsTab from "./TabElement/GraphsTab";
-
 import WordCloud from "../Graphs/WordCloud";
 import { useTranslation } from "react-i18next";
 function TabPanel(props) {
   const { children, value, index, ...other } = props;
- 
+
   return (
     <div
       role="tabpanel"
@@ -19,7 +17,7 @@ function TabPanel(props) {
       aria-labelledby={`simple-tab-${index}`}
       {...other}
     >
-     {children}
+      {children}
     </div>
   );
 }
@@ -33,11 +31,11 @@ TabPanel.propTypes = {
 function a11yProps(index) {
   return {
     id: `simple-tab-${index}`,
-    'aria-controls': `simple-tabpanel-${index}`,
+    "aria-controls": `simple-tabpanel-${index}`,
   };
 }
 
-export default function TabMain({tweetData}) {
+export default function TabMain({ tweetData }) {
   const [value, setValue] = React.useState(0);
   const { t } = useTranslation();
   const handleChange = (event, newValue) => {
@@ -45,22 +43,26 @@ export default function TabMain({tweetData}) {
   };
 
   return (
-    <Box sx={{ width: '80%' , marginLeft:"10%" ,marginRight:"10%"}}>
-      <Box sx={{ borderBottom: 1, borderColor: 'divider' }}>
-        <Tabs value={value} onChange={handleChange} aria-label="basic tabs example">
+    <Box sx={{ width: "80%", marginLeft: "10%", marginRight: "10%" }}>
+      <Box sx={{ borderBottom: 1, borderColor: "divider" }}>
+        <Tabs
+          value={value}
+          onChange={handleChange}
+          aria-label="basic tabs example"
+        >
           <Tab label={t("Graphs")} {...a11yProps(0)} />
           <Tab label={t("Last tweets")} {...a11yProps(1)} />
           <Tab label={t("Sentiment Analisys")} {...a11yProps(2)} />
         </Tabs>
       </Box>
       <TabPanel value={value} index={0}>
-        <GraphsTab tweetData={tweetData}/>
+        <GraphsTab tweetData={tweetData} />
       </TabPanel>
       <TabPanel value={value} index={1}>
-        <WordCloud  tweetData={tweetData}/>
+        <WordCloud tweetData={tweetData} />
       </TabPanel>
       <TabPanel value={value} index={2}>
-      {t("Sentiment Analisys")}
+        {t("Sentiment Analisys")}
       </TabPanel>
     </Box>
   );

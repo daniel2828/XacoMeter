@@ -1,18 +1,18 @@
 
 import "./App.scss";
 import AuthPage from "./pages/AuthPage";
-import { BrowserRouter, Routes, Route, Switch } from "react-router-dom";
+import { BrowserRouter, Route, Switch } from "react-router-dom";
 import MainPage from "./pages/MainPage";
 
-import { useTranslation, initReactI18next } from "react-i18next";
 import NavBar from "./components/NavBar/NavBar";
-
+import AuthProvider from "./providers/AuthProvider";
 function App() {
 
   return (
-    <>
+    <AuthProvider>
     <NavBar/>
-    <BrowserRouter>
+    
+    <BrowserRouter >
       <Switch>
         <Route path="/" exact={true}>
           <AuthPage />
@@ -20,12 +20,11 @@ function App() {
         <Route path="/data" exact={true}>
           <MainPage />
         </Route>
-        <Route path="/translation" exact={true}>
-          <p>{}</p>
-        </Route>
+      
       </Switch>
     </BrowserRouter>
-    </>
+    
+    </AuthProvider>
   );
 }
 

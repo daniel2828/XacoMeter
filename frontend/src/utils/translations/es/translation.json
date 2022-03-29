@@ -1,8 +1,6 @@
 {
     "welcome": "Test ES",
-    "GraphsTab":{
-        "header": "Linea temporal de tweets"
-    },
+    "History of tweets": "Linea temporal de tweets",
     "Select the hashtag to display data.": "Selecciona el hashtag para mostrar los datos",
     "Spanish": "Español",
     "English":"Inglés",

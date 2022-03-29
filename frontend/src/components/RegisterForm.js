@@ -12,7 +12,7 @@ import Container from "@mui/material/Container";
 import { createTheme, ThemeProvider } from "@mui/material/styles";
 import { signUp } from "../api/users";
 import Notification from "./Notification";
-import {useTranslation} from "react-i18next";
+import { useTranslation } from "react-i18next";
 function Copyright(props) {
   return (
     <Typography
@@ -34,12 +34,12 @@ function Copyright(props) {
 const theme = createTheme();
 
 /**
- * 
- * @param {setIsRegister} - Function to switch with login  
+ *
+ * @param {setIsRegister} - Function to switch with login
  * @returns RegisterForm
  */
 export default function RegisterForm({ setIsRegister }) {
-  const {t} = useTranslation();
+  const { t } = useTranslation();
   const [alertOpen, setAlertOpen] = useState(false);
   const [responseMessage, setResponseMessage] = useState({});
   const handleSubmit = (event) => {
