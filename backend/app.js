@@ -36,7 +36,7 @@ app.get('*', (req, res) => {
 })
 // Connect mongo and express
 mongoose
-  .connect("mongodb+srv://daniel:Mongo#Gnab8841@cluster0.cms2n.mongodb.net/xacometer", { useNewUrlParser: true })
+  .connect("mongodb+srv://dani:MongoGnab8841@cluster0.cms2n.mongodb.net/xacometer", { useNewUrlParser: true })
   .then(() => {
     console.log("Connected");
     app.listen(port, () => {
