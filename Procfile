@@ -1,1 +1,1 @@
-web: node backend/app.js
+web: PORT=1234 node backend/app.js
