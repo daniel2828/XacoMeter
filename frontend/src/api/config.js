@@ -1,2 +1,2 @@
-export const BASE_PATH = `http://localhost:${PROCESS.en}/api`;
+export const BASE_PATH = `http://localhost:${process.env.PORT}/api`;
 export const API_VERSION = "v1";
