@@ -7,7 +7,8 @@ import MainPage from "./pages/MainPage";
 import NavBar from "./components/NavBar/NavBar";
 import AuthProvider from "./providers/AuthProvider";
 function App() {
-
+  console.log(process.env.REACT_APP_BACK_PATH)
+  console.log(process.env)
   return (
     <AuthProvider>
     <NavBar/>
