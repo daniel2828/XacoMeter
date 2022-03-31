@@ -3,6 +3,7 @@ import axios from "axios";
 import { BASE_PATH, API_VERSION } from "./config";
 export const signIn =async (body)=>{
    console.log("NO VA ", process.env.BACK_PATH)
+   console.log("TEST1", process.env.test);
    console.log(`${BASE_PATH}/${API_VERSION}/users/sign-in`)
    const data = await axios.post(`${BASE_PATH}/${API_VERSION}/users/sign-in`, body)
    console.log(data);
