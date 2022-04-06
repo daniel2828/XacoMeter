@@ -6,6 +6,7 @@ import Box from "@mui/material/Box";
 import GraphsTab from "./TabElement/GraphsTab";
 import WordCloud from "../Graphs/WordCloud";
 import { useTranslation } from "react-i18next";
+import TabGraphs from "./TabGraphs";
 function TabPanel(props) {
   const { children, value, index, ...other } = props;
 
@@ -56,7 +57,8 @@ export default function TabMain({ tweetData }) {
         </Tabs>
       </Box>
       <TabPanel value={value} index={0}>
-        <GraphsTab tweetData={tweetData} />
+        {/* <GraphsTab tweetData={tweetData} /> */}
+        <TabGraphs tweetData={tweetData} />
       </TabPanel>
       <TabPanel value={value} index={1}>
         <WordCloud tweetData={tweetData} />
