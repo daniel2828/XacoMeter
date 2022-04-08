@@ -1,4 +1,4 @@
-import * as React from "react";
+import {useState,useEffect} from "react";
 import PropTypes from "prop-types";
 import Tabs from "@mui/material/Tabs";
 import Tab from "@mui/material/Tab";
@@ -7,6 +7,10 @@ import WordCloud from "../Graphs/WordCloud";
 import { useTranslation } from "react-i18next";
 import TabGraphs from "./TabGraphs";
 import Grid from "@mui/material/Grid";
+import { useContext } from "react";
+
+import useXaco from "../../hooks/useXaco";
+import MobileDrawer from "../Mobile/MobileDrawer";
 function TabPanel(props) {
   const { children, value, index, ...other } = props;
 
@@ -37,38 +41,44 @@ function a11yProps(index) {
 }
 
 export default function TabMain({ tweetData }) {
-  const [value, setValue] = React.useState(0);
+  const [value, setValue] = useState(0);
   const { t } = useTranslation();
+  const {widthScreen} = useXaco();
+  const isMobile = widthScreen <=768;
   const handleChange = (event, newValue) => {
     setValue(newValue);
   };
-
-  return (
-    <Box sx={{ width: "80%", marginLeft: "10%", marginRight: "10%" }}>
-      <Box sx={{ borderBottom: 1, borderColor: "divider" }}>
-        <Tabs
-          value={value}
-          onChange={handleChange}
-          aria-label="basic tabs example"
-        >
-          <Tab label={t("Graphs")} {...a11yProps(0)} />
-          <Tab label={t("Last tweets")} {...a11yProps(1)} />
-          <Tab label={t("Sentiment Analisys")} {...a11yProps(2)} />
-        </Tabs>
+  if (isMobile){
+    return (<MobileDrawer tweetData={tweetData}/>)
+  }else{
+    return (
+      <Box sx={{ width: "80%", marginLeft: "10%", marginRight: "10%" }}>
+        <Box sx={{ borderBottom: 1, borderColor: "divider" }}>
+          <Tabs
+            value={value}
+            onChange={handleChange}
+            aria-label="basic tabs example"
+          >
+            <Tab label={t("Graphs")} {...a11yProps(0)} />
+            <Tab label={t("Last tweets")} {...a11yProps(1)} />
+            <Tab label={t("Sentiment Analisys")} {...a11yProps(2)} />
+          </Tabs>
+        </Box>
+        
+            <TabPanel value={value} index={0}>
+              {/* <GraphsTab tweetData={tweetData} /> */}
+              <TabGraphs tweetData={tweetData} />
+            </TabPanel>
+            <TabPanel value={value} index={1}>
+              <WordCloud tweetData={tweetData} />
+            </TabPanel>
+            <TabPanel value={value} index={2}>
+              {t("Sentiment Analisys")}
+            </TabPanel>
+        
+       
       </Box>
-      <Grid container spacing={3}>
-          <TabPanel value={value} index={0}>
-            {/* <GraphsTab tweetData={tweetData} /> */}
-            <TabGraphs tweetData={tweetData} />
-          </TabPanel>
-          <TabPanel value={value} index={1}>
-            <WordCloud tweetData={tweetData} />
-          </TabPanel>
-          <TabPanel value={value} index={2}>
-            {t("Sentiment Analisys")}
-          </TabPanel>
-      </Grid>
-     
-    </Box>
-  );
+    );
+  }
+  
 }

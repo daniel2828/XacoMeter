@@ -6,7 +6,7 @@ import Box from "@mui/material/Box";
 import WordCloud from "../Graphs/WordCloud";
 import PieChartComp from "../Graphs/PieChartComp";
 
-import LineChartComp from "../Graphs/LineChart";
+import LineChartComp from "../Graphs/LineChartComp";
 import { useTranslation } from "react-i18next";
 function TabPanel(props) {
   const { children, value, index, ...other } = props;
@@ -51,18 +51,7 @@ export default function TabGraphs({ tweetData }) {
     e?.preventDefault();
 
     // Use reduce
-    var counts = tweetData.reduce((p, c) => {
-      var name = c.tweet.created_at.substring(0, 10);
-      if (!p.hasOwnProperty(name)) {
-        p[name] = 0;
-      }
-      p[name]++;
-      return p;
-    }, {});
-    var countsExtended = Object.keys(counts).map((k) => {
-      return { name: k, uv: counts[k] };
-    });
-    setDaysData(countsExtended);
+   
     // Get the language counted
     var languageCounts = tweetData.reduce((p, c) => {
       var name = c.tweet.lang;
@@ -98,7 +87,7 @@ export default function TabGraphs({ tweetData }) {
       <TabPanel value={value} index={0}>
           <div className="tweets">
             <h3> {t("History of tweets")}</h3>
-            <LineChartComp daysData={daysData}/>
+            <LineChartComp tweetData={tweetData}/>
           </div>
       </TabPanel>
       <TabPanel value={value} index={1}>
