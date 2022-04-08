@@ -8,6 +8,7 @@ import PieChartComp from "../Graphs/PieChartComp";
 
 import LineChartComp from "../Graphs/LineChartComp";
 import { useTranslation } from "react-i18next";
+import BarChartComp from "../Graphs/BarChartComp";
 function TabPanel(props) {
   const { children, value, index, ...other } = props;
 
@@ -47,30 +48,7 @@ export default function TabGraphs({ tweetData }) {
   const [daysData, setDaysData] = useState([]);
   const [languageData, setLanguageData] = useState([]);
   // Handle changes into the hashtag
-  const handleChangeTweetData = async (e = undefined) => {
-    e?.preventDefault();
 
-    // Use reduce
-   
-    // Get the language counted
-    var languageCounts = tweetData.reduce((p, c) => {
-      var name = c.tweet.lang;
-      if (!p.hasOwnProperty(name)) {
-        p[name] = 0;
-      }
-      p[name]++;
-      return p;
-    }, {});
-    var languageCountsExtended = Object.keys(languageCounts).map((k) => {
-      return { name: k, value: languageCounts[k] };
-    });
-    console.log("language", languageCountsExtended);
-    setLanguageData(languageCountsExtended);
-  };
-  // Effects
-  useEffect(async () => {
-    handleChangeTweetData();
-  }, [tweetData]);
   return (
     <Box sx={{ width: "80%", marginLeft: "10%", marginRight: "10%" }}>
       <Box sx={{ borderBottom: 1, borderColor: "divider" }}>
@@ -97,10 +75,10 @@ export default function TabGraphs({ tweetData }) {
             )}
             {languageData?.length}
           </h2>
-          <PieChartComp data={languageData} />
+          <PieChartComp tweetData={tweetData} />
       </TabPanel>
       <TabPanel value={value} index={2}>
-        {t("Third graph")}
+        <BarChartComp tweetData={tweetData}/>
       </TabPanel>
     </Box>
   );

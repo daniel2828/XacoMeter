@@ -53,7 +53,7 @@ async function searchByQuery(req, res) {
     }
     tweetsArray.push(tweet);
   }
-  //console.log("LEN", tweetsArray.length)
+  // console.log("LEN", tweetsArray.length)
   // Add tweets to DB
   const capsuleTweets = ()=>{
     let newTweets = [];

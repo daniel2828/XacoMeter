@@ -3,7 +3,18 @@ import { PieChart, Pie, Cell } from "recharts";
 
 const COLORS = ["#0088FE", "#00C49F", "#FFBB28", "#FF8042"];
 
-export default function PieChartComp({ data }) {
+export default function PieChartComp({ tweetData }) {
+  var languageCounts = tweetData.reduce((p, c) => {
+    var name = c.tweet.lang;
+    if (!p.hasOwnProperty(name)) {
+      p[name] = 0;
+    }
+    p[name]++;
+    return p;
+  }, {});
+  var languageCountsExtended = Object.keys(languageCounts).map((k) => {
+    return { name: k, value: languageCounts[k] };
+  });
   const renderLabel = function (entry) {
     return `${entry.name} (${entry.value})`;
   };
@@ -17,7 +28,7 @@ export default function PieChartComp({ data }) {
       onMouseEnter={onPieEnter}
     >
       <Pie
-        data={data}
+        data={languageCountsExtended}
         cx={120}
         cy={200}
         innerRadius={60}
@@ -28,7 +39,7 @@ export default function PieChartComp({ data }) {
         isAnimationActive={false}
         label={renderLabel}
       >
-        {data.map((entry, index) => (
+        {languageCountsExtended.map((entry, index) => (
           <Cell key={`cell-${index}`} fill={COLORS[index % COLORS.length]} />
         ))}
       </Pie>
