@@ -3,18 +3,10 @@ import PropTypes from "prop-types";
 import Tabs from "@mui/material/Tabs";
 import Tab from "@mui/material/Tab";
 import Box from "@mui/material/Box";
-import GraphsTab from "./TabElement/GraphsTab";
 import WordCloud from "../Graphs/WordCloud";
-import PieChartComp from "../PieChartComp";
+import PieChartComp from "../Graphs/PieChartComp";
 
-import {
-    LineChart,
-    Line,
-    CartesianGrid,
-    XAxis,
-    YAxis,
-    Tooltip,
-  } from "recharts";
+import LineChartComp from "../Graphs/LineChart";
 import { useTranslation } from "react-i18next";
 function TabPanel(props) {
   const { children, value, index, ...other } = props;
@@ -104,28 +96,22 @@ export default function TabGraphs({ tweetData }) {
         </Tabs>
       </Box>
       <TabPanel value={value} index={0}>
-        <div className="history-tweets">
+          <div className="tweets">
             <h3> {t("History of tweets")}</h3>
-            <LineChart width={600} height={300} data={daysData}>
-              <Line type="monotone" dataKey="uv" stroke="#8884d8" />
-              <CartesianGrid stroke="#ccc" strokeDasharray="5 5" />
-              <XAxis dataKey="name" />
-              <YAxis />
-              <Tooltip />
-            </LineChart>
+            <LineChartComp daysData={daysData}/>
           </div>
       </TabPanel>
       <TabPanel value={value} index={1}>
             <h2>
             {t(
               "Language distribution. Number of different languages detected:"
-            )}{" "}
+            )}
             {languageData?.length}
           </h2>
           <PieChartComp data={languageData} />
       </TabPanel>
       <TabPanel value={value} index={2}>
-        {t("Sentiment Analisys")}
+        {t("Third graph")}
       </TabPanel>
     </Box>
   );

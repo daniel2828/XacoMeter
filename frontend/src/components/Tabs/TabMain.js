@@ -3,10 +3,10 @@ import PropTypes from "prop-types";
 import Tabs from "@mui/material/Tabs";
 import Tab from "@mui/material/Tab";
 import Box from "@mui/material/Box";
-import GraphsTab from "./TabElement/GraphsTab";
 import WordCloud from "../Graphs/WordCloud";
 import { useTranslation } from "react-i18next";
 import TabGraphs from "./TabGraphs";
+import Grid from "@mui/material/Grid";
 function TabPanel(props) {
   const { children, value, index, ...other } = props;
 
@@ -56,16 +56,19 @@ export default function TabMain({ tweetData }) {
           <Tab label={t("Sentiment Analisys")} {...a11yProps(2)} />
         </Tabs>
       </Box>
-      <TabPanel value={value} index={0}>
-        {/* <GraphsTab tweetData={tweetData} /> */}
-        <TabGraphs tweetData={tweetData} />
-      </TabPanel>
-      <TabPanel value={value} index={1}>
-        <WordCloud tweetData={tweetData} />
-      </TabPanel>
-      <TabPanel value={value} index={2}>
-        {t("Sentiment Analisys")}
-      </TabPanel>
+      <Grid container spacing={3}>
+          <TabPanel value={value} index={0}>
+            {/* <GraphsTab tweetData={tweetData} /> */}
+            <TabGraphs tweetData={tweetData} />
+          </TabPanel>
+          <TabPanel value={value} index={1}>
+            <WordCloud tweetData={tweetData} />
+          </TabPanel>
+          <TabPanel value={value} index={2}>
+            {t("Sentiment Analisys")}
+          </TabPanel>
+      </Grid>
+     
     </Box>
   );
 }
