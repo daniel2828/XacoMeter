@@ -9,9 +9,9 @@ import MenuItem from "@mui/material/MenuItem";
 
 import Typography from '@mui/material/Typography';
 import { logout } from "../../api/auth";
-import useAuth from "../../hooks/useAuth";
+import useXaco from "../../hooks/useXaco";
 export default function NavBar() {
-  const { user, isLoading } = useAuth();
+  const { user, isLoading } = useXaco();
   const { t, i18n } = useTranslation();
   const handleChangeLanguage = (e = undefined) => {
     e.preventDefault();

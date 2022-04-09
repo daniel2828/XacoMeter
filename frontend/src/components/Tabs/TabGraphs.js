@@ -3,19 +3,12 @@ import PropTypes from "prop-types";
 import Tabs from "@mui/material/Tabs";
 import Tab from "@mui/material/Tab";
 import Box from "@mui/material/Box";
-import GraphsTab from "./TabElement/GraphsTab";
 import WordCloud from "../Graphs/WordCloud";
-import PieChartComp from "../PieChartComp";
+import PieChartComp from "../Graphs/PieChartComp";
 
-import {
-    LineChart,
-    Line,
-    CartesianGrid,
-    XAxis,
-    YAxis,
-    Tooltip,
-  } from "recharts";
+import LineChartComp from "../Graphs/LineChartComp";
 import { useTranslation } from "react-i18next";
+import BarChartComp from "../Graphs/BarChartComp";
 function TabPanel(props) {
   const { children, value, index, ...other } = props;
 
@@ -55,41 +48,7 @@ export default function TabGraphs({ tweetData }) {
   const [daysData, setDaysData] = useState([]);
   const [languageData, setLanguageData] = useState([]);
   // Handle changes into the hashtag
-  const handleChangeTweetData = async (e = undefined) => {
-    e?.preventDefault();
 
-    // Use reduce
-    var counts = tweetData.reduce((p, c) => {
-      var name = c.tweet.created_at.substring(0, 10);
-      if (!p.hasOwnProperty(name)) {
-        p[name] = 0;
-      }
-      p[name]++;
-      return p;
-    }, {});
-    var countsExtended = Object.keys(counts).map((k) => {
-      return { name: k, uv: counts[k] };
-    });
-    setDaysData(countsExtended);
-    // Get the language counted
-    var languageCounts = tweetData.reduce((p, c) => {
-      var name = c.tweet.lang;
-      if (!p.hasOwnProperty(name)) {
-        p[name] = 0;
-      }
-      p[name]++;
-      return p;
-    }, {});
-    var languageCountsExtended = Object.keys(languageCounts).map((k) => {
-      return { name: k, value: languageCounts[k] };
-    });
-    console.log("language", languageCountsExtended);
-    setLanguageData(languageCountsExtended);
-  };
-  // Effects
-  useEffect(async () => {
-    handleChangeTweetData();
-  }, [tweetData]);
   return (
     <Box sx={{ width: "80%", marginLeft: "10%", marginRight: "10%" }}>
       <Box sx={{ borderBottom: 1, borderColor: "divider" }}>
@@ -104,28 +63,22 @@ export default function TabGraphs({ tweetData }) {
         </Tabs>
       </Box>
       <TabPanel value={value} index={0}>
-        <div className="history-tweets">
+          <div className="tweets">
             <h3> {t("History of tweets")}</h3>
-            <LineChart width={600} height={300} data={daysData}>
-              <Line type="monotone" dataKey="uv" stroke="#8884d8" />
-              <CartesianGrid stroke="#ccc" strokeDasharray="5 5" />
-              <XAxis dataKey="name" />
-              <YAxis />
-              <Tooltip />
-            </LineChart>
+            <LineChartComp tweetData={tweetData}/>
           </div>
       </TabPanel>
       <TabPanel value={value} index={1}>
             <h2>
             {t(
               "Language distribution. Number of different languages detected:"
-            )}{" "}
+            )}
             {languageData?.length}
           </h2>
-          <PieChartComp data={languageData} />
+          <PieChartComp tweetData={tweetData} />
       </TabPanel>
       <TabPanel value={value} index={2}>
-        {t("Sentiment Analisys")}
+        <BarChartComp tweetData={tweetData}/>
       </TabPanel>
     </Box>
   );

@@ -24,5 +24,7 @@
     "Graphs": "Gráficos",
     "Last tweets": "Últimos tweets",
     "Sentiment Analisys" : "Análisis de Sentimientos",
-    "Language distribution. Number of different languages detected:":"Distribución por lenguajes. Número de lenguajes detectados:"
+    "Language distribution. Number of different languages detected:":"Distribución por lenguajes. Número de lenguajes detectados:",
+    "loading tweets": "Cargando tweets",
+    "Language distribution": "Distribución por lenguajes"
 }
