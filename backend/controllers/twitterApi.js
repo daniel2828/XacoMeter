@@ -1,6 +1,9 @@
 
 const Tweets = require("../models/tweets");
 const { appOnlyClient } = require("../config");
+var sentiment = require('multilang-sentiment');
+const Sentiment = require('sentiment');
+const lorca = require('lorca-nlp');
 async function testAPI(req, res) {
   const rwClient = appOnlyClient.readWrite;
 
@@ -69,18 +72,44 @@ async function searchByQuery(req, res) {
         console.log("err", err)
       });
     });
-    return newTweets
+   
   }
 
   const newTweets = await capsuleTweets();
+
   console.log("NT",newTweets);
   let tweets = await Tweets.find({hashtag:hashtag}).sort( { id_tweet: 1 } )
+  
+ 
   //console.log("TEES", tweets)
   if (newTweets.length>0){
     tweets.push(newTweets);
   } 
   res.status(200).send(tweets);
    
+}
+async function getSentimentAnalysis(req,res){
+  const {hashtag} = req.body;
+  const tweets = await Tweets.find({hashtag:hashtag}).sort( { id_tweet: 1 } )
+  let tweetsArray = [];
+  //var sentiment = new Sentiment();
+  var tweetsNew = tweets.map(tweet => {
+    //console.log("tweet", tweet.tweet.text)
+    let sentimentData =   sentiment(tweet.tweet.text, (tweet.tweet.lang !=="und" ? tweet.tweet.lang: "es"));
+    let newTweet = { ...tweet, sentiment: sentimentData }
+    Tweets.findByIdAndUpdate(tweet._id,{sentiment:sentimentData}, (err,tweetUpdated)=>{
+      if (!err){
+        console.log("ACTUALIZADO")
+      }else{
+        console.log("ERROR", err);
+      }
+    
+    })
+    return (newTweet)
+  });
+  
+  res.status(200).send(tweetsNew);
+ 
 }
 // async function getGrouped(req, res) {
 //   const tweets = await Tweets.aggregate( [
@@ -95,5 +124,6 @@ async function searchByQuery(req, res) {
 module.exports = {
   testAPI,
   searchByQuery,
+  getSentimentAnalysis
  // getGrouped
 };

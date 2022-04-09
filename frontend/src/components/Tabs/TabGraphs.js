@@ -59,7 +59,7 @@ export default function TabGraphs({ tweetData }) {
         >
           <Tab label={t("History of tweets")} {...a11yProps(0)} />
           <Tab label={t("Language distribution")} {...a11yProps(1)} />
-          <Tab label={t("Sentiment Analisys")} {...a11yProps(2)} />
+          <Tab label={t("Most Active Accounts")} {...a11yProps(2)} />
         </Tabs>
       </Box>
       <TabPanel value={value} index={0}>
