@@ -55,13 +55,11 @@ export default function LoginForm({ setIsRegister }) {
 
     signIn(body)
       .then((res) => {
-        console.log(res);
         localStorage.setItem("ACCESS_TOKEN", res.data.accessToken);
         localStorage.setItem("REFRESH_TOKEN", res.data.refreshToken);
         window.location.href = "/data";
       })
       .catch((err) => {
-        console.log(err.response);
         setResponseMessage(err.response);
         setAlertOpen(true);
       });

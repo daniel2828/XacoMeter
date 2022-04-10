@@ -53,14 +53,14 @@ const data = [
 ];
 
 export default function BarChartComp({ tweetData }) {
-  console.log("LOS DATOS", tweetData);
+ 
   let dictData = {};
   /**
    * Create the dict of authors
    */
   tweetData?.forEach((tweet) => {
     if (tweet.tweet.author_id in dictData) {
-      console.log("NO existe");
+
       dictData[tweet.tweet.author_id].count++;
     } else {
       dictData[tweet.tweet.author_id] = {
@@ -80,7 +80,6 @@ export default function BarChartComp({ tweetData }) {
         }
        
     }
-  console.log("AL FINAL", dictData);
   return (
     <BarChart
       width={500}

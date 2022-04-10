@@ -8,9 +8,10 @@ import { useTranslation } from "react-i18next";
 import TabGraphs from "./TabGraphs";
 import Grid from "@mui/material/Grid";
 import { useContext } from "react";
-
+import SentimentAnalisys from "../SentimentAnalisys/SentimentAnalisys";
 import useXaco from "../../hooks/useXaco";
 import MobileDrawer from "../Mobile/MobileDrawer";
+import LastTweets from "../LastTweets/LastTweets";
 function TabPanel(props) {
   const { children, value, index, ...other } = props;
 
@@ -40,7 +41,7 @@ function a11yProps(index) {
   };
 }
 
-export default function TabMain({ tweetData }) {
+export default function TabMain({ tweetData, tweetDataForSentiment }) {
   const [value, setValue] = useState(0);
   const { t } = useTranslation();
   const {widthScreen} = useXaco();
@@ -70,10 +71,10 @@ export default function TabMain({ tweetData }) {
               <TabGraphs tweetData={tweetData} />
             </TabPanel>
             <TabPanel value={value} index={1}>
-              <WordCloud tweetData={tweetData} />
+              <LastTweets tweetData={tweetData} />
             </TabPanel>
             <TabPanel value={value} index={2}>
-              {t("Sentiment Analisys")}
+              <SentimentAnalisys dataWithSentiment={tweetDataForSentiment} />
             </TabPanel>
         
        

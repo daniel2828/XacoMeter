@@ -77,7 +77,6 @@ function singIn(req, res) {
       });
     }
   });
-  console.log(params);
 }
 module.exports = {
   singUp,

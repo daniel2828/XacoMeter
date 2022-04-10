@@ -25,7 +25,6 @@
     "@mui/icons-material": "^5.4.1",
     "@mui/material": "^5.4.1",
     "@mui/styled-engine-sc": "^5.4.1",
-  
     "axios": "^0.26.0",
     "bcrypt-nodejs": "0.0.3",
     "concurrently": "^7.0.0",
@@ -35,7 +34,9 @@
     "lorca-nlp": "^1.0.12",
     "moment": "^2.29.1",
     "mongoose": "^6.2.0",
+    "multilang-sentiment": "^2.0.0",
     "nodemon": "^2.0.15",
+    "react-tweet-embed": "^2.0.0",
     "sentiment": "^5.0.2",
     "styled-components": "^5.3.3",
     "twitter-api-v2": "^1.11.0"

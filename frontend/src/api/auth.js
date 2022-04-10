@@ -4,7 +4,6 @@ import jwtDecode from "jwt-decode";
 export function getAccessTokenApi() {
   // GET token from local storage
   const accessToken = localStorage.getItem("ACCESS_TOKEN");
-  console.log("Acc", accessToken)
   if (!accessToken || accessToken === "null") {
     logout();
     return null;

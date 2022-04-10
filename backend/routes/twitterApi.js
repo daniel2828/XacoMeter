@@ -6,5 +6,5 @@ const api = express.Router();
 
 api.post("/test", TwitterController.testAPI);
 api.post("/searchByQuery",[md_auth.ensureAuth], TwitterController.searchByQuery);
-//api.get("/getTweetsByHashtag", TwitterController.getTweetsByHashtag);
+api.post("/getSentiment",[md_auth.ensureAuth], TwitterController.getSentimentAnalysis);
 module.exports = api;

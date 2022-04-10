@@ -1,6 +1,9 @@
 
 const Tweets = require("../models/tweets");
 const { appOnlyClient } = require("../config");
+var sentiment = require('multilang-sentiment');
+const Sentiment = require('sentiment');
+const lorca = require('lorca-nlp');
 async function testAPI(req, res) {
   const rwClient = appOnlyClient.readWrite;
 
@@ -65,22 +68,81 @@ async function searchByQuery(req, res) {
       tweets.hashtag = hashtag;
       tweets.tweet = tweet;
       newTweets.push(tweets);
+      // MAKE SENTIMENT ANALISYS
+      let sentimentData =   sentiment(tweet.text, (tweet.lang !=="und" ? tweet.lang: "es"));
+      tweets.sentiment = sentimentData;
+          
+        
+          
+    
       await tweets.save((err, tweetStored) => {
         console.log("err", err)
       });
     });
-    return newTweets
+   
   }
 
   const newTweets = await capsuleTweets();
+
   console.log("NT",newTweets);
-  let tweets = await Tweets.find({hashtag:hashtag}).sort( { id_tweet: 1 } )
+  let tweets = await Tweets.find({hashtag:hashtag})
+  
+ 
   //console.log("TEES", tweets)
-  if (newTweets.length>0){
+  if (newTweets?.length>0){
     tweets.push(newTweets);
   } 
+  tweets.sort( (a,b)=>{
+    if (a.id_tweet < b.id_tweet) {
+      return 1;
+    }
+    if (a.id_tweet > b.id_tweet) {
+      return -1;
+    }
+    // a must be equal to b
+    return 0;
+  } )
   res.status(200).send(tweets);
    
+}
+async function getSentimentAnalysis(req,res){
+  const {hashtag} = req.body;
+    const tweets = await Tweets.find({hashtag:hashtag}).sort( { id_tweet: 1 } )
+    let tweetsRet =[];
+    tweets.forEach(tweet=>
+    {
+      if (tweet.sentiment==undefined){
+        let sentimentData;
+        try {
+         sentimentData =   sentiment(tweet.tweet.text, (tweet.tweet.lang !=="und" ? tweet.tweet.lang: "es"));
+        
+        } catch (error) {
+          sentimentData =   sentiment(tweet.tweet.text, "en");
+        
+        }
+      Tweets.updateOne(
+          {_id: tweet._id}, 
+          {sentiment: sentimentData },
+          {multi:true}, 
+            function(err, numberAffected){  
+              console.log("Actualiza")  
+            });
+         tweet.sentiment=sentiment;
+        tweetsRet.push(tweet);
+      }else{
+        tweetsRet.push(tweet);
+      }
+        
+      
+    
+      
+    })
+    res.status(200).send(tweetsRet);
+    // let tweetsArray = [];
+
+   
+ 
+ 
 }
 // async function getGrouped(req, res) {
 //   const tweets = await Tweets.aggregate( [
@@ -95,5 +157,6 @@ async function searchByQuery(req, res) {
 module.exports = {
   testAPI,
   searchByQuery,
+  getSentimentAnalysis
  // getGrouped
 };

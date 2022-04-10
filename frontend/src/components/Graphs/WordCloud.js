@@ -2,7 +2,7 @@ import React from 'react'
 import { TagCloud } from 'react-tagcloud'
 
 export default function WordCloud({tweetData}) {
-    console.log("EEE", tweetData);
+   
   return (
     <p></p>
     // <TagCloud

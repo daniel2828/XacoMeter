@@ -10,14 +10,19 @@ import MenuItem from "@mui/material/MenuItem";
 import Typography from '@mui/material/Typography';
 import { logout } from "../../api/auth";
 import useXaco from "../../hooks/useXaco";
+import { useEffect } from "react";
 export default function NavBar() {
   const { user, isLoading } = useXaco();
   const { t, i18n } = useTranslation();
+  console.log("USER," , user)
   const handleChangeLanguage = (e = undefined) => {
     e.preventDefault();
     i18n.changeLanguage(e.target.value);
-  };
-  console.log( "KAB " ,i18n.language)
+  }
+  useEffect(() => {
+
+    console.log("RECIBO EL USER cambiado", user)
+  } , [user])
   const logoutUser= ()=>{
     logout();
     window.location.reload();
