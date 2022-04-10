@@ -5,6 +5,12 @@ export const getTweetsByHashtag = async (hashtag,accessToken)=>{
       "Content-Type": "application/json",
       Authorization : accessToken
    }})
-   console.log(data);
+   return data;
+}
+export const getSentimentAnalysis = async (hashtag,accessToken)=>{
+   const data = await axios.post(`${BASE_PATH}/${API_VERSION}/twitter/getSentiment`,{hashtag},{headers:{
+      "Content-Type": "application/json",
+      Authorization : accessToken
+   }})
    return data;
 }

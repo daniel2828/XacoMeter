@@ -24,6 +24,7 @@ export default function MainPage() {
   const [daysData, setDaysData] = useState([]);
   const [isSearching, setIsSearching] = useState(true)
   const [languageData, setLanguageData] = useState([]);
+  const [tweetDataForSentiment,setTweetDataForSentiment] = useState([]);
   // Handle changes into the hashtag
   const handleChange = async (e) => {
     setIsSearching(true);
@@ -44,6 +45,7 @@ export default function MainPage() {
       return includes;
     });
     setTweetData(tweets);
+    setTweetDataForSentiment(tweets);
     // Use reduce
     var counts = tweets.reduce((p, c) => {
       var name = c.tweet.created_at.substring(0, 10);
@@ -57,7 +59,7 @@ export default function MainPage() {
       return { name: k, uv: counts[k] };
     });
     setDaysData(countsExtended);
-    // Get the language counted
+    // // Get the language counted
     var languageCounts = tweets.reduce((p, c) => {
       var name = c.tweet.lang;
       if (!p.hasOwnProperty(name)) {
@@ -106,7 +108,7 @@ export default function MainPage() {
           {t("Number of tweets registered since")} {daysData[0]?.name}:
         </h2>
         <h2> {tweetData?.length}</h2>
-        <TabMain tweetData={tweetData}></TabMain>
+        <TabMain tweetData={tweetData} tweetDataForSentiment={tweetDataForSentiment}></TabMain>
       </>
     );
   }

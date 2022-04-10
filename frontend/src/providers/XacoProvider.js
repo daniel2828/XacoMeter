@@ -20,37 +20,45 @@ export default function XacoProvider(props) {
 
   useEffect(() => {
     checkUserLogin(setState);
+    handleWindowSizeChange(setState);
+    window.addEventListener('resize', ()=>handleWindowSizeChange(setState));
+    return () => {
+        window.removeEventListener('resize', ()=>handleWindowSizeChange(setState));
+    }
   }, []);
   
  
-  useEffect(() => {
-    handleWindowSizeChange(setState);
-      window.addEventListener('resize', ()=>handleWindowSizeChange(setState));
-      return () => {
-          window.removeEventListener('resize', ()=>handleWindowSizeChange(setState));
-      }
-  }, []);
-  
+
+  useEffect(() => { console.log("CHANGE STATE", state)}, [state])
   
   return <XacoContext.Provider value={state}>{children}</XacoContext.Provider>;
 }
 function handleWindowSizeChange(setState) {
-  setState(() => ({
-    widthScreen:window.innerWidth
+  setState((prevState ) => ({
+   
+      ...prevState,
+      widthScreen:window.innerWidth
+
+   
   }));
   
 }
 function checkUserLogin(setState) {
   const accessToken = getAccessTokenApi();
-
+  console.log("CHECK USER LOGIN", accessToken)
   if (!accessToken) {
     const refreshToken = getRefreshTokenApi();
     // Logout user in case refresh token not found
     if (!refreshToken) {
       logout();
-      setState(() => ({
-        isLoading: false,
-        user: null
+
+      setState((prevState ) => ({
+   
+          ...prevState,
+          isLoading: false,
+          user: null
+ 
+       
       }));
    
     } else {
@@ -58,9 +66,15 @@ function checkUserLogin(setState) {
       refreshAccessTokenApi(refreshToken);
     }
   } else {
-    setState(() => ({
-      isLoading: false,
-      user: jwtDecode(accessToken),
+    console.log("SETEAMOS STATE")
+ 
+    setState((prevState ) => ({
+
+        ...prevState,
+        isLoading: false,
+        user: jwtDecode(accessToken),
+ 
+     
     }));
   }
 }
