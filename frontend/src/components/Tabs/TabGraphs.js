@@ -1,4 +1,4 @@
-import React, {useState, useEffect} from "react";
+import React, { useState, useEffect } from "react";
 import PropTypes from "prop-types";
 import Tabs from "@mui/material/Tabs";
 import Tab from "@mui/material/Tab";
@@ -9,6 +9,8 @@ import PieChartComp from "../Graphs/PieChartComp";
 import LineChartComp from "../Graphs/LineChartComp";
 import { useTranslation } from "react-i18next";
 import BarChartComp from "../Graphs/BarChartComp";
+import "./TabGraphs.scss";
+import { Grid } from "@mui/material";
 function TabPanel(props) {
   const { children, value, index, ...other } = props;
 
@@ -50,7 +52,14 @@ export default function TabGraphs({ tweetData }) {
   // Handle changes into the hashtag
 
   return (
-    <Box sx={{ width: "80%", marginLeft: "10%", marginRight: "10%" }}>
+    <Box
+      sx={{
+        textAlign: "center",
+        width: "80%",
+        marginLeft: "10%",
+        marginRight: "10%",
+      }}
+    >
       <Box sx={{ borderBottom: 1, borderColor: "divider" }}>
         <Tabs
           value={value}
@@ -62,23 +71,26 @@ export default function TabGraphs({ tweetData }) {
           <Tab label={t("Most Active Accounts")} {...a11yProps(2)} />
         </Tabs>
       </Box>
-      <TabPanel value={value} index={0}>
-          <div className="tweets">
-            <h3> {t("History of tweets")}</h3>
-            <LineChartComp tweetData={tweetData}/>
-          </div>
+
+      <TabPanel className="tab-graph" value={value} index={0}>
+        <h3> {t("History of tweets")}</h3>
+        <div className="tab-graph">
+          <LineChartComp tweetData={tweetData} />
+        </div>
       </TabPanel>
       <TabPanel value={value} index={1}>
-            <h2>
-            {t(
-              "Language distribution. Number of different languages detected:"
-            )}
-            {languageData?.length}
-          </h2>
+        <h2>
+          {t("Language distribution. Number of different languages detected:")}
+          {languageData?.length}
+        </h2>
+        <div className="tab-graph">
           <PieChartComp tweetData={tweetData} />
+        </div>
       </TabPanel>
-      <TabPanel value={value} index={2}>
-        <BarChartComp tweetData={tweetData}/>
+      <TabPanel className="tab-graph" value={value} index={2}>
+        <div className="tab-graph">
+          <BarChartComp tweetData={tweetData} />
+        </div>
       </TabPanel>
     </Box>
   );

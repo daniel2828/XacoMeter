@@ -15,6 +15,7 @@ import {
   TwitterOnAirButton,
 } from "react-twitter-embed";
 import SentimentCard from "./SentimentCard";
+import { Grid } from "@mui/material";
 export default function SentimentAnalisys({ dataWithSentiment }) {
   //const [dataWithSentiment, setDataWithSentiment] = useState([]);
   //   useEffect(() => {
@@ -24,27 +25,38 @@ export default function SentimentAnalisys({ dataWithSentiment }) {
   //     });
   //   },[]);
   let dataSortByScore = dataWithSentiment;
+  if (!dataWithSentiment){
+    return (<>Loading...</>)
+  }
+  else{
+    return (
+      <>
+        <div>SentimentAnalisys</div>
+        <Grid container spacing={2}>
+          {dataWithSentiment
+            .sort(function (a, b) {
+              if (a?.sentiment?.score < b?.sentiment?.score) {
+                return 1;
+              }
+              if (a?.sentiment?.score > b?.sentiment?.score) {
+                return -1;
+              }
+              // a must be equal to b
+              return 0;
+            })
+            .slice(0, 10)
+            .map((element) => {
+              return (
+              
+                  <Grid item xs={12} sm={6} md={6} lg={3} xl={3}>
+                    <SentimentCard data={element} />
+                  </Grid>
+               
+              );
+            })}
+        </Grid>
+      </>
+    );
+  }
  
-  return (
-    <>
-      <div>SentimentAnalisys</div>
-      {dataWithSentiment.sort(function (a, b) {
-      if (a?.sentiment?.score < b?.sentiment?.score) {
-        return 1;
-      }
-      if (a?.sentiment?.score > b?.sentiment?.score) {
-        return -1;
-      }
-      // a must be equal to b
-      return 0;
-    }).slice(0, 10).map((element) => {
-        return (
-          <>
-                <SentimentCard  data={element} />
-           
-          </>
-        );
-      })}
-    </>
-  );
 }

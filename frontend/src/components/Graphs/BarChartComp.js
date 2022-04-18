@@ -91,6 +91,7 @@ export default function BarChartComp({ tweetData }) {
         left: 20,
         bottom: 5,
       }}
+      style={{marginLeft:"20%"}}
     >
       <CartesianGrid strokeDasharray="3 3" />
       <XAxis dataKey="name" />

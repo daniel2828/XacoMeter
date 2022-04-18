@@ -29,7 +29,7 @@ export default function XacoProvider(props) {
   
  
 
-  useEffect(() => { console.log("CHANGE STATE", state)}, [state])
+
   
   return <XacoContext.Provider value={state}>{children}</XacoContext.Provider>;
 }

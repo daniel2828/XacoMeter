@@ -22,9 +22,11 @@ export default function PieChartComp({ tweetData }) {
   const onPieEnter = () => {};
   return (
     <PieChart
+     style={{marginLeft:"40%"}}
       overflow={"visible"}
-      width={1200}
+      width={300}
       height={400}
+     
       onMouseEnter={onPieEnter}
     >
       <Pie
