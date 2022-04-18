@@ -1,0 +1,31 @@
+{
+    "welcome": "Test ES",
+    "History of tweets": "Linea temporal de tweets",
+    "Select the hashtag to display data.": "Selecciona el hashtag para mostrar los datos",
+    "Spanish": "Español",
+    "English":"Inglés",
+    
+    
+    "Number of tweets registered since": "Numero de tweets registrados desde",
+    "Xacometer Sign up": "Xacometer Registro",
+    "Sign Up" : "Registro",
+    "Repeat Password": "Repita contraseña",
+    "Password": "Contraseña",
+    "Email Address" : "Direccion email",
+    "Last Name": "Apellidos",
+    "First Name": "Nombre",
+    "Already have an account? Sign in" : "¿Ya tienes cuenta? Haz Login",
+
+    "Xacometer Sign In": "Xacometer Login",
+    "Sign In": "Logear",
+    "Don't have an account? Sign Up" : "¿No tienes cuenta? Registrate",
+
+
+    "Graphs": "Gráficos",
+    "Last tweets": "Últimos tweets",
+    "Sentiment Analisys" : "Análisis de Sentimientos",
+    "Language distribution. Number of different languages detected:":"Distribución por lenguajes. Número de lenguajes detectados:",
+    "loading tweets": "Cargando tweets",
+    "Language distribution": "Distribución por lenguajes",
+    "Most Active Accounts": "Cuentas más activas"
+}
