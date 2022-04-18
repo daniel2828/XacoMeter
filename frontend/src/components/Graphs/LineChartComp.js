@@ -18,12 +18,20 @@ export default function LineChartComp({tweetData}) {
     p[name]++;
     return p;
   }, {});
-  var countsExtended = Object.keys(counts).map((k) => {
+  console.log("COUNTS", counts);
+  // var countsExtended = []
+  // tweetData.forEach(element => {
+  //   var name = element.tweet.created_at.substring(0, 10);
+  //   var obj = {name: name, uv: }
+  //   countsExtended.push(obj);
+  // })
+  let countsExtended = Object.keys(counts).sort().map((k) => {
     return { name: k, uv: counts[k] };
   });
+
   //setDaysData(countsExtended);
   return (
-    <LineChart width={widthScreen>= 768 ? 600:320} height={widthScreen>= 768 ? 300:200} data={countsExtended}>
+    <LineChart style={{marginLeft:"20%"}} width={widthScreen>= 768 ? 600:320} height={widthScreen>= 768 ? 300:200} data={countsExtended}>
       <Line type="monotone" dataKey="uv" stroke="#8884d8" />
       <CartesianGrid stroke="#ccc" strokeDasharray="5 5" />
       <XAxis dataKey="name" />
