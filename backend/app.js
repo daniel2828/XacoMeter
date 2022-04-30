@@ -7,6 +7,7 @@ const port = process.env.PORT || 3977;
 // Routes
 const userRoutes = require("./routes/user");
 const twitterRoutes = require("./routes/twitterApi");
+const hashtagRoutes = require("./routes/hashtags");
 app.use(bodyParser.urlencoded({ extended: false }));
 app.use(bodyParser.json());
 // Configure Header HTTP
@@ -31,6 +32,8 @@ app.use((req, res, next) => {
 // Basic Routes
 app.use(`/api/${API_VERSION}/users`, userRoutes);
 app.use(`/api/${API_VERSION}/twitter`, twitterRoutes);
+app.use(`/api/${API_VERSION}/hashtags`, hashtagRoutes);
+
 app.get('*', (req, res) => {
   res.sendFile(path.join(__dirname + '/../frontend/build/index.html'))
 })

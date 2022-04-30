@@ -11,7 +11,12 @@ import Typography from '@mui/material/Typography';
 import { logout } from "../../api/auth";
 import useXaco from "../../hooks/useXaco";
 import { useEffect } from "react";
+import { Redirect } from "react-router-dom";
+import { useHistory } from "react-router-dom";
+
 export default function NavBar() {
+  const history = useHistory();
+  
   const { user, isLoading } = useXaco();
   const { t, i18n } = useTranslation();
   console.log("USER," , user)
@@ -26,6 +31,10 @@ export default function NavBar() {
   const logoutUser= ()=>{
     logout();
     window.location.reload();
+  }
+  const handleChangePage = ()=>{
+    console.log("HOla")
+   history.push("/admin")
   }
   return (
     <Box sx={{ flexGrow: 1 }}>
@@ -47,6 +56,7 @@ export default function NavBar() {
           </Select>
           {!user && (<Button color="inherit">Login</Button>)}
           {user && (<Button onClick={logoutUser} color="inherit">Logout</Button>)}
+          {user?.role =="admin" && (<Button onClick={handleChangePage} color="inherit">Admin</Button>)}
         </Toolbar>
       </AppBar>
     </Box>

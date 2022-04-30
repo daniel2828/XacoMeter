@@ -1,9 +1,7 @@
 const Tweets = require("../models/tweets");
 const { appOnlyClient } = require("../config");
 var sentiment = require("multilang-sentiment");
-const Sentiment = require("sentiment");
-const lorca = require("lorca-nlp");
-const words = require("../utils/words");
+
 async function testAPI(req, res) {
   const rwClient = appOnlyClient.readWrite;
 
