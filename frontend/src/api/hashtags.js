@@ -26,3 +26,12 @@ export const getHashtags = async (accessToken)=>{
     console.log("ADAWD", data)
     return data;
   }
+  export const createHashtag = async (hashName, accessToken)=>{
+    console.log("ACCSES", accessToken)
+    const data = await axios.post(`${BASE_PATH}/${API_VERSION}/hashtags/createHashtag`,{name:hashName},{headers:{
+       "Content-Type": "application/json",
+       Authorization : accessToken
+    }})
+    console.log("ADAWD", data)
+    return data;
+  }
