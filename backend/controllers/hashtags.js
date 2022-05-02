@@ -14,8 +14,9 @@ async function getHashtags(req, res) {
     res.status(200).send(hashtags);
   }
 async function deleteHashtag(req, res) {
-    const {_id} = req.body;
-    let response = await Hashtags.findByIdAndDelete(_id);
+    const {id} = req.params;
+    console.log("id", id)
+    let response = await Hashtags.findByIdAndDelete(id);
     console.log("REES", response)
     res.status(200).send(response);
 }
