@@ -14,7 +14,7 @@ import CardContent from "@mui/material/CardContent";
 export default function AdminPage() {
   const [hashtags, setHashtags] = useState([]);
   const accessToken = getAccessTokenApi();
-
+  
   const callGetHashtags = async () => {
     let hashtags = await getHashtags(accessToken);
     setHashtags(hashtags.data);
