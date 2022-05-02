@@ -35,10 +35,10 @@ export default function SentimentAnalisys({ dataWithSentiment }) {
         <Grid container spacing={2}>
           {dataWithSentiment
             .sort(function (a, b) {
-              if (a?.sentiment?.score < b?.sentiment?.score) {
+              if (a?.sentiment?.score > b?.sentiment?.score) {
                 return 1;
               }
-              if (a?.sentiment?.score > b?.sentiment?.score) {
+              if (a?.sentiment?.score < b?.sentiment?.score) {
                 return -1;
               }
               // a must be equal to b

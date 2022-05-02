@@ -117,7 +117,7 @@ export default function MainPage() {
           <MenuItem value={"CaminoDeSantiago"}>#CaminoDeSantiago</MenuItem>
         </Select>
         <h2>
-          {t("Number of tweets registered since")} {daysData[0]?.name}:
+          {t("Number of tweets registered since")} {daysData[daysData.length -1 ]?.name}:
         </h2>
         <h2> {tweetData?.length}</h2>
         <TabMain
