@@ -8,10 +8,13 @@ const port = process.env.PORT || 3977;
 const userRoutes = require("./routes/user");
 const twitterRoutes = require("./routes/twitterApi");
 const hashtagRoutes = require("./routes/hashtags");
+const { createCronJobs } = require("./cronjobs/cronjobs");
+createCronJobs();
 app.use(bodyParser.urlencoded({ extended: false }));
 app.use(bodyParser.json());
 // Configure Header HTTP
-const path = require('path')
+const path = require('path');
+
 
 // Serve static files from the React frontend app
 app.use(express.static(path.join(__dirname, '../frontend/build')))

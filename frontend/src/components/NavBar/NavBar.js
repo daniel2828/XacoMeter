@@ -36,6 +36,9 @@ export default function NavBar() {
     console.log("HOla")
    history.push("/admin")
   }
+  const handleChangeMain = ()=>{  
+      history.push("/data")
+  }
   return (
     <Box sx={{ flexGrow: 1 }}>
       <AppBar position="static">
@@ -56,6 +59,7 @@ export default function NavBar() {
           </Select>
           {!user && (<Button color="inherit">Login</Button>)}
           {user && (<Button onClick={logoutUser} color="inherit">Logout</Button>)}
+          <Button onClick={handleChangeMain} color="inherit">Tweets</Button>
           {user?.role =="admin" && (<Button onClick={handleChangePage} color="inherit">Admin</Button>)}
         </Toolbar>
       </AppBar>
