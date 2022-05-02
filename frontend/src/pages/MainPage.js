@@ -11,6 +11,7 @@ import { useTranslation } from "react-i18next";
 import CircularProgress from "@mui/material/CircularProgress";
 
 import "./MainPage.scss";
+import { getHashtags } from "../api/hashtags";
 /**
  * Main page where the data of tweets is displayed
  * @returns MainPage component
@@ -24,11 +25,15 @@ export default function MainPage() {
   const [isSearching, setIsSearching] = useState(true);
   const [languageData, setLanguageData] = useState([]);
   const [tweetDataForSentiment, setTweetDataForSentiment] = useState([]);
+  const [hashtags, setHashtags] = useState([])
   // Handle changes into the hashtag
   const handleChange = async (e) => {
     setIsSearching(true);
     e?.preventDefault();
     const accessToken = getAccessTokenApi();
+    const hashtagsRes = await getHashtags(accessToken);
+    console.log("HashtagsRes", hashtagsRes);
+    setHashtags(hashtagsRes.data);
     let tweetsPrev = await getTweetsByHashtag(
       e?.target?.value ? e?.target?.value : "BuenCamino",
       accessToken
@@ -113,8 +118,14 @@ export default function MainPage() {
           label="Hashtag"
           onChange={handleChange}
         >
-          <MenuItem value={"BuenCamino"}>#BuenCamino</MenuItem>
-          <MenuItem value={"CaminoDeSantiago"}>#CaminoDeSantiago</MenuItem>
+          {hashtags?.map((hashtag) => {
+            return (
+              <MenuItem key={hashtag?.name} value={hashtag?.name}>
+                #{hashtag?.name}
+              </MenuItem>
+            );
+          })}
+          
         </Select>
         <h2>
           {t("Number of tweets registered since")} {daysData[daysData.length -1 ]?.name}:
