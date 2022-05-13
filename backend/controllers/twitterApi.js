@@ -1,9 +1,7 @@
 const Tweets = require("../models/tweets");
 const { appOnlyClient } = require("../config");
 var sentiment = require("multilang-sentiment");
-const Sentiment = require("sentiment");
-const lorca = require("lorca-nlp");
-const words = require("../utils/words");
+
 async function testAPI(req, res) {
   const rwClient = appOnlyClient.readWrite;
 
@@ -34,11 +32,16 @@ async function searchByQuery(req, res) {
     .sort("-id_tweet")
     .exec();
   //console.log("LAST", lastTweet)
-  console.log("TEST");
-  const created = new Date(lastTweet.tweet.created_at);
-  const dateToday = new Date();
-  const lessThanSevenDays =
-    created < dateToday.setDate(dateToday.getDate() - 7);
+
+  let lessThanSevenDays = false;
+  if (lastTweet?.length > 0) {
+    console.log("TEST");
+    const created = new Date(lastTweet?.tweet?.created_at);
+    const dateToday = new Date();
+    lessThanSevenDays = created < dateToday.setDate(dateToday.getDate() - 7);
+  } else {
+    console.log("NO TWEETS");
+  }
 
   const buenCaminoSearch = await appOnlyClient.v2.search(`#${hashtag}`, {
     ...(lastTweet?.id_tweet && lessThanSevenDays == false
@@ -111,7 +114,6 @@ async function searchByQuery(req, res) {
   //   return ys;
   // });
   tweets.sort((a, b) => {
-   
     if (a.id_tweet < b.id_tweet) {
       return 1;
     }

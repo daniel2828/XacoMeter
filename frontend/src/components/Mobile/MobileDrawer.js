@@ -24,6 +24,16 @@ import Button from "@mui/material/Button";
 import Menu from "@mui/material/Menu";
 import MenuItem from "@mui/material/MenuItem";
 import LineChartComp from "../Graphs/LineChartComp";
+import BarChartComp from "../Graphs/BarChartComp";
+import PieChartComp from "../Graphs/PieChartComp";
+import AlignHorizontalLeftIcon from '@mui/icons-material/AlignHorizontalLeft';
+import LastTweets from "../LastTweets/LastTweets";
+import SentimentAnalisys from "../SentimentAnalisys/SentimentAnalisys";
+import SentimentVerySatisfiedIcon from '@mui/icons-material/SentimentVerySatisfied';
+import LogoutIcon from '@mui/icons-material/Logout';
+import { logoutUser } from "../../utils/utils";
+import { useHistory } from "react-router-dom";
+import AdminPanelSettingsIcon from '@mui/icons-material/AdminPanelSettings';
 const drawerWidth = 240;
 
 const Main = styled("main", { shouldForwardProp: (prop) => prop !== "open" })(
@@ -71,7 +81,12 @@ const DrawerHeader = styled("div")(({ theme }) => ({
   justifyContent: "flex-end",
 }));
 
-export default function MobileDrawer({ tweetData }) {
+export default function MobileDrawer({ tweetData, tweetDataForSentiment }) {
+  const history = useHistory();
+  const handleChangeAdmin = ()=>{
+    console.log("HOla")
+    history.push("/admin")
+  }
   const theme = useTheme();
   const [open, setOpen] = useState(false);
   const [component, setComponent] = useState("");
@@ -84,10 +99,15 @@ export default function MobileDrawer({ tweetData }) {
   };
   const [anchorEl, setAnchorEl] = useState(null);
   const openMenu = Boolean(anchorEl);
+  // Menu last tweets
+
+
+
   const handleClick = (event) => {
-    
+    console.log("EVENT", event.currentTarget); 
     setAnchorEl(event.currentTarget);
   };
+ 
   const handleClose = (component) => {
       if(component){
         setComponent(component);
@@ -96,6 +116,7 @@ export default function MobileDrawer({ tweetData }) {
      setAnchorEl(null);
      setOpen(false);
   };
+
   return (
     <Box sx={{ display: "flex" }}>
       <CssBaseline />
@@ -111,7 +132,7 @@ export default function MobileDrawer({ tweetData }) {
             <MenuIcon />
           </IconButton>
           <Typography variant="h6" noWrap component="div">
-            Persistent drawer
+            Xacometer
           </Typography>
         </Toolbar>
       </AppBar>
@@ -152,7 +173,38 @@ export default function MobileDrawer({ tweetData }) {
               <SignalCellularAltIcon />
             </ListItemIcon>
             <ListItemText primary={t("Graphs")} />
+           
           </ListItem>
+          <ListItem
+           
+           aria-controls={open ? 'basic-menu' : undefined}
+           aria-haspopup="true"
+           aria-expanded={open ? 'true' : undefined}
+           onClick={()=>handleClose("LastTweets")}
+           button
+           key={"LastTweets"}
+         >
+           <ListItemIcon>
+             <AlignHorizontalLeftIcon />
+           </ListItemIcon>
+           <ListItemText primary={t("Last tweets")} />
+          
+         </ListItem>
+         <ListItem
+           
+           aria-controls={open ? 'basic-menu' : undefined}
+           aria-haspopup="true"
+           aria-expanded={open ? 'true' : undefined}
+           onClick={()=>handleClose("SentimentAnalisys")}
+           button
+           key={"SentimentAnalisys"}
+         >
+           <ListItemIcon>
+             <SentimentVerySatisfiedIcon />
+           </ListItemIcon>
+           <ListItemText primary={t("Sentiment analisys")} />
+          
+         </ListItem>
           {/* {['Inbox', 'Starred', 'Send email', 'Drafts'].map((text, index) => (
             <ListItem button key={text}>
               <ListItemIcon>
@@ -163,16 +215,19 @@ export default function MobileDrawer({ tweetData }) {
           ))} */}
         </List>
         <Divider />
-        <List>
-          {["All mail", "Trash", "Spam"].map((text, index) => (
-            <ListItem button key={text}>
+        <ListItem button key={"Admin"}  onClick={handleChangeAdmin}>
               <ListItemIcon>
-                {index % 2 === 0 ? <InboxIcon /> : <MailIcon />}
+                <AdminPanelSettingsIcon/>
               </ListItemIcon>
-              <ListItemText primary={text} />
-            </ListItem>
-          ))}
-        </List>
+              <ListItemText primary={"Admin"} />
+         </ListItem>
+        <ListItem button key={"Logout"}  onClick={logoutUser}>
+              <ListItemIcon>
+                <LogoutIcon/>
+              </ListItemIcon>
+              <ListItemText primary={"Logout"} />
+         </ListItem>
+      
       </Drawer>
       <Main open={open}>
         <DrawerHeader />
@@ -186,10 +241,16 @@ export default function MobileDrawer({ tweetData }) {
           }}
         >
           <MenuItem onClick={()=>handleClose("Timeline")}>{t("History of tweets")}</MenuItem>
-          <MenuItem onClick={handleClose}>My account</MenuItem>
-          <MenuItem onClick={handleClose}>Logout</MenuItem>
+          <MenuItem onClick={()=>handleClose("Language")}>{t("Language distribution")}</MenuItem>
+          
+          <MenuItem onClick={()=>handleClose("Accounts")}>{t("Most active accounts")}</MenuItem>
         </Menu>
+        
         {component === "Timeline" && <LineChartComp tweetData={tweetData} />}
+        {component === "Language" && <PieChartComp tweetData={tweetData} />}
+        {component === "Accounts" && <BarChartComp tweetData={tweetData} />}
+        {component === "LastTweets" && <LastTweets tweetData={tweetData}/>}
+        {component === "SentimentAnalisys" && <SentimentAnalisys tweetDataForSentiment={tweetDataForSentiment}/>}
       </Main>
     </Box>
   );

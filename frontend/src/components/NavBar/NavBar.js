@@ -8,10 +8,16 @@ import { useTranslation } from "react-i18next";
 import MenuItem from "@mui/material/MenuItem";
 
 import Typography from '@mui/material/Typography';
-import { logout } from "../../api/auth";
+
 import useXaco from "../../hooks/useXaco";
 import { useEffect } from "react";
+import { Redirect } from "react-router-dom";
+import { useHistory } from "react-router-dom";
+import { logoutUser } from "../../utils/utils";
+
 export default function NavBar() {
+  const history = useHistory();
+  
   const { user, isLoading } = useXaco();
   const { t, i18n } = useTranslation();
   console.log("USER," , user)
@@ -23,9 +29,13 @@ export default function NavBar() {
 
     console.log("RECIBO EL USER cambiado", user)
   } , [user])
-  const logoutUser= ()=>{
-    logout();
-    window.location.reload();
+
+  const handleChangePage = ()=>{
+    console.log("HOla")
+    history.push("/admin")
+  }
+  const handleChangeMain = ()=>{  
+      history.push("/data")
   }
   return (
     <Box sx={{ flexGrow: 1 }}>
@@ -47,6 +57,8 @@ export default function NavBar() {
           </Select>
           {!user && (<Button color="inherit">Login</Button>)}
           {user && (<Button onClick={logoutUser} color="inherit">Logout</Button>)}
+          <Button onClick={handleChangeMain} color="inherit">Tweets</Button>
+          {user?.role =="admin" && (<Button onClick={handleChangePage} color="inherit">Admin</Button>)}
         </Toolbar>
       </AppBar>
     </Box>
