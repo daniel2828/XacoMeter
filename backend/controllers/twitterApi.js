@@ -81,15 +81,20 @@ async function searchByQuery(req, res) {
       tweets.tweet = tweet;
       newTweets.push(tweets);
       // MAKE SENTIMENT ANALISYS
-      let sentimentData = sentiment(
-        tweet.text,
-        tweet.lang !== "und" ? tweet.lang : "es"
-      );
-      tweets.sentiment = sentimentData;
-
-      await tweets.save((err, tweetStored) => {
-        console.log("err", err);
-      });
+      try{
+        let sentimentData = sentiment(
+          tweet.text,
+          tweet.lang !== "und" ? tweet.lang : "es"
+        );
+        tweets.sentiment = sentimentData;
+  
+        await tweets.save((err, tweetStored) => {
+          console.log("err", err);
+        });
+      }catch(error){
+        console.log("ERROR EL Lenguaje no es válido para análisis");
+      }
+      
     });
     return newTweets;
   };
@@ -158,6 +163,49 @@ async function getSentimentAnalysis(req, res) {
   res.status(200).send(tweetsRet);
   // let tweetsArray = [];
 }
+async function modifyRecordsArray(req, res) {
+  const { hashtag } = req.body;
+  const tweets = await Tweets.find({ hashtag: hashtag }).sort({ id_tweet: 1 });
+  let tweetsRet = [];
+  tweets.forEach((tweet) => {
+    console.log("tweets")
+    if (tweet.sentiment != undefined) {
+      let sentimentWords = tweet.sentiment.words;
+      sentimentWords.map((word) => {
+        let newWord ={}
+        newWord.value = word 
+    
+        
+        try {
+          newWord.score= sentiment(
+            word,
+            tweet.tweet.lang !== "und" ? tweet.tweet.lang : "es"
+          );
+        
+        } catch (error) {
+          newWord.score = sentiment(word, "en");
+    
+        }
+       
+        return newWord;
+      })
+    
+      // Tweets.updateOne(
+      //   { _id: tweet._id },
+      //   { "sentiment.words": sentimentWords },
+      //   { multi: true },
+      //   function (err, numberAffected) {
+      //     console.log("Actualiza");
+      //   }
+      // );
+      console.log("SENTIMENT",tweet._id, sentimentWords);
+      //tweet.sentiment = sentiment;
+      //tweetsRet.push(tweet);
+    } 
+  });
+  res.status(200).send("OK");
+  // let tweetsArray = [];
+}
 // async function getGrouped(req, res) {
 //   const tweets = await Tweets.aggregate( [
 //     {
@@ -172,5 +220,6 @@ module.exports = {
   testAPI,
   searchByQuery,
   getSentimentAnalysis,
+  modifyRecordsArray
   // getGrouped
 };

@@ -27,6 +27,7 @@ const bull = (
 );
 
 export default function SentimentCard({ data }) {
+  console.log("DATOS CARDS", data)
   return (
     <Card >
       <CardContent>
@@ -35,7 +36,7 @@ export default function SentimentCard({ data }) {
         <p>Sentiment score {data?.sentiment?.score}</p>
       </CardContent>
       <CardActions>
-        <Button size="small">Learn More</Button>
+          
       </CardActions>
     </Card>
   );
