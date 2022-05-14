@@ -146,6 +146,7 @@ async function getSentimentAnalysis(req, res) {
       } catch (error) {
         sentimentData = sentiment(tweet.tweet.text, "en");
       }
+      
       Tweets.updateOne(
         { _id: tweet._id },
         { sentiment: sentimentData },
@@ -171,9 +172,11 @@ async function modifyRecordsArray(req, res) {
     console.log("tweets")
     if (tweet.sentiment != undefined) {
       let sentimentWords = tweet.sentiment.words;
-      sentimentWords.map((word) => {
+      let newArrayWords = [];
+      sentimentWords?.forEach((word) => {
+        console.log("WORD FALLA" , word)
         let newWord ={}
-        newWord.value = word 
+        newWord.value = word;
     
         
         try {
@@ -187,18 +190,23 @@ async function modifyRecordsArray(req, res) {
     
         }
        
-        return newWord;
+        newArrayWords.push(newWord);
       })
     
-      // Tweets.updateOne(
-      //   { _id: tweet._id },
-      //   { "sentiment.words": sentimentWords },
-      //   { multi: true },
-      //   function (err, numberAffected) {
-      //     console.log("Actualiza");
-      //   }
-      // );
-      console.log("SENTIMENT",tweet._id, sentimentWords);
+      Tweets.updateOne(
+        { _id: tweet._id },
+        { "sentiment.words": newArrayWords },
+        { multi: true },
+        function (err, numberAffected) {
+          if (err) {
+            console.log("ERROR", err);
+          }else{
+
+            console.log("Actualiza", numberAffected);
+          }
+        }
+      );
+      console.log("SENTIMENT",tweet._id, newArrayWords);
       //tweet.sentiment = sentiment;
       //tweetsRet.push(tweet);
     } 
