@@ -17,8 +17,9 @@ var sentiment = require("multilang-sentiment");
       .exec();
     console.log("LAST", lastTweet)  
     console.log("TEST");
-    const created = lastTweet?.tweet?.created_at > 0 ? new Date(lastTweet.tweet.created_at) :0;
-    const dateToday = new Date();
+     const created = lastTweet?.tweet?.created_at ? new Date(lastTweet.tweet.created_at) : new Date().getDate() - 7;
+    console.log("CREATED", created)
+     const dateToday = new Date();
     const lessThanSevenDays =
       created < dateToday.setDate(dateToday.getDate() - 7);
   
@@ -78,17 +79,17 @@ var sentiment = require("multilang-sentiment");
   }
 //every day cronjobs
 async function createCronJobs() {
-    Hashtags.find({}).then((hashtags) => { 
-       
-        hashtags.forEach(async (hashtag) => {
-            console.log(hashtag);
-           await processHashtags(hashtag.name);
-        });
-     });
+  
   cron.schedule("0 0 0 * * *", () => {
     
      
-  
+    Hashtags.find({}).then((hashtags) => { 
+        console.log("ASDAWD")
+        hashtags.forEach(async (hashtag) => {
+            console.log(hashtag);
+            await processHashtags(hashtag.name);
+        });
+     });
   
   });
 

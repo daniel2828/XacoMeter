@@ -8,33 +8,30 @@ import { useTranslation } from "react-i18next";
 import MenuItem from "@mui/material/MenuItem";
 
 import Typography from '@mui/material/Typography';
-import { logout } from "../../api/auth";
+
 import useXaco from "../../hooks/useXaco";
 import { useEffect } from "react";
 import { Redirect } from "react-router-dom";
 import { useHistory } from "react-router-dom";
+import { logoutUser } from "../../utils/utils";
 
 export default function NavBar() {
   const history = useHistory();
   
   const { user, isLoading } = useXaco();
   const { t, i18n } = useTranslation();
-  console.log("USER," , user)
+
   const handleChangeLanguage = (e = undefined) => {
     e.preventDefault();
     i18n.changeLanguage(e.target.value);
   }
   useEffect(() => {
 
-    console.log("RECIBO EL USER cambiado", user)
   } , [user])
-  const logoutUser= ()=>{
-    logout();
-    window.location.reload();
-  }
+
   const handleChangePage = ()=>{
-    console.log("HOla")
-   history.push("/admin")
+
+    history.push("/admin")
   }
   const handleChangeMain = ()=>{  
       history.push("/data")

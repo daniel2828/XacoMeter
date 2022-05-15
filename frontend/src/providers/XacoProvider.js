@@ -45,7 +45,6 @@ function handleWindowSizeChange(setState) {
 }
 function checkUserLogin(setState) {
   const accessToken = getAccessTokenApi();
-  console.log("CHECK USER LOGIN", accessToken)
   if (!accessToken) {
     const refreshToken = getRefreshTokenApi();
     // Logout user in case refresh token not found
@@ -66,7 +65,7 @@ function checkUserLogin(setState) {
       refreshAccessTokenApi(refreshToken);
     }
   } else {
-    console.log("SETEAMOS STATE")
+
  
     setState((prevState ) => ({
 

@@ -14,7 +14,7 @@ import {
 } from "react-twitter-embed";
 
 export default function LastTweets({ tweetData }) {
-  console.log("OPENING", tweetData);
+
   const [tweetsEmbed, setTweetsEmbed] = useState([]);
   const [load, setLoad] = useState(false);
 

@@ -5,6 +5,8 @@ import CardActions from '@mui/material/CardActions';
 import CardContent from '@mui/material/CardContent';
 import Button from '@mui/material/Button';
 import Typography from '@mui/material/Typography';
+import CircularProgress from '@mui/material/CircularProgress';
+import { useTranslation } from "react-i18next";
 import {
     TwitterTimelineEmbed,
     TwitterShareButton,
@@ -17,6 +19,8 @@ import {
     TwitterVideoEmbed,
     TwitterOnAirButton,
   } from "react-twitter-embed";
+  import { useState } from 'react';
+import SentimentModal from './SentimentModal';
 const bull = (
   <Box
     component="span"
@@ -27,15 +31,40 @@ const bull = (
 );
 
 export default function SentimentCard({ data }) {
+  const [loadingTweet, setLoadingTweet] = useState(true)
+ const {t} = useTranslation();
+  const newWords = data?.sentiment?.words?.map((word, index)=> {
+   
+       return (<p>{t("Word")}  :  {word?.value}  , {t("Score")}  {word?.score?.score}</p>)
+
+  })
   return (
     <Card >
       <CardContent>
-       
-        <TwitterTweetEmbed  options={{ size:"80%", width:"80%"}}  tweetId={data?.id_tweet} />
-        <p>Sentiment score {data?.sentiment?.score}</p>
+      <TwitterTweetEmbed onLoad={()=>setLoadingTweet(false)}  options={{ size:"80%", width:"80%"}}  tweetId={data?.id_tweet} />
+        
+        {loadingTweet && (
+          <>
+          
+          <CircularProgress />
+          <p>{t("Loading tweet")}</p>
+          </>
+        )}
+        
+        {
+        !loadingTweet &&(
+          <>
+           <p> {t("Total Score")}: {data?.sentiment?.score}</p>
+           <SentimentModal newWords={newWords}/>
+          </>
+         
+          
+        )
+       }
+
       </CardContent>
       <CardActions>
-        <Button size="small">Learn More</Button>
+          
       </CardActions>
     </Card>
   );

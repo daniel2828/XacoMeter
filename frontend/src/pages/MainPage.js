@@ -32,7 +32,7 @@ export default function MainPage() {
     e?.preventDefault();
     const accessToken = getAccessTokenApi();
     const hashtagsRes = await getHashtags(accessToken);
-    console.log("HashtagsRes", hashtagsRes);
+
     setHashtags(hashtagsRes.data);
     let tweetsPrev = await getTweetsByHashtag(
       e?.target?.value ? e?.target?.value : "BuenCamino",
@@ -49,7 +49,6 @@ export default function MainPage() {
       return ys;
     });
 
-    console.log("LOS PREVIOS", tweetsPrev);
     setTweetData(tweetsPrev);
     setTweetDataForSentiment(tweetsPrev);
     // Use reduce
