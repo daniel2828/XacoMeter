@@ -29,5 +29,8 @@
     "Language distribution": "Distribución por lenguajes",
     "Most Active Accounts": "Cuentas más activas",
     "Positive tweets": "Tweets positivos",
-    "Negative tweets": "Tweets negativos"
+    "Negative tweets": "Tweets negativos",
+    "Loading tweet" : "Cargando tweet",
+    "Word" : "Palabra",
+    "Score": "Puntuación"
 }
