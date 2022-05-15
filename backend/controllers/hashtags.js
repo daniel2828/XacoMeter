@@ -9,15 +9,15 @@ async function createHashtag(req, res) {
   res.status(200).send(response);
 }
 async function getHashtags(req, res) {
-    console.log("HOLA")
+  
     let hashtags = await Hashtags.find();
     res.status(200).send(hashtags);
   }
 async function deleteHashtag(req, res) {
     const {id} = req.params;
-    console.log("id", id)
+   
     let response = await Hashtags.findByIdAndDelete(id);
-    console.log("REES", response)
+
     res.status(200).send(response);
 }
 async function updateHashtag(req, res) {

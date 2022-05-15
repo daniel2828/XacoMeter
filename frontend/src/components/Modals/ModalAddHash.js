@@ -30,7 +30,7 @@ export default function ModalAddHash({callGetHashtags}) {
       const accessToken = getAccessTokenApi();
       const handleCreate = async()=> {
         const data = await createHashtag(hashName, accessToken );
-        console.log(data);
+    
         handleClose();
         callGetHashtags();
       }

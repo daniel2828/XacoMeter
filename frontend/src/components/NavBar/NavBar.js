@@ -20,18 +20,17 @@ export default function NavBar() {
   
   const { user, isLoading } = useXaco();
   const { t, i18n } = useTranslation();
-  console.log("USER," , user)
+
   const handleChangeLanguage = (e = undefined) => {
     e.preventDefault();
     i18n.changeLanguage(e.target.value);
   }
   useEffect(() => {
 
-    console.log("RECIBO EL USER cambiado", user)
   } , [user])
 
   const handleChangePage = ()=>{
-    console.log("HOla")
+
     history.push("/admin")
   }
   const handleChangeMain = ()=>{  

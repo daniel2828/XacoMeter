@@ -84,7 +84,7 @@ const DrawerHeader = styled("div")(({ theme }) => ({
 export default function MobileDrawer({ tweetData, tweetDataForSentiment }) {
   const history = useHistory();
   const handleChangeAdmin = ()=>{
-    console.log("HOla")
+   
     history.push("/admin")
   }
   const theme = useTheme();
@@ -103,8 +103,7 @@ export default function MobileDrawer({ tweetData, tweetDataForSentiment }) {
 
 
 
-  const handleClick = (event) => {
-    console.log("EVENT", event.currentTarget); 
+  const handleClick = (event) => { 
     setAnchorEl(event.currentTarget);
   };
  
