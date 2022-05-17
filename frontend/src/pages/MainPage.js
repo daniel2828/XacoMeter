@@ -35,7 +35,7 @@ export default function MainPage() {
 
     setHashtags(hashtagsRes.data);
     let tweetsPrev = await getTweetsByHashtag(
-      e?.target?.value ? e?.target?.value : "BuenCamino",
+      e?.target?.value ? e?.target?.value : "#BuenCamino",
       accessToken
     );
     tweetsPrev = tweetsPrev?.data?.filter((element) => {
@@ -78,7 +78,7 @@ export default function MainPage() {
     });
 
     setLanguageData(languageCountsExtended);
-    setHashtag(e?.target?.value ? e?.target?.value : "BuenCamino");
+    setHashtag(e?.target?.value ? e?.target?.value : "#BuenCamino");
     setIsSearching(false);
   };
   // Effects
@@ -118,9 +118,11 @@ export default function MainPage() {
           onChange={handleChange}
         >
           {hashtags?.map((hashtag) => {
+            const value = (hashtag.isKeyword ? "": "#") + hashtag.name; 
+            
             return (
-              <MenuItem key={hashtag?.name} value={hashtag?.name}>
-                #{hashtag?.name}
+              <MenuItem key={hashtag?.name} value={value}  >
+                {value}
               </MenuItem>
             );
           })}

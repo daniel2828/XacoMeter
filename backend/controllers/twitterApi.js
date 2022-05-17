@@ -26,7 +26,11 @@ async function testAPI(req, res) {
 async function searchByQuery(req, res) {
   // Query the last tweet
   let lastTweetId = "";
-  const { hashtag } = req.body;
+  let { hashtag } = req.body;
+  if (hashtag.substring(0,1) == "#") {
+    hashtag = hashtag.substring(1, hashtag.length);
+    console.log("HASAW", hashtag);  
+  }
   //console.log(hashtag)
   const lastTweet = await Tweets.findOne({ hashtag: hashtag })
     .sort("-id_tweet")
@@ -43,7 +47,7 @@ async function searchByQuery(req, res) {
     console.log("NO TWEETS");
   }
 
-  const buenCaminoSearch = await appOnlyClient.v2.search(`#${hashtag}`, {
+  const buenCaminoSearch = await appOnlyClient.v2.search(hashtag, {
     ...(lastTweet?.id_tweet && lessThanSevenDays == false
       ? { since_id: lastTweet.id_tweet }
       : {}),

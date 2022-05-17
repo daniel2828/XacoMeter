@@ -7,6 +7,7 @@ let TweetsSchema = Schema({
   hashtag: String,
   tweet: Object,
   sentiment: Object,
+  keyword: String
 });
 TweetsSchema.index({id_tweet:1, hashtag:1}, {unique: true})
 module.exports = mongoose.model("Tweets", TweetsSchema);
