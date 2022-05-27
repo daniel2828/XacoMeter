@@ -64,7 +64,7 @@ export default function SentimentAnalisys({ dataWithSentiment }) {
     };
   }
 
-  let dataSortByScore = dataWithSentiment;
+
   if (!dataWithSentiment) {
     return <>Loading...</>;
   } else {
@@ -83,7 +83,7 @@ export default function SentimentAnalisys({ dataWithSentiment }) {
           </Box>
 
           <TabPanel value={value} index={0}>
-            {/* <GraphsTab tweetData={tweetData} /> */}
+           
            
             <Grid container spacing={2}>
               {dataWithSentiment
@@ -100,7 +100,7 @@ export default function SentimentAnalisys({ dataWithSentiment }) {
                 .slice(0, 10)
                 .map((element) => {
                   return (
-                    <Grid item xs={12} sm={6} md={6} lg={3} xl={3}>
+                    <Grid key ={element.id_tweet} item xs={12} sm={6} md={6} lg={3} xl={3}>
                       <SentimentCard data={element} />
                     </Grid>
                   );
@@ -123,7 +123,7 @@ export default function SentimentAnalisys({ dataWithSentiment }) {
                 .slice(0, 10)
                 .map((element) => {
                   return (
-                    <Grid item xs={12} sm={6} md={6} lg={3} xl={3}>
+                    <Grid key ={element.id_tweet} item xs={12} sm={6} md={6} lg={3} xl={3}>
                       <SentimentCard data={element} />
                     </Grid>
                   );

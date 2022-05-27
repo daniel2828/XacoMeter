@@ -6,7 +6,11 @@ import {
     XAxis,
     YAxis,
     Tooltip,
+    BarChart,
+    Bar,
+    Legend
   } from "recharts";
+
 import useXaco from "../../hooks/useXaco";
 import moment from "moment";
 import { useTranslation } from "react-i18next";
@@ -91,9 +95,29 @@ export default function LineChartComp({tweetData}) {
     </p>
     <LineChartResumed tweetData={dailyLine}/>
     <p>
-    {t("Montly activty")}
+      {t("Montly activty")}
     </p>
-    <LineChartResumed tweetData={monthlyLine}/>
+    <BarChart
+      width={500}
+      height={300}
+      data={monthlyLine}
+      margin={{
+        top: 20,
+        right: 30,
+        left: 20,
+        bottom: 5,
+      }}
+      style={{marginLeft:"20%"}}
+    >
+      <CartesianGrid strokeDasharray="3 3" />
+      <XAxis dataKey="name" />
+      <YAxis />
+      <Tooltip />
+      <Legend />
+      
+      <Bar dataKey="uv" fill="#ffc658" />
+    </BarChart>
+    {/* <LineChartResumed tweetData={monthlyLine}/> */}
     <p>
     {t("Activity by day of the week")}
     </p>

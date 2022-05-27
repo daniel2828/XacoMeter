@@ -118,13 +118,16 @@ export default function MainPage() {
           onChange={handleChange}
         >
           {hashtags?.map((hashtag) => {
-            const value = (hashtag.isKeyword ? "": "#") + hashtag.name; 
+            if (hashtag.active){
+              const value = (hashtag.isKeyword ? "": "#") + hashtag.name; 
             
-            return (
-              <MenuItem key={hashtag?.name} value={value}  >
-                {value}
-              </MenuItem>
-            );
+              return (
+                <MenuItem key={hashtag?.name} value={value}  >
+                  {value}
+                </MenuItem>
+              );
+            }
+           
           })}
           
         </Select>
