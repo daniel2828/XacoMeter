@@ -1,13 +1,9 @@
-import React, { useState, useEffect } from "react";
+import React from "react";
 import PropTypes from "prop-types";
 import Tabs from "@mui/material/Tabs";
 import Tab from "@mui/material/Tab";
 import Box from "@mui/material/Box";
-
 import { useTranslation } from "react-i18next";
-
-
-import { Grid } from "@mui/material";
 import Hashtags from "./Hashtags";
 function TabPanel(props) {
   const { children, value, index, ...other } = props;
@@ -37,16 +33,20 @@ function a11yProps(index) {
     "aria-controls": `tabgraphs-tabpanel-${index}`,
   };
 }
-
+/**
+ * Tab admin page
+ * @returns Tab for admin
+ */
 export default function TabAdmin() {
   const [value, setValue] = React.useState(0);
   const { t } = useTranslation();
-  const handleChange = (event, newValue) => {
+  /**
+   * Change the value of the tab
+   * @param {Integer} newValue 
+   */
+  const handleChange = ( newValue) => {
     setValue(newValue);
   };
-
-  // Handle changes into the hashtag
-
   return (
     <Box
       sx={{
@@ -75,8 +75,7 @@ export default function TabAdmin() {
       <Hashtags isKeyword={true}/>
       </TabPanel>
       <TabPanel className="tab-graph" value={value} index={2}>
-    
-      </TabPanel>
+    </TabPanel>
     </Box>
   );
 }

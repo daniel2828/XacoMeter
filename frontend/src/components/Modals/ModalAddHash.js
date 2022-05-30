@@ -2,7 +2,6 @@
 import  React, {useState} from 'react';
 import Box from '@mui/material/Box';
 import Button from '@mui/material/Button';
-import Typography from '@mui/material/Typography';
 import Modal from '@mui/material/Modal';
 import { Input } from '@mui/material';
 import { Grid } from '@mui/material';
@@ -40,7 +39,7 @@ export default function ModalAddHash({callGetHashtags,isKeyword}) {
       }
       return (
         <div >
-          <Button onClick={handleOpen} variant="contained">{t("Add")}</Button>
+          <Button name="Add" onClick={handleOpen} variant="contained">{t("Add")}</Button>
           <Modal
             open={open}
             onClose={handleClose}
@@ -50,8 +49,8 @@ export default function ModalAddHash({callGetHashtags,isKeyword}) {
               <>
               <Box sx={style}>
                   <Grid container spacing={3}>
-                      <Grid item xs={12}><Input type='text' placeholder='Hashtag name' value={hashName} onChange={handleChangeHashtag}/></Grid>
-                      <Grid item xs={12}><Button variant='outlined' onClick={handleCreate}>{t("Create")}</Button> </Grid>
+                      <Grid item xs={12}><Input type='text' name='HashtagName' placeholder='Hashtag name' value={hashName} onChange={handleChangeHashtag}/></Grid>
+                      <Grid item xs={12}><Button name="create" variant='outlined' onClick={handleCreate}>{t("Create")}</Button> </Grid>
                    
                   </Grid>
                 
