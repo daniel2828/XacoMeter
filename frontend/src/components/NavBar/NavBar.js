@@ -25,9 +25,7 @@ export default function NavBar() {
     e.preventDefault();
     i18n.changeLanguage(e.target.value);
   }
-  useEffect(() => {
 
-  } , [user])
 
   const handleChangePage = ()=>{
 

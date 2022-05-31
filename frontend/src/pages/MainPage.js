@@ -40,7 +40,7 @@ export default function MainPage() {
     );
     tweetsPrev = tweetsPrev?.data?.filter((element) => {
       let ys = false;
-      //console.log("Words", words, element);
+      
       words.forEach((word) => {
         if (element?.tweet?.text?.toLowerCase().includes(word)) {
           ys = true;
@@ -82,7 +82,7 @@ export default function MainPage() {
     setIsSearching(false);
   };
   // Effects
-  useEffect(async () => {
+  useEffect( () => {
     handleChange();
   }, []);
   /**

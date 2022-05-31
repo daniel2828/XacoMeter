@@ -159,6 +159,8 @@ export default function RegisterForm({ setIsRegister }) {
               fullWidth
               variant="contained"
               sx={{ mt: 3, mb: 2 }}
+              name="Submit"
+              data-testid="submit-button"
             >
               {t("Sign Up")}
             </Button>

@@ -3,8 +3,6 @@ import Avatar from "@mui/material/Avatar";
 import Button from "@mui/material/Button";
 import CssBaseline from "@mui/material/CssBaseline";
 import TextField from "@mui/material/TextField";
-import FormControlLabel from "@mui/material/FormControlLabel";
-import Checkbox from "@mui/material/Checkbox";
 import Link from "@mui/material/Link";
 import Grid from "@mui/material/Grid";
 import Box from "@mui/material/Box";
@@ -123,12 +121,15 @@ export default function LoginForm({ setIsRegister }) {
               fullWidth
               variant="contained"
               sx={{ mt: 3, mb: 2 }}
+              name="submit"
+              data-testid="submit"
             >
               {t("Sign In")}
             </Button>
             <Grid container>
               <Grid item>
                 <Link
+                  name="changeRegister"
                   onClickCapture={() => setIsRegister(true)}
                   href="#"
                   variant="body2"

@@ -25,7 +25,7 @@ export default function LastTweets({ tweetData }) {
   let tweetSort = tweetData;
   useEffect(() => {
     let removeRepeated = []
-    tweetSort= tweetSort.sort(function (a, b) {
+    tweetSort= tweetSort?.sort(function (a, b) {
       if (moment(a?.tweet?.createdAt) > moment(b?.tweet?.createdAt)) {
         return -1;
       }

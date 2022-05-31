@@ -43,7 +43,7 @@ export default function LineChartComp({tweetData}) {
    }
    const getTemporalyLineWeekly = (start, end)=>{
     let firstTime = true;
-    const counts = tweetData.reduce((p, c) => {
+    const counts = tweetData?.reduce((p, c) => {
    
       var name = c.tweet.created_at.substring(start, end);
       var newDate = moment.utc();
@@ -62,14 +62,18 @@ export default function LineChartComp({tweetData}) {
       p[name]++;
       return p;
     }, {});
-    const countsExtended = Object.keys(counts).sort().map((k) => {
-      return { name: parseDayToName(k), uv: counts[k] };
-    });
+    let countsExtended = null;
+    if (counts){
+      countsExtended = Object.keys(counts).sort().map((k) => {
+        return { name: parseDayToName(k), uv: counts[k] };
+      });
+    }
+   
     return countsExtended;
   }
    const getTemporalyLine = (start, end)=>{
   
-    const counts = tweetData.reduce((p, c) => {
+    const counts = tweetData?.reduce((p, c) => {
  
       var name = c.tweet.created_at.substring(start, end);
     
@@ -79,9 +83,14 @@ export default function LineChartComp({tweetData}) {
       p[name]++;
       return p;
     }, {});
-    const countsExtended = Object.keys(counts).sort().map((k) => {
-      return { name: k, uv: counts[k] };
-    });
+    
+    let countsExtended = null;
+    if (counts) {
+       countsExtended =  Object.keys(counts).sort().map((k) => {
+        return { name: k, uv: counts[k] };
+      });
+    }
+   
     return countsExtended;
   }
   const dailyLine = getTemporalyLine(0,10);

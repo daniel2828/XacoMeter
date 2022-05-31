@@ -1,19 +1,6 @@
 import React from "react";
-import { useEffect, useState } from "react";
-import { getSentimentAnalysis } from "../../api/tweets";
-import { getAccessTokenApi } from "../../api/auth";
-import {
-  TwitterTimelineEmbed,
-  TwitterShareButton,
-  TwitterFollowButton,
-  TwitterHashtagButton,
-  TwitterMentionButton,
-  TwitterTweetEmbed,
-  TwitterMomentShare,
-  TwitterDMButton,
-  TwitterVideoEmbed,
-  TwitterOnAirButton,
-} from "react-twitter-embed";
+import { useState } from "react";
+
 import SentimentCard from "./SentimentCard";
 import PropTypes from "prop-types";
 import Tabs from "@mui/material/Tabs";
@@ -23,13 +10,7 @@ import { Grid } from "@mui/material";
 
 import { useTranslation } from "react-i18next";
 export default function SentimentAnalisys({ dataWithSentiment }) {
-  //const [dataWithSentiment, setDataWithSentiment] = useState([]);
-  //   useEffect(() => {
-  //     const accessToken = getAccessTokenApi();
-  //     getSentimentAnalysis(accessToken).then(data => {
-  //       setDataWithSentiment(data);
-  //     });
-  //   },[]);
+  console.log("Data sent", dataWithSentiment)
   const [value, setValue] = useState(0);
   const handleChange = (event, newValue) => {
     setValue(newValue);
@@ -86,8 +67,7 @@ export default function SentimentAnalisys({ dataWithSentiment }) {
            
            
             <Grid container spacing={2}>
-              {dataWithSentiment
-                .sort(function (a, b) {
+              {dataWithSentiment?.sort(function (a, b) {
                   if (a?.sentiment?.score > b?.sentiment?.score) {
                     return -1;
                   }
