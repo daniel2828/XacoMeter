@@ -9,8 +9,7 @@ import { words } from "../utils/words";
 import TabMain from "../components/Tabs/TabMain";
 import { useTranslation } from "react-i18next";
 import CircularProgress from "@mui/material/CircularProgress";
-
-import "./MainPage.scss";
+import "./CommonPages.scss";
 import { getHashtags } from "../api/hashtags";
 /**
  * Main page where the data of tweets is displayed
@@ -32,15 +31,15 @@ export default function MainPage() {
     e?.preventDefault();
     const accessToken = getAccessTokenApi();
     const hashtagsRes = await getHashtags(accessToken);
-    console.log("HashtagsRes", hashtagsRes);
+
     setHashtags(hashtagsRes.data);
     let tweetsPrev = await getTweetsByHashtag(
-      e?.target?.value ? e?.target?.value : "BuenCamino",
+      e?.target?.value ? e?.target?.value : "#BuenCamino",
       accessToken
     );
     tweetsPrev = tweetsPrev?.data?.filter((element) => {
       let ys = false;
-      //console.log("Words", words, element);
+      
       words.forEach((word) => {
         if (element?.tweet?.text?.toLowerCase().includes(word)) {
           ys = true;
@@ -49,7 +48,6 @@ export default function MainPage() {
       return ys;
     });
 
-    console.log("LOS PREVIOS", tweetsPrev);
     setTweetData(tweetsPrev);
     setTweetDataForSentiment(tweetsPrev);
     // Use reduce
@@ -79,11 +77,11 @@ export default function MainPage() {
     });
 
     setLanguageData(languageCountsExtended);
-    setHashtag(e?.target?.value ? e?.target?.value : "BuenCamino");
+    setHashtag(e?.target?.value ? e?.target?.value : "#BuenCamino");
     setIsSearching(false);
   };
   // Effects
-  useEffect(async () => {
+  useEffect( () => {
     handleChange();
   }, []);
   /**
@@ -94,6 +92,7 @@ export default function MainPage() {
     return <Redirect to="/"></Redirect>;
   } else if (isSearching) {
     return (
+      <div className="controll-page">
       <Box
         sx={{
           display: "flex",
@@ -105,10 +104,11 @@ export default function MainPage() {
         <p>{t("loading tweets")}</p>{" "}
         <CircularProgress size={150} sx={{ marginTop: "40px" }} />
       </Box>
+      </div>
     );
   } else {
     return (
-      <>
+      <div className="controll-page">
         <h1>{t("Select the hashtag to display data.")}</h1>
 
         <Select
@@ -119,11 +119,16 @@ export default function MainPage() {
           onChange={handleChange}
         >
           {hashtags?.map((hashtag) => {
-            return (
-              <MenuItem key={hashtag?.name} value={hashtag?.name}>
-                #{hashtag?.name}
-              </MenuItem>
-            );
+            if (hashtag.active){
+              const value = (hashtag.isKeyword ? "": "#") + hashtag.name; 
+            
+              return (
+                <MenuItem key={hashtag?.name} value={value}  >
+                  {value}
+                </MenuItem>
+              );
+            }
+           
           })}
           
         </Select>
@@ -135,7 +140,7 @@ export default function MainPage() {
           tweetData={tweetData}
           tweetDataForSentiment={tweetDataForSentiment}
         ></TabMain>
-      </>
+      </div>
     );
   }
 }

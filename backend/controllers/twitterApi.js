@@ -15,7 +15,7 @@ async function testAPI(req, res) {
 
       return err;
     });
-  console.log(result.data);
+
   res.status(200).send(result);
 }
 /**
@@ -26,24 +26,29 @@ async function testAPI(req, res) {
 async function searchByQuery(req, res) {
   // Query the last tweet
   let lastTweetId = "";
-  const { hashtag } = req.body;
-  //console.log(hashtag)
+  let { hashtag } = req.body;
+  if (hashtag.substring(0, 1) == "#") {
+    hashtag = hashtag.substring(1, hashtag.length);
+
+  }
+    console.log(hashtag)
   const lastTweet = await Tweets.findOne({ hashtag: hashtag })
     .sort("-id_tweet")
     .exec();
-  //console.log("LAST", lastTweet)
+  console.log("LAST", lastTweet)
 
   let lessThanSevenDays = false;
-  if (lastTweet?.length > 0) {
-    console.log("TEST");
+  //console.log(lastTweet?.length)
+  if (lastTweet) {
+   
     const created = new Date(lastTweet?.tweet?.created_at);
     const dateToday = new Date();
     lessThanSevenDays = created < dateToday.setDate(dateToday.getDate() - 7);
+    console.log("lessThanSevenDays", lessThanSevenDays);
   } else {
     console.log("NO TWEETS");
   }
-
-  const buenCaminoSearch = await appOnlyClient.v2.search(`#${hashtag}`, {
+  const buenCaminoSearch = await appOnlyClient.v2.search(hashtag, {
     ...(lastTweet?.id_tweet && lessThanSevenDays == false
       ? { since_id: lastTweet.id_tweet }
       : {}),
@@ -81,20 +86,40 @@ async function searchByQuery(req, res) {
       tweets.tweet = tweet;
       newTweets.push(tweets);
       // MAKE SENTIMENT ANALISYS
-      try{
+      try {
         let sentimentData = sentiment(
           tweet.text,
           tweet.lang !== "und" ? tweet.lang : "es"
         );
         tweets.sentiment = sentimentData;
-  
+        if (tweets.sentiment != undefined) {
+          let sentimentWords = tweets.sentiment.words;
+          let newArrayWords = [];
+          sentimentWords?.forEach((word) => {
+            let newWord = {};
+            newWord.value = word;
+
+            try {
+              newWord.score = sentiment(
+                word,
+                tweets.tweet.lang !== "und" ? tweets.tweet.lang : "es"
+              );
+            } catch (error) {
+              newWord.score = sentiment(word, "en");
+            }
+            
+            newArrayWords.push(newWord);
+          });
+          tweets.sentiment.words = newArrayWords;
+        }
+
+        
         await tweets.save((err, tweetStored) => {
           console.log("err", err);
         });
-      }catch(error){
-        console.log("ERROR EL Lenguaje no es válido para análisis");
+      } catch (error) {
+        console.log("ERROR EL Lenguaje no es válido para análisis", error);
       }
-      
     });
     return newTweets;
   };
@@ -146,7 +171,7 @@ async function getSentimentAnalysis(req, res) {
       } catch (error) {
         sentimentData = sentiment(tweet.tweet.text, "en");
       }
-      
+
       Tweets.updateOne(
         { _id: tweet._id },
         { sentiment: sentimentData },
@@ -169,47 +194,50 @@ async function modifyRecordsArray(req, res) {
   const tweets = await Tweets.find({ hashtag: hashtag }).sort({ id_tweet: 1 });
   let tweetsRet = [];
   tweets.forEach((tweet) => {
-    console.log("tweets")
     if (tweet.sentiment != undefined) {
       let sentimentWords = tweet.sentiment.words;
       let newArrayWords = [];
+      let hastoUpdate=false;
       sentimentWords?.forEach((word) => {
-        console.log("WORD FALLA" , word)
-        let newWord ={}
-        newWord.value = word;
-    
-        
-        try {
-          newWord.score= sentiment(
-            word,
-            tweet.tweet.lang !== "und" ? tweet.tweet.lang : "es"
-          );
-        
-        } catch (error) {
-          newWord.score = sentiment(word, "en");
-    
-        }
-       
-        newArrayWords.push(newWord);
-      })
-    
-      Tweets.updateOne(
-        { _id: tweet._id },
-        { "sentiment.words": newArrayWords },
-        { multi: true },
-        function (err, numberAffected) {
-          if (err) {
-            console.log("ERROR", err);
-          }else{
+        if (word?.value == undefined) {
+          hastoUpdate = true;
 
-            console.log("Actualiza", numberAffected);
+          let newWord = {};
+          newWord.value = word;
+
+          try {
+            newWord.score = sentiment(
+              word,
+              tweet.tweet.lang !== "und" ? tweet.tweet.lang : "es"
+            );
+          } catch (error) {
+            newWord.score = sentiment(word, "en");
           }
+
+          newArrayWords.push(newWord);
         }
-      );
-      console.log("SENTIMENT",tweet._id, newArrayWords);
+
+      });
+      if (hastoUpdate){
+        Tweets.updateOne(
+          { _id: tweet._id },
+          { "sentiment.words": newArrayWords },
+          { multi: true },
+          function (err, numberAffected) {
+            if (err) {
+              console.log("ERROR", err);
+            }else{
+  
+        
+            }
+          }
+        );
+      }
+      
+     
       //tweet.sentiment = sentiment;
       //tweetsRet.push(tweet);
-    } 
+    }
   });
   res.status(200).send("OK");
   // let tweetsArray = [];
@@ -228,6 +256,6 @@ module.exports = {
   testAPI,
   searchByQuery,
   getSentimentAnalysis,
-  modifyRecordsArray
+  modifyRecordsArray,
   // getGrouped
 };

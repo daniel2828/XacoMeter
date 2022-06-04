@@ -1,23 +1,24 @@
 
 const Hashtags = require("../models/hashtags");
 async function createHashtag(req, res) {
-  const {name} = req.body;
+  const {name, isKeyword} = req.body;
   const hashtag = new Hashtags();
   hashtag.name = name;
   hashtag.active = true;
+  hashtag.isKeyword = isKeyword;
   const response = await hashtag.save();
   res.status(200).send(response);
 }
 async function getHashtags(req, res) {
-    console.log("HOLA")
+  
     let hashtags = await Hashtags.find();
     res.status(200).send(hashtags);
   }
 async function deleteHashtag(req, res) {
     const {id} = req.params;
-    console.log("id", id)
+   
     let response = await Hashtags.findByIdAndDelete(id);
-    console.log("REES", response)
+
     res.status(200).send(response);
 }
 async function updateHashtag(req, res) {

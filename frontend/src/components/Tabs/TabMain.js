@@ -3,7 +3,6 @@ import PropTypes from "prop-types";
 import Tabs from "@mui/material/Tabs";
 import Tab from "@mui/material/Tab";
 import Box from "@mui/material/Box";
-import WordCloud from "../Graphs/WordCloud";
 import { useTranslation } from "react-i18next";
 import TabGraphs from "./TabGraphs";
 import Grid from "@mui/material/Grid";

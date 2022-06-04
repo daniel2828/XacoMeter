@@ -4,7 +4,7 @@ import { PieChart, Pie, Cell } from "recharts";
 const COLORS = ["#0088FE", "#00C49F", "#FFBB28", "#FF8042"];
 
 export default function PieChartComp({ tweetData }) {
-  var languageCounts = tweetData.reduce((p, c) => {
+  var languageCounts = tweetData?.reduce((p, c) => {
     var name = c.tweet.lang;
     if (!p.hasOwnProperty(name)) {
       p[name] = 0;
@@ -12,9 +12,13 @@ export default function PieChartComp({ tweetData }) {
     p[name]++;
     return p;
   }, {});
-  var languageCountsExtended = Object.keys(languageCounts).map((k) => {
-    return { name: k, value: languageCounts[k] };
-  });
+
+  var languageCountsExtended =null;
+  if (languageCounts){
+    languageCounts = Object.keys(languageCounts).map((k) => {
+      return { name: k, value: languageCounts[k] };
+    });
+  } 
   const renderLabel = function (entry) {
     return `${entry.name} (${entry.value})`;
   };
@@ -41,7 +45,7 @@ export default function PieChartComp({ tweetData }) {
         isAnimationActive={false}
         label={renderLabel}
       >
-        {languageCountsExtended.map((entry, index) => (
+        {languageCountsExtended?.map((entry, index) => (
           <Cell key={`cell-${index}`} fill={COLORS[index % COLORS.length]} />
         ))}
       </Pie>

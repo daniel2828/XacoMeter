@@ -2,12 +2,12 @@
 import  React, {useState} from 'react';
 import Box from '@mui/material/Box';
 import Button from '@mui/material/Button';
-import Typography from '@mui/material/Typography';
 import Modal from '@mui/material/Modal';
 import { Input } from '@mui/material';
 import { Grid } from '@mui/material';
 import { createHashtag } from '../../api/hashtags';
 import { getAccessTokenApi } from '../../api/auth';
+import { useTranslation } from 'react-i18next';
 
 const style = {
   position: 'absolute',
@@ -21,16 +21,16 @@ const style = {
   p: 4,
   marginTop: '10%',
 };
-export default function ModalAddHash({callGetHashtags}) {
-  
+export default function ModalAddHash({callGetHashtags,isKeyword}) {
+      const {t} = useTranslation();
       const [hashName, setHashName] = useState("")
       const [open, setOpen] = useState(false);
       const handleOpen = () => setOpen(true);
       const handleClose = () => setOpen(false);
       const accessToken = getAccessTokenApi();
       const handleCreate = async()=> {
-        const data = await createHashtag(hashName, accessToken );
-        console.log(data);
+        const data = await createHashtag(hashName, accessToken,isKeyword );
+    
         handleClose();
         callGetHashtags();
       }
@@ -39,7 +39,7 @@ export default function ModalAddHash({callGetHashtags}) {
       }
       return (
         <div >
-          <Button onClick={handleOpen} variant="contained">Add hashtag</Button>
+          <Button name="Add" onClick={handleOpen} variant="contained">{t("Add")}</Button>
           <Modal
             open={open}
             onClose={handleClose}
@@ -49,8 +49,8 @@ export default function ModalAddHash({callGetHashtags}) {
               <>
               <Box sx={style}>
                   <Grid container spacing={3}>
-                      <Grid item xs={12}><Input type='text' placeholder='Hashtag name' value={hashName} onChange={handleChangeHashtag}/></Grid>
-                      <Grid item xs={12}><Button variant='outlined' onClick={handleCreate}>Create</Button> </Grid>
+                      <Grid item xs={12}><Input type='text' name='HashtagName' placeholder='Hashtag name' value={hashName} onChange={handleChangeHashtag}/></Grid>
+                      <Grid item xs={12}><Button name="create" variant='outlined' onClick={handleCreate}>{t("Create")}</Button> </Grid>
                    
                   </Grid>
                 

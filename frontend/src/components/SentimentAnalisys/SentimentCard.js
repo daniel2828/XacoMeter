@@ -34,7 +34,7 @@ export default function SentimentCard({ data }) {
   const [loadingTweet, setLoadingTweet] = useState(true)
  const {t} = useTranslation();
   const newWords = data?.sentiment?.words?.map((word, index)=> {
-    console.log("WWWW", word)
+   
        return (<p>{t("Word")}  :  {word?.value}  , {t("Score")}  {word?.score?.score}</p>)
 
   })
@@ -54,7 +54,7 @@ export default function SentimentCard({ data }) {
         {
         !loadingTweet &&(
           <>
-           <p> Total Score: {data?.sentiment?.score}</p>
+           <p> {t("Total Score")}: {data?.sentiment?.score}</p>
            <SentimentModal newWords={newWords}/>
           </>
          
