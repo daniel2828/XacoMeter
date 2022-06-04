@@ -12,6 +12,7 @@ import Container from "@mui/material/Container";
 import { createTheme, ThemeProvider } from "@mui/material/styles";
 import { signIn } from "../api/users";
 import Notification from "./Notification";
+import CaminoImage from  "../assets/img/concha.jpg";
 import { useTranslation } from "react-i18next";
 function Copyright(props) {
   return (
@@ -78,7 +79,7 @@ export default function LoginForm({ setIsRegister }) {
           }}
         >
           <Avatar sx={{ m: 1, bgcolor: "secondary.main" }}>
-            <LockOutlinedIcon />
+             <img src={CaminoImage} alt="Logo"  width="50" height="50" />;
           </Avatar>
           <Typography component="h1" variant="h5">
             {t("Xacometer Sign In")}

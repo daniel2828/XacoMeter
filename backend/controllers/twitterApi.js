@@ -31,18 +31,20 @@ async function searchByQuery(req, res) {
     hashtag = hashtag.substring(1, hashtag.length);
 
   }
-  //console.log(hashtag)
+    console.log(hashtag)
   const lastTweet = await Tweets.findOne({ hashtag: hashtag })
     .sort("-id_tweet")
     .exec();
-  //console.log("LAST", lastTweet)
+  console.log("LAST", lastTweet)
 
   let lessThanSevenDays = false;
-  if (lastTweet?.length > 0) {
+  //console.log(lastTweet?.length)
+  if (lastTweet) {
    
     const created = new Date(lastTweet?.tweet?.created_at);
     const dateToday = new Date();
     lessThanSevenDays = created < dateToday.setDate(dateToday.getDate() - 7);
+    console.log("lessThanSevenDays", lessThanSevenDays);
   } else {
     console.log("NO TWEETS");
   }

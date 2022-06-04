@@ -9,8 +9,7 @@ import { words } from "../utils/words";
 import TabMain from "../components/Tabs/TabMain";
 import { useTranslation } from "react-i18next";
 import CircularProgress from "@mui/material/CircularProgress";
-
-import "./MainPage.scss";
+import "./CommonPages.scss";
 import { getHashtags } from "../api/hashtags";
 /**
  * Main page where the data of tweets is displayed
@@ -93,6 +92,7 @@ export default function MainPage() {
     return <Redirect to="/"></Redirect>;
   } else if (isSearching) {
     return (
+      <div className="controll-page">
       <Box
         sx={{
           display: "flex",
@@ -104,10 +104,11 @@ export default function MainPage() {
         <p>{t("loading tweets")}</p>{" "}
         <CircularProgress size={150} sx={{ marginTop: "40px" }} />
       </Box>
+      </div>
     );
   } else {
     return (
-      <>
+      <div className="controll-page">
         <h1>{t("Select the hashtag to display data.")}</h1>
 
         <Select
@@ -139,7 +140,7 @@ export default function MainPage() {
           tweetData={tweetData}
           tweetDataForSentiment={tweetDataForSentiment}
         ></TabMain>
-      </>
+      </div>
     );
   }
 }

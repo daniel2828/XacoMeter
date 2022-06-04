@@ -9,7 +9,9 @@ export default function AdminPage() {
     return <Redirect to="/"></Redirect>;
   } else {
     return (
+      <div className="controll-page">
         <TabAdmin />
+      </div>
     );
   }
 }

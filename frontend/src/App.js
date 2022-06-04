@@ -16,16 +16,18 @@ function App() {
    
     
     <BrowserRouter  >
-    <NavBar/>
+    
     <Switch>
    
     <Route path="/" exact={true}>
         <AuthPage />
     </Route>
     <Route path="/data" exact={true}>
+        <NavBar/>
         <MainPage />
     </Route>
     <Route path="/admin" exact={true}>
+        <NavBar/>
         <AdminPage/>
     </Route>
     </Switch>
