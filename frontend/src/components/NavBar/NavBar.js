@@ -15,6 +15,8 @@ import { Redirect } from "react-router-dom";
 import { useHistory } from "react-router-dom";
 import { logoutUser } from "../../utils/utils";
 
+import Avatar from "@mui/material/Avatar";
+import CaminoImage from  "../../assets/img/concha.jpg";
 export default function NavBar() {
   const history = useHistory();
   
@@ -25,9 +27,7 @@ export default function NavBar() {
     e.preventDefault();
     i18n.changeLanguage(e.target.value);
   }
-  useEffect(() => {
 
-  } , [user])
 
   const handleChangePage = ()=>{
 
@@ -40,8 +40,11 @@ export default function NavBar() {
     <Box sx={{ flexGrow: 1 }}>
       <AppBar position="static">
         <Toolbar>
-        <Typography variant="h6" component="div" sx={{ flexGrow: 1 }}>
-            
+          <Avatar sx={{ m: 1, bgcolor: "secondary.main" }}>
+              <img src={CaminoImage} alt="Logo"  width="50" height="50" />;
+            </Avatar>
+          <Typography variant="h6" component="div" sx={{ flexGrow: 1 }}>
+              XacoMeter
           </Typography>
           <Select
             labelId="select-language"

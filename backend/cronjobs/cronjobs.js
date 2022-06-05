@@ -15,10 +15,8 @@ var sentiment = require("multilang-sentiment");
     const lastTweet = await Tweets.findOne({ hashtag: hashtag })
       .sort("-id_tweet")
       .exec();
-    console.log("LAST", lastTweet)  
-    console.log("TEST");
+    
      const created = lastTweet?.tweet?.created_at ? new Date(lastTweet.tweet.created_at) : new Date().getDate() - 7;
-    console.log("CREATED", created)
      const dateToday = new Date();
     const lessThanSevenDays =
       created < dateToday.setDate(dateToday.getDate() - 7);
@@ -35,22 +33,21 @@ var sentiment = require("multilang-sentiment");
       "tweet.fields":
         "attachments,author_id,context_annotations,conversation_id,created_at,entities,geo,id,in_reply_to_user_id,lang,public_metrics,possibly_sensitive,referenced_tweets,reply_settings,source,text,withheld",
     });
-    // console.log("BCS", buenCaminoSearch);
+   
     let authors = buenCaminoSearch.includes.users;
     let places = buenCaminoSearch.includes.places;
     let tweetsArray = [];
     for await (const tweet of buenCaminoSearch) {
       if (tweet.author_id !== "") {
         tweet.author = authors?.find((author) => author.id === tweet.author_id);
-        //console.log("FOUND" ,  tweet.author )
+     
       }
       if (tweet.geo) {
         tweet.location = places?.find((place) => place.id === tweet.geo.place_id);
       }
       tweetsArray.push(tweet);
     }
-    // console.log("LEN", tweetsArray.length)
-    // Add tweets to DB
+
     const capsuleTweets = () => {
       let newTweets = [];
       tweetsArray.forEach(async (tweet) => {
@@ -80,7 +77,7 @@ var sentiment = require("multilang-sentiment");
 //every day cronjobs
 async function createCronJobs() {
   
-  cron.schedule("0 0 0 * * *", () => {
+  await cron.schedule("0 0 0 * * *", () => {
     
      
     Hashtags.find({}).then((hashtags) => { 

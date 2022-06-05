@@ -1,0 +1,25 @@
+.mainPage__circular {
+  height: 150px;
+  width: 150px;
+}
+.auth-page{
+  background-image: url("../assets/img/back.jpeg");
+  background-repeat: no-repeat; /* Do not repeat the image */
+  background-size: cover; /* Resize the background image to cover the entire container */
+  min-height: 100%;
+  margin: 0;
+  padding:0;
+}
+.page-container {
+  background-color: whitesmoke;
+  border: 1px solid;
+  width: 50%;
+  height: auto;
+  position: fixed;
+  top: 20%;
+  margin-left: 25%;
+  float: inline-end;
+  padding-bottom: 1px;
+  opacity: 0.95;
+  border-radius: 20px;
+}

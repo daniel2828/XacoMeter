@@ -13,6 +13,7 @@ import { createTheme, ThemeProvider } from "@mui/material/styles";
 import { signUp } from "../api/users";
 import Notification from "./Notification";
 import { useTranslation } from "react-i18next";
+import CaminoImage from  "../assets/img/concha.jpg";
 function Copyright(props) {
   return (
     <Typography
@@ -82,9 +83,9 @@ export default function RegisterForm({ setIsRegister }) {
             alignItems: "center",
           }}
         >
-          <Avatar sx={{ m: 1, bgcolor: "secondary.main" }}>
-            <LockOutlinedIcon />
-          </Avatar>
+         <Avatar sx={{ m: 1, bgcolor: "secondary.main" }}>
+              <img src={CaminoImage} alt="Logo"  width="50" height="50" />;
+            </Avatar>
           <Typography component="h1" variant="h5">
             {t("Xacometer Sign up")}
           </Typography>
@@ -159,6 +160,8 @@ export default function RegisterForm({ setIsRegister }) {
               fullWidth
               variant="contained"
               sx={{ mt: 3, mb: 2 }}
+              name="Submit"
+              data-testid="submit-button"
             >
               {t("Sign Up")}
             </Button>

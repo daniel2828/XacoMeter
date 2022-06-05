@@ -24,9 +24,9 @@ export const getHashtags = async (accessToken)=>{
     }})
     return data;
   }
-  export const createHashtag = async (hashName, accessToken)=>{
+  export const createHashtag = async (hashName, accessToken,isKeyword)=>{
 
-    const data = await axios.post(`${BASE_PATH}/${API_VERSION}/hashtags/createHashtag`,{name:hashName},{headers:{
+    const data = await axios.post(`${BASE_PATH}/${API_VERSION}/hashtags/createHashtag`,{name:hashName, isKeyword:isKeyword},{headers:{
        "Content-Type": "application/json",
        Authorization : accessToken
     }})

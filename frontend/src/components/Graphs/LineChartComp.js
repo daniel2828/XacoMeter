@@ -6,7 +6,11 @@ import {
     XAxis,
     YAxis,
     Tooltip,
+    BarChart,
+    Bar,
+    Legend
   } from "recharts";
+
 import useXaco from "../../hooks/useXaco";
 import moment from "moment";
 import { useTranslation } from "react-i18next";
@@ -39,7 +43,7 @@ export default function LineChartComp({tweetData}) {
    }
    const getTemporalyLineWeekly = (start, end)=>{
     let firstTime = true;
-    const counts = tweetData.reduce((p, c) => {
+    const counts = tweetData?.reduce((p, c) => {
    
       var name = c.tweet.created_at.substring(start, end);
       var newDate = moment.utc();
@@ -58,14 +62,18 @@ export default function LineChartComp({tweetData}) {
       p[name]++;
       return p;
     }, {});
-    const countsExtended = Object.keys(counts).sort().map((k) => {
-      return { name: parseDayToName(k), uv: counts[k] };
-    });
+    let countsExtended = null;
+    if (counts){
+      countsExtended = Object.keys(counts).sort().map((k) => {
+        return { name: parseDayToName(k), uv: counts[k] };
+      });
+    }
+   
     return countsExtended;
   }
    const getTemporalyLine = (start, end)=>{
   
-    const counts = tweetData.reduce((p, c) => {
+    const counts = tweetData?.reduce((p, c) => {
  
       var name = c.tweet.created_at.substring(start, end);
     
@@ -75,9 +83,14 @@ export default function LineChartComp({tweetData}) {
       p[name]++;
       return p;
     }, {});
-    const countsExtended = Object.keys(counts).sort().map((k) => {
-      return { name: k, uv: counts[k] };
-    });
+    
+    let countsExtended = null;
+    if (counts) {
+       countsExtended =  Object.keys(counts).sort().map((k) => {
+        return { name: k, uv: counts[k] };
+      });
+    }
+   
     return countsExtended;
   }
   const dailyLine = getTemporalyLine(0,10);
@@ -91,9 +104,29 @@ export default function LineChartComp({tweetData}) {
     </p>
     <LineChartResumed tweetData={dailyLine}/>
     <p>
-    {t("Montly activty")}
+      {t("Montly activty")}
     </p>
-    <LineChartResumed tweetData={monthlyLine}/>
+    <BarChart
+      width={500}
+      height={300}
+      data={monthlyLine}
+      margin={{
+        top: 20,
+        right: 30,
+        left: 20,
+        bottom: 5,
+      }}
+      style={{marginLeft:"20%"}}
+    >
+      <CartesianGrid strokeDasharray="3 3" />
+      <XAxis dataKey="name" />
+      <YAxis />
+      <Tooltip />
+      <Legend />
+      
+      <Bar dataKey="uv" fill="#ffc658" />
+    </BarChart>
+    {/* <LineChartResumed tweetData={monthlyLine}/> */}
     <p>
     {t("Activity by day of the week")}
     </p>
