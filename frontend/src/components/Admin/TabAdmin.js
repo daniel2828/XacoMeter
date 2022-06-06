@@ -1,10 +1,11 @@
-import React from "react";
+import React, {useState} from "react";
 import PropTypes from "prop-types";
 import Tabs from "@mui/material/Tabs";
 import Tab from "@mui/material/Tab";
 import Box from "@mui/material/Box";
 import { useTranslation } from "react-i18next";
 import Hashtags from "./Hashtags";
+import Users from "./Users";
 function TabPanel(props) {
   const { children, value, index, ...other } = props;
 
@@ -12,8 +13,8 @@ function TabPanel(props) {
     <div
       role="tabpanel"
       hidden={value !== index}
-      id={`tabadmin-tabpanel-${index}`}
-      aria-labelledby={`tabadmin-tab-${index}`}
+      id={`simple-tabpanel-${index}`}
+      aria-labelledby={`simple-tab-${index}`}
       {...other}
     >
       {children}
@@ -29,8 +30,8 @@ TabPanel.propTypes = {
 
 function a11yProps(index) {
   return {
-    id: `tabgraphs-tab-${index}`,
-    "aria-controls": `tabgraphs-tabpanel-${index}`,
+    id: `simple-tab-${index}`,
+    "aria-controls": `simple-tabpanel-${index}`,
   };
 }
 /**
@@ -38,13 +39,14 @@ function a11yProps(index) {
  * @returns Tab for admin
  */
 export default function TabAdmin() {
-  const [value, setValue] = React.useState(0);
+  const [value, setValue] = useState(0);
   const { t } = useTranslation();
   /**
    * Change the value of the tab
    * @param {Integer} newValue 
    */
-  const handleChange = ( newValue) => {
+  const handleChange = (event, newValue) => {
+    console.log("new Valie",  newValue);
     setValue(newValue);
   };
   return (
@@ -72,10 +74,11 @@ export default function TabAdmin() {
        <Hashtags/>
       </TabPanel>
       <TabPanel className="tab-graph" value={value} index={1}>
-      <Hashtags isKeyword={true}/>
+        <Hashtags isKeyword={true}/>
       </TabPanel>
       <TabPanel className="tab-graph" value={value} index={2}>
-    </TabPanel>
+        <Users/>
+      </TabPanel>
     </Box>
   );
 }

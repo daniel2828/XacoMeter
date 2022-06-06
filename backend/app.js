@@ -2,18 +2,26 @@ const { API_VERSION } = require("./config");
 const mongoose = require("mongoose");
 const express = require("express");
 const bodyParser = require("body-parser");
+const path = require('path');  
+require('dotenv').config()
+
 const app = express();
 const port = process.env.PORT || 3977;
 // Routes
 const userRoutes = require("./routes/user");
 const twitterRoutes = require("./routes/twitterApi");
 const hashtagRoutes = require("./routes/hashtags");
+const logger = require("./logging/winstonLogger");
+const {MONGO_DB_URI, MONGO_DB_URI_TEST, NODE_ENV} = process.env;
+logger.info(`MONGO_DB_URI ${MONGO_DB_URI}, MONGO_DB_URI_TEST, NODE_ENV`);
+const connectionString = NODE_ENV ==='test'? MONGO_DB_URI_TEST : MONGO_DB_URI;
 const { createCronJobs } = require("./cronjobs/cronjobs");
+
 
 app.use(bodyParser.urlencoded({ extended: false }));
 app.use(bodyParser.json());
 // Configure Header HTTP
-const path = require('path');
+
 
 
 // Serve static files from the React frontend app
@@ -41,17 +49,24 @@ app.get('*', (req, res) => {
   res.sendFile(path.join(__dirname + '/../frontend/build/index.html'))
 })
 // Connect mongo and express
- mongoose
-  .connect("mongodb+srv://dani:MongoGnab8841@cluster0.cms2n.mongodb.net/xacometer", { useNewUrlParser: true })
+let server = null;
+ mongoose 
+  .connect(connectionString, { useNewUrlParser: true })
   .then(() => {
-    console.log("Connected");
-    app.listen(port, () => {
-      console.log("#######################");
-      console.log("#######################");
-      console.log("###### API REST ######");
-      console.log("#######################");
-      console.log("#######################");
-      console.log(`http://localhost:${port}/api/${API_VERSION}/`);
+    logger.info("Connected");
+    server = app.listen(port, () => {
+      logger.info("#######################");
+      logger.info("#######################");
+      logger.info("###### API REST ######");
+      logger.info("#######################");
+      logger.info("#######################");
+      logger.info(`http://localhost:${port}/api/${API_VERSION}/`);
     });
   })
-  .catch((err) => console.log(err));
+  .catch((err) => logger.info(err));
+  if (process.env.NODE_ENV === 'test') {
+    mongoose.connection.close(function () {
+      console.log('Mongoose connection disconnected');
+    });
+  }
+module.exports = {app, server,mongoose };

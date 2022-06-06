@@ -4,7 +4,7 @@ const jwt = require("../services/jwt");
 
 function singUp(req, res) {
   const user = new User();
-  const { name, lastName, email, password, repeatPassword, active } = req.body;
+  const { name, lastName, email, password, repeatPassword } = req.body;
   console.log(lastName);
 
   user.name = name;
@@ -12,7 +12,7 @@ function singUp(req, res) {
   user.email = email.toLowerCase();
   //Default values
   user.role = "admin";
-  user.active = active;
+  user.active = true;
   console.log(req.body);
   if (!password || !repeatPassword) {
     res.status(400).send({ message: "Las contraseñas son obligatorias" });
@@ -78,7 +78,14 @@ function singIn(req, res) {
     }
   });
 }
+async function getUsers(req, res) {
+ 
+  // Find by email in mongo database
+  let users = await User.find();
+  res.status(200).send(users);
+}
 module.exports = {
   singUp,
   singIn,
+  getUsers
 };

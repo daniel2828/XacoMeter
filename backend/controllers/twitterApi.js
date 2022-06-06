@@ -3,20 +3,7 @@ const { appOnlyClient } = require("../config");
 var sentiment = require("multilang-sentiment");
 
 async function testAPI(req, res) {
-  const rwClient = appOnlyClient.readWrite;
-
-  const result = await rwClient.v2
-    .get("tweets/search/all", {
-      query: "BuenCamino",
-      max_results: 10,
-    })
-    .catch((err) => {
-      console.log("ERROR", err);
-
-      return err;
-    });
-
-  res.status(200).send(result);
+  res.status(200).json({ name: 'john' });
 }
 /**
  * Search by query all the data of the last week
