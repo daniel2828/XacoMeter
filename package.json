@@ -28,6 +28,7 @@
     "axios": "^0.26.0",
     "bcrypt-nodejs": "0.0.3",
     "concurrently": "^7.0.0",
+    "dotenv": "^16.0.1",
     "express": "^4.17.2",
     "history": "^4.10.1",
     "jwt-decode": "^3.1.2",
@@ -41,6 +42,10 @@
     "react-tweet-embed": "^2.0.0",
     "sentiment": "^5.0.2",
     "styled-components": "^5.3.3",
-    "twitter-api-v2": "^1.11.0"
+    "twitter-api-v2": "^1.11.0",
+    "winson": "^1.0.0"
+  },
+  "devDependencies": {
+    "winston": "^3.7.2"
   }
 }
