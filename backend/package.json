@@ -13,7 +13,8 @@
     "node-cron": "^3.0.0",
     "nodemon": "^2.0.15",
     "sentiment": "^5.0.2",
-    "twitter-api-v2": "^1.11.0"
+    "twitter-api-v2": "^1.11.0",
+    "winston": "^3.7.2"
   },
   "jest": {
     "testEnvironment": "node",
@@ -29,7 +30,7 @@
   "devDependencies": {
     "cross-env": "^7.0.3",
     "jest": "^28.1.0",
-    "supertest": "^6.2.3",
-    "winston": "^3.7.2"
+    "supertest": "^6.2.3"
+   
   }
 }
