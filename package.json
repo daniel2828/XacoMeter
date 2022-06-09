@@ -43,9 +43,7 @@
     "react-tweet-embed": "^2.0.0",
     "sentiment": "^5.0.2",
     "styled-components": "^5.3.3",
-    "twitter-api-v2": "^1.11.0"
-  },
-  "devDependencies": {
+    "twitter-api-v2": "^1.11.0",
     "winston": "^3.7.2"
   }
 }
