@@ -23,7 +23,8 @@
   },
   "scripts": {
     "test": "cross-env NODE_ENV=test jest --detectOpenHandles",
-    "start": "cross-env NODE_ENV=dev nodemon app.js"
+    "start": "cross-env NODE_ENV=dev nodemon app.js",
+    "dev": "cross-env NODE_ENV=test nodemon app.js"
   },
   "devDependencies": {
     "cross-env": "^7.0.3",
