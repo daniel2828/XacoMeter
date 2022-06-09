@@ -22,7 +22,7 @@ app.use(bodyParser.urlencoded({ extended: false }));
 app.use(bodyParser.json());
 // Configure Header HTTP
 
-
+createCronJobs();
 
 // Serve static files from the React frontend app
 app.use(express.static(path.join(__dirname, '../frontend/build')))
