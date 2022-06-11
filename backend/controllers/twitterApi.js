@@ -12,8 +12,8 @@ async function testAPI(req, res) {
  */
 async function searchByQuery(req, res) {
   // Query the last tweet
-  let lastTweetId = "";
-  let { hashtag } = req.body;
+
+  const { hashtag } = req.body;
   if (hashtag.substring(0, 1) == "#") {
     hashtag = hashtag.substring(1, hashtag.length);
 
@@ -143,6 +143,15 @@ async function searchByQuery(req, res) {
   console.log("RES");
   res.status(200).send(tweets);
 }
+async function getByHashtag(req,res){
+  let { hashtag } = req.body;
+  if (hashtag.substring(0, 1) == "#") {
+    hashtag = hashtag.substring(1, hashtag.length);
+
+  }
+  const tweets = await Tweets.find({ hashtag: hashtag });
+  res.status(200).send(tweets);
+}
 async function getSentimentAnalysis(req, res) {
   const { hashtag } = req.body;
   const tweets = await Tweets.find({ hashtag: hashtag }).sort({ id_tweet: 1 });
@@ -244,5 +253,6 @@ module.exports = {
   searchByQuery,
   getSentimentAnalysis,
   modifyRecordsArray,
+  getByHashtag
   // getGrouped
 };

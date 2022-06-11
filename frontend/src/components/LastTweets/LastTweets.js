@@ -63,7 +63,7 @@ export default function LastTweets({ tweetData }) {
             <Grid key={element?.id_tweet} item xs={12} sm={6} md={4} lg={3} xl={3}>
               <TwitterTweetEmbed
                 onLoad={() => setLoadingTweet(false)}
-                options={{ size: "80%", width: "80%" }}
+                //options={}
                 tweetId={element?.id_tweet}
               />
 
@@ -71,6 +71,7 @@ export default function LastTweets({ tweetData }) {
                 <>
                   <CircularProgress />
                   <p>{t("Loading tweet")}</p>
+                  
                 </>
               )}
 

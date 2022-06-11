@@ -8,4 +8,5 @@ api.get("/test", TwitterController.testAPI);
 api.post("/searchByQuery",[md_auth.ensureAuth], TwitterController.searchByQuery);
 api.post("/getSentiment",[md_auth.ensureAuth], TwitterController.getSentimentAnalysis);
 api.post("/modifySentiment", TwitterController.modifyRecordsArray)
+api.post("/getByHashtag", [md_auth.ensureAuth], TwitterController.getByHashtag)
 module.exports = api;
