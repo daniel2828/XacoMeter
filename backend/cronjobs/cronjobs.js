@@ -10,18 +10,29 @@ var sentiment = require("multilang-sentiment");
  */
  async function processHashtags(hashtag) {
     // Query the last tweet
-    console.log("PROCESANDO HASHTAG", hashtag)
-    let lastTweetId = "";
+   
+    if (hashtag.substring(0, 1) == "#") {
+      hashtag = hashtag.substring(1, hashtag.length);
+  
+    }
+      console.log(hashtag)
     const lastTweet = await Tweets.findOne({ hashtag: hashtag })
       .sort("-id_tweet")
       .exec();
-    
-     const created = lastTweet?.tweet?.created_at ? new Date(lastTweet.tweet.created_at) : new Date().getDate() - 7;
-     const dateToday = new Date();
-    const lessThanSevenDays =
-      created < dateToday.setDate(dateToday.getDate() - 7);
+    console.log("LAST", lastTweet)
   
-    const buenCaminoSearch = await appOnlyClient.v2.search(`#${hashtag}`, {
+    let lessThanSevenDays = false;
+    //console.log(lastTweet?.length)
+    if (lastTweet) {
+     
+      const created = new Date(lastTweet?.tweet?.created_at);
+      const dateToday = new Date();
+      lessThanSevenDays = created < dateToday.setDate(dateToday.getDate() - 7);
+      console.log("lessThanSevenDays", lessThanSevenDays);
+    } else {
+      console.log("NO TWEETS");
+    }
+    const buenCaminoSearch = await appOnlyClient.v2.search(hashtag, {
       ...(lastTweet?.id_tweet && lessThanSevenDays == false
         ? { since_id: lastTweet.id_tweet }
         : {}),
@@ -33,21 +44,22 @@ var sentiment = require("multilang-sentiment");
       "tweet.fields":
         "attachments,author_id,context_annotations,conversation_id,created_at,entities,geo,id,in_reply_to_user_id,lang,public_metrics,possibly_sensitive,referenced_tweets,reply_settings,source,text,withheld",
     });
-   
+    // console.log("BCS", buenCaminoSearch);
     let authors = buenCaminoSearch.includes.users;
     let places = buenCaminoSearch.includes.places;
     let tweetsArray = [];
     for await (const tweet of buenCaminoSearch) {
       if (tweet.author_id !== "") {
         tweet.author = authors?.find((author) => author.id === tweet.author_id);
-     
+        //console.log("FOUND" ,  tweet.author )
       }
       if (tweet.geo) {
         tweet.location = places?.find((place) => place.id === tweet.geo.place_id);
       }
       tweetsArray.push(tweet);
     }
-
+    // console.log("LEN", tweetsArray.length)
+    // Add tweets to DB
     const capsuleTweets = () => {
       let newTweets = [];
       tweetsArray.forEach(async (tweet) => {
@@ -58,21 +70,51 @@ var sentiment = require("multilang-sentiment");
         tweets.tweet = tweet;
         newTweets.push(tweets);
         // MAKE SENTIMENT ANALISYS
-        let sentimentData = sentiment(
-          tweet.text,
-          tweet.lang !== "und" ? tweet.lang : "es"
-        );
-        tweets.sentiment = sentimentData;
+        try {
+          let sentimentData = sentiment(
+            tweet.text,
+            tweet.lang !== "und" ? tweet.lang : "es"
+          );
+          tweets.sentiment = sentimentData;
+          if (tweets.sentiment != undefined) {
+            let sentimentWords = tweets.sentiment.words;
+            let newArrayWords = [];
+            sentimentWords?.forEach((word) => {
+              let newWord = {};
+              newWord.value = word;
   
-        await tweets.save((err, tweetStored) => {
-          console.log("err", err);
-        });
+              try {
+                newWord.score = sentiment(
+                  word,
+                  tweets.tweet.lang !== "und" ? tweets.tweet.lang : "es"
+                );
+              } catch (error) {
+                newWord.score = sentiment(word, "en");
+              }
+              
+              newArrayWords.push(newWord);
+            });
+            tweets.sentiment.words = newArrayWords;
+          }
+  
+          
+          await tweets.save((err, tweetStored) => {
+            console.log("err", err);
+          });
+        } catch (error) {
+          console.log("ERROR EL Lenguaje no es válido para análisis", error);
+        }
       });
       return newTweets;
     };
-    const tweets = capsuleTweets();
-    console.log("Tweets", tweets);
-    
+  
+    capsuleTweets();
+  
+
+
+
+
+
   }
 //every day cronjobs
 async function createCronJobs() {

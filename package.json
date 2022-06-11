@@ -29,6 +29,7 @@
     "axios": "^0.26.0",
     "bcrypt-nodejs": "0.0.3",
     "concurrently": "^7.0.0",
+    "cors": "^2.8.5",
     "dotenv": "^16.0.1",
     "express": "^4.17.2",
     "history": "^4.10.1",

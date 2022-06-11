@@ -46,5 +46,6 @@
     "Activity by day of the week": "Actividad por día de la semana",
     "Hashtags": "Hashtags",
     "Keywords" :"Palabras clave",
-    "Users": "Usuarios"
+    "Users": "Usuarios",
+    "Please notice that the time to load the tweets could be long depending on the volume of data" : "Por favor, tenga en cuenta que el tiempo de carga de los tweets puede ser largo dependiendo del volumen de datos"
 }

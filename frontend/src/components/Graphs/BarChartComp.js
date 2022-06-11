@@ -30,10 +30,11 @@ export default function BarChartComp({ tweetData }) {
   let dataPrint=[];
 //loop dictData to create dataPrint
     for (let key in dictData) { 
-        if (dictData[key].count>=5){
+      // TODO PASAR A VARIABLE
+        if (dictData[key].count>=100){
             dataPrint.push({    
                 name: dictData[key]?.author?.name,
-                uv: dictData[key].count,
+                "tweets": dictData[key].count,
             }); 
         }
        
@@ -52,12 +53,12 @@ export default function BarChartComp({ tweetData }) {
       style={{marginLeft:"20%"}}
     >
       <CartesianGrid strokeDasharray="3 3" />
-      <XAxis dataKey="name" />
+      <XAxis dataKey="name" hide/>
       <YAxis />
       <Tooltip />
       <Legend />
  
-      <Bar dataKey="uv" fill="#ffc658" />
+      <Bar dataKey="tweets" fill="#ffc658" />
     </BarChart>
   );
 }

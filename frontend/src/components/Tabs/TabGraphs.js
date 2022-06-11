@@ -78,10 +78,7 @@ export default function TabGraphs({ tweetData }) {
         </div>
       </TabPanel>
       <TabPanel value={value} index={1}>
-        <h2>
-          {t("Language distribution. Number of different languages detected:")}
-          {languageData?.length}
-        </h2>
+      
         <div className="tab-graph">
           <PieChartComp tweetData={tweetData} />
         </div>

@@ -65,7 +65,7 @@ export default function LineChartComp({tweetData}) {
     let countsExtended = null;
     if (counts){
       countsExtended = Object.keys(counts).sort().map((k) => {
-        return { name: parseDayToName(k), uv: counts[k] };
+        return { name: parseDayToName(k), "tweets": counts[k] };
       });
     }
    
@@ -87,7 +87,7 @@ export default function LineChartComp({tweetData}) {
     let countsExtended = null;
     if (counts) {
        countsExtended =  Object.keys(counts).sort().map((k) => {
-        return { name: k, uv: counts[k] };
+        return { name: k, "tweets": counts[k] };
       });
     }
    
@@ -124,7 +124,7 @@ export default function LineChartComp({tweetData}) {
       <Tooltip />
       <Legend />
       
-      <Bar dataKey="uv" fill="#ffc658" />
+      <Bar dataKey="tweets" fill="#ffc658" />
     </BarChart>
     {/* <LineChartResumed tweetData={monthlyLine}/> */}
     <p>
@@ -139,7 +139,7 @@ const LineChartResumed = ({tweetData}) => {
   const {widthScreen} = useXaco();
    return(
     <LineChart style={{marginLeft:"20%"}} width={widthScreen>= 768 ? 600:320} height={widthScreen>= 768 ? 300:200} data={tweetData}>
-    <Line type="monotone" dataKey="uv" stroke="#8884d8" />
+    <Line type="monotone" dataKey="tweets" stroke="#8884d8" />
     <CartesianGrid stroke="#ccc" strokeDasharray="5 5" />
     <XAxis dataKey="name" />
     <YAxis />
