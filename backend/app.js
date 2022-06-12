@@ -22,7 +22,7 @@ const { createCronJobs } = require("./cronjobs/cronjobs");
 
 app.use(bodyParser.urlencoded({ extended: false }));
 app.use(bodyParser.json());
-app.use(cors())
+// app.use(cors())
 // Configure Header HTTP
 
 createCronJobs();
