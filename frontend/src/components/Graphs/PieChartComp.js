@@ -1,9 +1,10 @@
 import React from "react";
 import { PieChart, Pie, Cell } from "recharts";
-
+import { useTranslation } from "react-i18next";
 const COLORS = ["#0088FE", "#00C49F", "#FFBB28", "#FF8042"];
 
 export default function PieChartComp({ tweetData }) {
+  const {t} = useTranslation();
   var languageCounts = tweetData?.reduce((p, c) => {
     var name = c.tweet.lang;
     if (!p.hasOwnProperty(name)) {
@@ -15,18 +16,22 @@ export default function PieChartComp({ tweetData }) {
 
   var languageCountsExtended =null;
   if (languageCounts){
-    languageCounts = Object.keys(languageCounts).map((k) => {
+    languageCountsExtended = Object.keys(languageCounts).map((k) => {
       return { name: k, value: languageCounts[k] };
     });
   } 
   const renderLabel = function (entry) {
     return `${entry.name} (${entry.value})`;
   };
-
+  console.log("GHlad",languageCountsExtended)
   const onPieEnter = () => {};
   return (
+    <>  <h2>
+    {t("Language distribution. Number of different languages detected:")}
+    {languageCountsExtended?.length}
+  </h2>
     <PieChart
-     style={{marginLeft:"40%"}}
+      style={{marginLeft:"40%"}}
       overflow={"visible"}
       width={300}
       height={400}
@@ -35,10 +40,9 @@ export default function PieChartComp({ tweetData }) {
     >
       <Pie
         data={languageCountsExtended}
-        cx={120}
-        cy={200}
-        innerRadius={60}
-        outerRadius={80}
+   
+        innerRadius={80}
+        outerRadius={120}
         fill="#8884d8"
         paddingAngle={5}
         dataKey="value"
@@ -50,5 +54,6 @@ export default function PieChartComp({ tweetData }) {
         ))}
       </Pie>
     </PieChart>
+    </>
   );
 }

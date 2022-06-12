@@ -1,4 +1,4 @@
-import React from "react";
+import React, {useState} from "react";
 import {
   BarChart,
   Bar,
@@ -8,10 +8,11 @@ import {
   Tooltip,
   Legend,
 } from "recharts";
-
-
+import { MenuItem, Select, Box } from "@mui/material/";
+import { useTranslation } from "react-i18next";
 export default function BarChartComp({ tweetData }) {
- 
+  const {t} = useTranslation();
+  const [numTweets, setNumTweets] = useState(100)
   let dictData = {};
   /**
    * Create the dict of authors
@@ -30,16 +31,48 @@ export default function BarChartComp({ tweetData }) {
   let dataPrint=[];
 //loop dictData to create dataPrint
     for (let key in dictData) { 
-        if (dictData[key].count>=5){
+      // TODO PASAR A VARIABLE
+        if (dictData[key].count>=numTweets){
             dataPrint.push({    
                 name: dictData[key]?.author?.name,
-                uv: dictData[key].count,
+                "tweets": dictData[key].count,
             }); 
         }
        
     }
+    const handleChange = async (e) => {
+ 
+      e?.preventDefault();
+   
+      setNumTweets(e?.target?.value ? e?.target?.value : "100");
+
+    };
   return (
-    <BarChart
+    <>
+    <p>{t("Number of tweets")}</p>
+    <Select
+          labelId="select-hashtag"
+          id="select-hashtag"
+          value={numTweets}
+          label="Hashtag"
+          onChange={handleChange}
+        >
+                <MenuItem key={"5"} value={5}>
+                  5
+                </MenuItem>
+                <MenuItem key={"10"} value={10}>
+                  10
+                </MenuItem>
+                <MenuItem key={"100"} value={100}>
+                  100
+                </MenuItem>
+                <MenuItem key={"300"} value={300}>
+                  300
+                </MenuItem>
+          
+        </Select>
+        
+        <BarChart
       width={500}
       height={300}
       data={dataPrint}
@@ -52,12 +85,14 @@ export default function BarChartComp({ tweetData }) {
       style={{marginLeft:"20%"}}
     >
       <CartesianGrid strokeDasharray="3 3" />
-      <XAxis dataKey="name" />
+      <XAxis dataKey="name" hide/>
       <YAxis />
       <Tooltip />
       <Legend />
  
-      <Bar dataKey="uv" fill="#ffc658" />
+      <Bar dataKey="tweets" fill="#ffc658" />
     </BarChart>
+        </>
+   
   );
 }

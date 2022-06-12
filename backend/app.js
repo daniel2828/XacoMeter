@@ -2,7 +2,9 @@ const { API_VERSION } = require("./config");
 const mongoose = require("mongoose");
 const express = require("express");
 const bodyParser = require("body-parser");
-const path = require('path');  
+const path = require('path'); 
+var cors = require('cors')
+
 require('dotenv').config()
 
 const app = express();
@@ -20,9 +22,10 @@ const { createCronJobs } = require("./cronjobs/cronjobs");
 
 app.use(bodyParser.urlencoded({ extended: false }));
 app.use(bodyParser.json());
+app.use(cors())
 // Configure Header HTTP
 
-
+createCronJobs();
 
 // Serve static files from the React frontend app
 app.use(express.static(path.join(__dirname, '../frontend/build')))

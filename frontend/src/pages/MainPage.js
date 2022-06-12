@@ -17,14 +17,14 @@ import { getHashtags } from "../api/hashtags";
  */
 export default function MainPage() {
   // States
-  const [hashtag, setHashtag] = useState("BuenCamino");
+  const [hashtag, setHashtag] = useState("");
   const { t } = useTranslation();
   const [tweetData, setTweetData] = useState([]);
   const [daysData, setDaysData] = useState([]);
   const [isSearching, setIsSearching] = useState(true);
   const [languageData, setLanguageData] = useState([]);
   const [tweetDataForSentiment, setTweetDataForSentiment] = useState([]);
-  const [hashtags, setHashtags] = useState([])
+  const [hashtags, setHashtags] = useState([]);
   // Handle changes into the hashtag
   const handleChange = async (e) => {
     setIsSearching(true);
@@ -34,12 +34,12 @@ export default function MainPage() {
 
     setHashtags(hashtagsRes.data);
     let tweetsPrev = await getTweetsByHashtag(
-      e?.target?.value ? e?.target?.value : "#BuenCamino",
+      e?.target?.value ? e?.target?.value : "",
       accessToken
     );
     tweetsPrev = tweetsPrev?.data?.filter((element) => {
       let ys = false;
-      
+
       words.forEach((word) => {
         if (element?.tweet?.text?.toLowerCase().includes(word)) {
           ys = true;
@@ -77,11 +77,11 @@ export default function MainPage() {
     });
 
     setLanguageData(languageCountsExtended);
-    setHashtag(e?.target?.value ? e?.target?.value : "#BuenCamino");
+    setHashtag(e?.target?.value ? e?.target?.value : "");
     setIsSearching(false);
   };
   // Effects
-  useEffect( () => {
+  useEffect(() => {
     handleChange();
   }, []);
   /**
@@ -93,17 +93,18 @@ export default function MainPage() {
   } else if (isSearching) {
     return (
       <div className="controll-page">
-      <Box
-        sx={{
-          display: "flex",
-          flexDirection: "column",
-          alignItems: "center",
-          marginTop: "30px",
-        }}
-      >
-        <p>{t("loading tweets")}</p>{" "}
-        <CircularProgress size={150} sx={{ marginTop: "40px" }} />
-      </Box>
+        <Box
+          sx={{
+            display: "flex",
+            flexDirection: "column",
+            alignItems: "center",
+            marginTop: "30px",
+          }}
+        >
+          <p>{t("loading tweets")}</p>{" "}
+          <p>{t("Please notice that the time to load the tweets could be long depending on the volume of data")}</p>
+          <CircularProgress size={150} sx={{ marginTop: "40px" }} />
+        </Box>
       </div>
     );
   } else {
@@ -119,27 +120,30 @@ export default function MainPage() {
           onChange={handleChange}
         >
           {hashtags?.map((hashtag) => {
-            if (hashtag.active){
-              const value = (hashtag.isKeyword ? "": "#") + hashtag.name; 
-            
+            if (hashtag.active) {
+              const value = (hashtag.isKeyword ? "" : "#") + hashtag.name;
+
               return (
-                <MenuItem key={hashtag?.name} value={value}  >
+                <MenuItem key={hashtag?.name} value={value}>
                   {value}
                 </MenuItem>
               );
             }
-           
           })}
-          
         </Select>
-        <h2>
-          {t("Number of tweets registered since")} {daysData[daysData.length -1 ]?.name}:
-        </h2>
-        <h2> {tweetData?.length}</h2>
-        <TabMain
-          tweetData={tweetData}
-          tweetDataForSentiment={tweetDataForSentiment}
-        ></TabMain>
+        {tweetData?.length > 0 && (
+          <>
+            <h2>
+              {t("Number of tweets registered since")}{" "}
+              {daysData[daysData.length - 1]?.name}:
+            </h2>
+            <h2> {tweetData?.length}</h2>
+            <TabMain
+              tweetData={tweetData}
+              tweetDataForSentiment={tweetDataForSentiment}
+            ></TabMain>
+          </>
+        )}
       </div>
     );
   }

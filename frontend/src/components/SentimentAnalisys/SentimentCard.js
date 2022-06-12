@@ -6,6 +6,7 @@ import CardContent from '@mui/material/CardContent';
 import Button from '@mui/material/Button';
 import Typography from '@mui/material/Typography';
 import CircularProgress from '@mui/material/CircularProgress';
+import Grid from "@mui/material/Grid";
 import { useTranslation } from "react-i18next";
 import {
     TwitterTimelineEmbed,
@@ -39,9 +40,14 @@ export default function SentimentCard({ data }) {
 
   })
   return (
+   
+
     <Card >
       <CardContent>
-      <TwitterTweetEmbed onLoad={()=>setLoadingTweet(false)}  options={{ size:"80%", width:"80%"}}  tweetId={data?.id_tweet} />
+      
+      
+            
+      <TwitterTweetEmbed onLoad={()=>setLoadingTweet(false)}   tweetId={data?.id_tweet} />
         
         {loadingTweet && (
           <>
@@ -63,9 +69,12 @@ export default function SentimentCard({ data }) {
        }
 
       </CardContent>
+      
       <CardActions>
           
       </CardActions>
     </Card>
+   
+
   );
 }
