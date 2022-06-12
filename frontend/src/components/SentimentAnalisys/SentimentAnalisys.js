@@ -12,6 +12,7 @@ import { useTranslation } from "react-i18next";
 export default function SentimentAnalisys({ dataWithSentiment }) {
   console.log("Data sent", dataWithSentiment)
   let removeRepeated = []
+  let removeRepeatedNeg = []
   const [value, setValue] = useState(0);
   const handleChange = (event, newValue) => {
     setValue(newValue);
@@ -84,11 +85,11 @@ export default function SentimentAnalisys({ dataWithSentiment }) {
                     // That means that ITS a retweet
                     return false
                   }
-                    if (removeRepeated?.includes(element.id_tweet)) {
+                    if (removeRepeatedNeg?.includes(element.id_tweet)) {
                    
                       return false;
                     }else{
-                      removeRepeated.push(element.id_tweet);
+                      removeRepeatedNeg.push(element.id_tweet);
                       return true;
                     }
                   })
