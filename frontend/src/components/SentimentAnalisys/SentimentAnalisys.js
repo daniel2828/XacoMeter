@@ -11,6 +11,7 @@ import { Grid } from "@mui/material";
 import { useTranslation } from "react-i18next";
 export default function SentimentAnalisys({ dataWithSentiment }) {
   console.log("Data sent", dataWithSentiment)
+  let removeRepeated = []
   const [value, setValue] = useState(0);
   const handleChange = (event, newValue) => {
     setValue(newValue);
@@ -77,7 +78,21 @@ export default function SentimentAnalisys({ dataWithSentiment }) {
                   // a must be equal to b
                   return 0;
                 })
-                .slice(0, 10)
+                .filter((element) => {
+                  //log element
+                  if (element?.tweet?.referenced_tweets?.length >0){
+                    // That means that ITS a retweet
+                    return false
+                  }
+                    if (removeRepeated?.includes(element.id_tweet)) {
+                   
+                      return false;
+                    }else{
+                      removeRepeated.push(element.id_tweet);
+                      return true;
+                    }
+                  })
+                  .slice(0, 10)
                 .map((element) => {
                   return (
                     <Grid key ={element.id_tweet} item xs={12} sm={6} md={6} lg={6} xl={4}>
@@ -100,7 +115,21 @@ export default function SentimentAnalisys({ dataWithSentiment }) {
                   // a must be equal to b
                   return 0;
                 })
-                .slice(0, 10)
+                .filter((element) => {
+                  //log element
+                  if (element?.tweet?.referenced_tweets?.length >0){
+                    // That means that ITS a retweet
+                    return false
+                  }
+                    if (removeRepeated?.includes(element.id_tweet)) {
+                      //console.log("LLL", element)
+                      return false;
+                    }else{
+                      removeRepeated.push(element.id_tweet);
+                      return true;
+                    }
+                  })
+                  .slice(0, 10)
                 .map((element) => {
                   return (
                     <Grid key ={element.id_tweet} item xs={12} sm={8} md={8} lg={4} xl={4}>

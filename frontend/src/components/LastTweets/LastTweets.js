@@ -17,42 +17,44 @@ import {
 } from "react-twitter-embed";
 import moment from "moment";
 export default function LastTweets({ tweetData }) {
-  const [tweetsEmbed, setTweetsEmbed] = useState([]);
-  const [load, setLoad] = useState(false);
+
   const {t} = useTranslation();
   const [loadingTweet, setLoadingTweet] = useState(true);
   const [tweetSorted, setTweetSorted] = useState([])
   let tweetSort = tweetData;
   useEffect(() => {
     let removeRepeated = []
-    tweetSort= tweetSort?.sort(function (a, b) {
-      if (moment(a?.tweet?.createdAt) > moment(b?.tweet?.createdAt)) {
+    const sortedData = tweetSort?.sort(function (a, b) {
+       if (moment(a?.tweet?.created_at).isAfter(moment(b?.tweet?.created_at))) {
         return -1;
       }
-      if (moment(a?.tweet?.createdAt) < moment(b?.tweet?.createdAt)) {
+      if (moment(a?.tweet?.created_at).isBefore(moment(b?.tweet?.created_at))) {
         return 1;
       }
       // a must be equal to b
-      return 0;
+      //return 0;
     }).filter((element) => {
-      if (removeRepeated?.includes(element.tweet_id)) {
-        return true;
-      }else{
-        removeRepeated.push(element.tweet_id);
+    //log element
+    if (element?.tweet?.referenced_tweets?.length >0){
+      // That means that ITS a retweet
+      return false
+    }
+      if (removeRepeated?.includes(element.id_tweet)) {
+        //console.log("LLL", element)
         return false;
+      }else{
+        removeRepeated.push(element.id_tweet);
+        return true;
       }
     })
     .slice(0, 10);
-    setTweetSorted(tweetSort);
+    
+    setTweetSorted(sortedData);
   }, [tweetData])
   
 
  
-  console.log("AWED", tweetSort);
-  useEffect(() => {
-    setTweetsEmbed();
-    setLoad(true);
-  }, []);
+
   if (!tweetSorted) {
     return <>Loading...</>;
   } else {
