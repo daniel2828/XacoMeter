@@ -19,7 +19,21 @@ logger.info(`MONGO_DB_URI ${MONGO_DB_URI}, MONGO_DB_URI_TEST, NODE_ENV`);
 const connectionString = NODE_ENV ==='test'? MONGO_DB_URI_TEST : MONGO_DB_URI;
 const { createCronJobs } = require("./cronjobs/cronjobs");
 
-
+app.use((req, res, next) => {
+  res.header("Access-Control-Allow-Origin", "*")
+  res.header(
+    "Access-Control-Allow-Headers",
+    "Origin, X-Requested, Content-Type, Accept Authorization"
+  )
+  if (req.method === "OPTIONS") {
+    res.header(
+      "Access-Control-Allow-Methods",
+      "POST, PUT, PATCH, GET, DELETE"
+    )
+    return res.status(200).json({})
+  }
+  next()
+})
 app.use(bodyParser.urlencoded({ extended: false }));
 app.use(bodyParser.json());
 // app.use(cors())
@@ -27,21 +41,20 @@ app.use(bodyParser.json());
 
 createCronJobs();
 
-// Serve static files from the React frontend app
-app.use(express.static(path.join(__dirname, '../frontend/build')))
+
 
 // AFTER defining routes: Anything that doesn't match what's above, send back index.html; (the beginning slash ('/') in the string is important!)
 
-app.use((req, res, next) => {
-  res.header("Access-Control-Allow-Origin", "*");
-  res.header(
-    "Access-Control-Allow-Headers",
-    "Authorization, X-API-KEY, Origin, X-Requested-With, Content-Type, Accept, Access-Control-Allow-Request-Method"
-  );
-  res.header("Access-Control-Allow-Methods", "GET, POST, OPTIONS, PUT, DELETE");
-  res.header("Allow", "GET, POST, OPTIONS, PUT, DELETE");
-  next();
-});
+// app.use((req, res, next) => {
+//   res.header("Access-Control-Allow-Origin", "*");
+//   res.header(
+//     "Access-Control-Allow-Headers",
+//     "Authorization, X-API-KEY, Origin, X-Requested-With, Content-Type, Accept, Access-Control-Allow-Request-Method"
+//   );
+//   res.header("Access-Control-Allow-Methods", "GET, POST, OPTIONS, PUT, DELETE");
+//   res.header("Allow", "GET, POST, OPTIONS, PUT, DELETE");
+//   next();
+// });
 
 // Basic Routes
 app.use(`/api/${API_VERSION}/users`, userRoutes);
