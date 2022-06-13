@@ -1,44 +1,15 @@
-import {useState,useEffect} from "react";
-import PropTypes from "prop-types";
+import {useState} from "react";
 import Tabs from "@mui/material/Tabs";
 import Tab from "@mui/material/Tab";
 import Box from "@mui/material/Box";
 import { useTranslation } from "react-i18next";
 import TabGraphs from "./TabGraphs";
-import Grid from "@mui/material/Grid";
-import { useContext } from "react";
+
 import SentimentAnalisys from "../SentimentAnalisys/SentimentAnalisys";
 import useXaco from "../../hooks/useXaco";
 import MobileDrawer from "../Mobile/MobileDrawer";
 import LastTweets from "../LastTweets/LastTweets";
-function TabPanel(props) {
-  const { children, value, index, ...other } = props;
-
-  return (
-    <div
-      role="tabpanel"
-      hidden={value !== index}
-      id={`simple-tabpanel-${index}`}
-      aria-labelledby={`simple-tab-${index}`}
-      {...other}
-    >
-      {children}
-    </div>
-  );
-}
-
-TabPanel.propTypes = {
-  children: PropTypes.node,
-  index: PropTypes.number.isRequired,
-  value: PropTypes.number.isRequired,
-};
-
-function a11yProps(index) {
-  return {
-    id: `simple-tab-${index}`,
-    "aria-controls": `simple-tabpanel-${index}`,
-  };
-}
+import {TabPanel, a11yProps} from "../../utils/utils";
 
 export default function TabMain({ tweetData, tweetDataForSentiment }) {
   const [value, setValue] = useState(0);
