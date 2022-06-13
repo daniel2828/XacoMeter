@@ -53,7 +53,7 @@ function singUp(req, res) {
 
 function singIn(req, res) {
   const params = req.body;
-  const email = params.email.toLowerCase();
+  const email = params.email.toLowerCase().toString();
   const password = params.password;
   // Find by email in mongo database
   User.findOne({ email }, (err, userStored) => {
@@ -78,7 +78,7 @@ function singIn(req, res) {
     }
   });
 }
-async function getUsers(req, res) {
+async function getUsers(_req, res) {
  
   // Find by email in mongo database
   let users = await User.find();
