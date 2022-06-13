@@ -78,7 +78,7 @@ function singIn(req, res) {
     }
   });
 }
-async function getUsers(req, res) {
+async function getUsers(_req, res) {
  
   // Find by email in mongo database
   let users = await User.find();

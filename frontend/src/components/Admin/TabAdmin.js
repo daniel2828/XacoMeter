@@ -45,8 +45,8 @@ export default function TabAdmin() {
    * Change the value of the tab
    * @param {Integer} newValue 
    */
-  const handleChange = (event, newValue) => {
-    console.log("new Valie",  newValue);
+  const handleChange = (_event, newValue) => {
+    
     setValue(newValue);
   };
   return (

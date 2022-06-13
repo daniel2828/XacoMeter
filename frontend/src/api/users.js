@@ -13,11 +13,11 @@ export const signUp =async (body)=>{
     return data;
  }
  export const getUsers = async (accessToken)=>{
-   const data = await axios.get(`${BASE_PATH}/${API_VERSION}/users`,
+
+
+   return await axios.get(`${BASE_PATH}/${API_VERSION}/users`,
    {headers:{
       "Content-Type": "application/json",
       Authorization : accessToken
-   }})
-
-   return data;
+   }});
  }
