@@ -10,9 +10,9 @@ exports.ensureAuth = (req, res, next) => {
       .send({ message: "La petición no tiene cabecera de autentificación" });
   }
   const token = req.headers.authorization.replace(/['"]+/g, "");
-
+  let payload = "";
   try {
-    let payload = jwt.decode(token, SECRET_KEY);
+    payload= jwt.decode(token, SECRET_KEY);
     // Token expired
     if (payload.exp < moment.unix()) {
       return res.status(404).send({ message: "El token ha expirado" });
