@@ -2,50 +2,24 @@ import React from "react";
 import { useState } from "react";
 
 import SentimentCard from "./SentimentCard";
-import PropTypes from "prop-types";
+
 import Tabs from "@mui/material/Tabs";
 import Tab from "@mui/material/Tab";
 import Box from "@mui/material/Box";
 import { Grid } from "@mui/material";
 
 import { useTranslation } from "react-i18next";
+import {TabPanel, a11yProps} from "../../utils/utils";
 export default function SentimentAnalisys({ dataWithSentiment }) {
   console.log("Data sent", dataWithSentiment)
   let removeRepeated = []
   let removeRepeatedNeg = []
   const [value, setValue] = useState(0);
-  const handleChange = (event, newValue) => {
+  const handleChange = (_event, newValue) => {
     setValue(newValue);
   };
   const { t } = useTranslation();
-  function TabPanel(props) {
-    const { children, value, index, ...other } = props;
 
-    return (
-      <div
-        role="tabpanel"
-        hidden={value !== index}
-        id={`simple-tabpanel-${index}`}
-        aria-labelledby={`simple-tab-${index}`}
-        {...other}
-      >
-        {children}
-      </div>
-    );
-  }
-
-  TabPanel.propTypes = {
-    children: PropTypes.node,
-    index: PropTypes.number.isRequired,
-    value: PropTypes.number.isRequired,
-  };
-
-  function a11yProps(index) {
-    return {
-      id: `simple-tab-${index}`,
-      "aria-controls": `simple-tabpanel-${index}`,
-    };
-  }
 
 
   if (!dataWithSentiment) {

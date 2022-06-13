@@ -29,7 +29,7 @@ export default function ModalAddHash({callGetHashtags,isKeyword}) {
       const handleClose = () => setOpen(false);
       const accessToken = getAccessTokenApi();
       const handleCreate = async()=> {
-        const data = await createHashtag(hashName, accessToken,isKeyword );
+        await createHashtag(hashName, accessToken,isKeyword );
     
         handleClose();
         callGetHashtags();

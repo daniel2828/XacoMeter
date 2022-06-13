@@ -42,7 +42,7 @@ export default function LineChartComp({tweetData}) {
 
    }
    const getTemporalyLineWeekly = (start, end)=>{
-    let firstTime = true;
+
     const counts = tweetData?.reduce((p, c) => {
    
       var name = c.tweet.created_at.substring(start, end);
