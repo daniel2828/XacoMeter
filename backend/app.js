@@ -2,7 +2,7 @@ const { API_VERSION } = require("./config");
 const mongoose = require("mongoose");
 const express = require("express");
 const bodyParser = require("body-parser");
-const path = require('path'); 
+
 
 
 require('dotenv').config()

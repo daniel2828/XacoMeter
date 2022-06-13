@@ -1,7 +1,6 @@
 const Tweets = require("../models/tweets");
-const { appOnlyClient } = require("../config");
 const {processHashtags} = require("../utils/reusable");
-var sentiment = require("multilang-sentiment");
+let sentiment = require("multilang-sentiment");
 
 async function testAPI(req, res) {
   res.status(200).json({ name: 'john' });

@@ -5,8 +5,8 @@ const COLORS = ["#0088FE", "#00C49F", "#FFBB28", "#FF8042"];
 
 export default function PieChartComp({ tweetData }) {
   const {t} = useTranslation();
-  var languageCounts = tweetData?.reduce((p, c) => {
-    var name = c.tweet.lang;
+  let languageCounts = tweetData?.reduce((p, c) => {
+    let name = c.tweet.lang;
     if (!p.hasOwnProperty(name)) {
       p[name] = 0;
     }
@@ -14,7 +14,7 @@ export default function PieChartComp({ tweetData }) {
     return p;
   }, {});
 
-  var languageCountsExtended =null;
+  let languageCountsExtended =null;
   if (languageCounts){
     languageCountsExtended = Object.keys(languageCounts).map((k) => {
       return { name: k, value: languageCounts[k] };
