@@ -54,8 +54,7 @@ const processHashtags = async(hashtag)=> {
   if (hashtag.substring(0, 1) == "#") {
     hashtag = hashtag.substring(1, hashtag.length);
   }
-  console.log(hashtag);
-  const lastTweet = await Tweets.findOne({ hashtag: hashtag })
+  const lastTweet = await Tweets.findOne({ hashtag: hashtag.toString() })
     .sort("-id_tweet")
     .exec();
 
