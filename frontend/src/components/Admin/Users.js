@@ -2,7 +2,7 @@
 
 import React, { useEffect, useState } from "react";
 import { getAccessTokenApi } from "../../api/auth";
-import { getHashtags, updateHashtag, deleteHashtag } from "../../api/hashtags";
+import {  updateHashtag, deleteHashtag } from "../../api/hashtags";
 import Switch from "@mui/material/Switch";
 import {getUsers} from "../../api/users"
 import { Grid } from "@mui/material";
@@ -27,9 +27,9 @@ export default function Users() {
      * Get all hashtags from the API
      */
     const callGetUsers = async () => {
-      const users = await getUsers(accessToken);
-      console.log("USERS", users);
-      setUsers(users.data);
+      const usersRes = await getUsers(accessToken);
+      
+      setUsers(usersRes.data);
     };
   /**
    * handle change hashtag
