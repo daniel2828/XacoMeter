@@ -19,10 +19,10 @@ logger.info(`MONGO_DB_URI ${MONGO_DB_URI}, MONGO_DB_URI_TEST, NODE_ENV`);
 const connectionString = NODE_ENV ==='test'? MONGO_DB_URI_TEST : MONGO_DB_URI;
 const { createCronJobs } = require("./cronjobs/cronjobs");
 
-
+var cors = require('cors')
 app.use(bodyParser.urlencoded({ extended: false }));
 app.use(bodyParser.json());
-// app.use(cors())
+app.use(cors())
 // Configure Header HTTP
 
 createCronJobs();
