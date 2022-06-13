@@ -45,8 +45,8 @@ export default function LineChartComp({tweetData}) {
 
     const counts = tweetData?.reduce((p, c) => {
    
-      var name = c.tweet.created_at.substring(start, end);
-      var newDate = moment.utc();
+      let name = c.tweet.created_at.substring(start, end);
+      let newDate = moment.utc();
       newDate.set('year',  c.tweet.created_at.substring(0, 4));
 
       newDate.set('month', c.tweet.created_at.substring(5, 7));
@@ -75,7 +75,7 @@ export default function LineChartComp({tweetData}) {
   
     const counts = tweetData?.reduce((p, c) => {
  
-      var name = c.tweet.created_at.substring(start, end);
+      let name = c.tweet.created_at.substring(start, end);
     
       if (!p.hasOwnProperty(name)) {
         p[name] = 0;

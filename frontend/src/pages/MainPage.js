@@ -51,28 +51,28 @@ export default function MainPage() {
     setTweetData(tweetsPrev);
     setTweetDataForSentiment(tweetsPrev);
     // Use reduce
-    var counts = tweetsPrev.reduce((p, c) => {
-      var name = c.tweet.created_at.substring(0, 10);
+    let counts = tweetsPrev.reduce((p, c) => {
+      let name = c.tweet.created_at.substring(0, 10);
       if (!p.hasOwnProperty(name)) {
         p[name] = 0;
       }
       p[name]++;
       return p;
     }, {});
-    var countsExtended = Object.keys(counts).map((k) => {
+    let countsExtended = Object.keys(counts).map((k) => {
       return { name: k, uv: counts[k] };
     });
     setDaysData(countsExtended);
     // // Get the language counted
-    var languageCounts = tweetsPrev.reduce((p, c) => {
-      var name = c.tweet.lang;
+    let languageCounts = tweetsPrev.reduce((p, c) => {
+      let name = c.tweet.lang;
       if (!p.hasOwnProperty(name)) {
         p[name] = 0;
       }
       p[name]++;
       return p;
     }, {});
-    var languageCountsExtended = Object.keys(languageCounts).map((k) => {
+    let languageCountsExtended = Object.keys(languageCounts).map((k) => {
       return { name: k, value: languageCounts[k] };
     });
 

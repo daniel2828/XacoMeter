@@ -1,8 +1,6 @@
 const cron = require("node-cron");
 const Hashtags = require("../models/hashtags");
-const Tweets = require("../models/tweets");
-const { appOnlyClient } = require("../config");
-var sentiment = require("multilang-sentiment");
+
 const {processHashtags} = require ("../utils/reusable");
 /**
  * Search by query all the data of the last week
@@ -17,7 +15,7 @@ async function createCronJobs() {
     
      
     Hashtags.find({}).then((hashtags) => { 
-        console.log("ASDAWD")
+      
         hashtags.forEach(async (hashtag) => {
             console.log(hashtag);
             await processHashtags(hashtag.name);
