@@ -36,7 +36,7 @@ export default function NavBar() {
   const handleChangeMain = ()=>{  
       history.push("/data")
   }
-  if (!isMobile){
+//  if (!isMobile){
     return (
       <Box sx={{ flexGrow: 1 }}>
         <AppBar position="static">
@@ -44,9 +44,12 @@ export default function NavBar() {
             <Avatar sx={{ m: 1, bgcolor: "secondary.main" }}>
                 <img src={CaminoImage} alt="Logo"  width="50" height="50" />;
               </Avatar>
-            <Typography variant="h6" component="div" sx={{ flexGrow: 1 }}>
-                XacoMeter
-            </Typography>
+            {!isMobile&&(
+              <Typography variant="h6" component="div" sx={{ flexGrow: 1 }}>
+              XacoMeter
+              </Typography>
+            )}
+            
             <Select
               labelId="select-language"
               id="select-language"
@@ -66,8 +69,8 @@ export default function NavBar() {
         </AppBar>
       </Box>
     );
-  }else{
-    return(<></>);
-  }
+  // }else{
+  //   return(<></>);
+  // }
   
 }

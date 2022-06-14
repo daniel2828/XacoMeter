@@ -10,6 +10,7 @@ import {
 } from "recharts";
 import { MenuItem, Select } from "@mui/material/";
 import { useTranslation } from "react-i18next";
+import "./Chart.scss";
 export default function BarChartComp({ tweetData }) {
   const {t} = useTranslation();
   const [numTweets, setNumTweets] = useState(100)
@@ -73,16 +74,18 @@ export default function BarChartComp({ tweetData }) {
         </Select>
         
         <BarChart
-      width={500}
+      width={400}
       height={300}
+      style={{overflowX:"scroll", scrollbarWidth: "thin", left:"30%"}}
+  
       data={dataPrint}
-      margin={{
-        top: 20,
-        right: 30,
-        left: 20,
-        bottom: 5,
-      }}
-      style={{marginLeft:"20%"}}
+      // margin={{
+      //   top: 20,
+      //   right: 30,
+      //   left: 20,
+      //   bottom: 5,
+      // }}
+      //style={{}}
     >
       <CartesianGrid strokeDasharray="3 3" />
       <XAxis dataKey="name" hide/>

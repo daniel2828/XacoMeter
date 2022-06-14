@@ -1,6 +1,7 @@
 import React from "react";
 import { PieChart, Pie, Cell } from "recharts";
 import { useTranslation } from "react-i18next";
+import "./Chart.scss";
 const COLORS = ["#0088FE", "#00C49F", "#FFBB28", "#FF8042"];
 
 export default function PieChartComp({ tweetData }) {
@@ -32,7 +33,7 @@ export default function PieChartComp({ tweetData }) {
   </h2>
     <PieChart
       
-      overflow={"visible"}
+      style={{overflowX:"scroll", scrollbarWidth: "thin", left:"30%"}}
       width={250}
       height={400}
       display="block"

@@ -137,9 +137,7 @@ export default function MainPage() {
           })}
         </Select>
       
-        {isMobile && (
-          <MobileDrawer tweetData={tweetData} tweetDataForSentiment={tweetDataForSentiment}/>)
-        }
+       
         {tweetData?.length  > 0  && (
           <>
             <h2>
