@@ -15,8 +15,8 @@ import CardContent from "@mui/material/CardContent";
 import { t } from "i18next";
 import useXaco from "../../hooks/useXaco";
 export default function Users() {
-  const {widthScreen} = useXaco();
-  const isMobile = widthScreen <=768;
+   const {widthScreen} = useXaco();
+    const isMobile = widthScreen <=768;
     const [users, setUsers] = useState([]);
     const accessToken = getAccessTokenApi();
     //Effect to get hashtags from api
@@ -53,7 +53,10 @@ export default function Users() {
       callGetUsers();
     };
     
-    const perc = isMobile ? "20%":"40%";
+    const perc = isMobile ? "15%":"35%";
+ 
+    
+    
   return (
     <Grid container spacing={3}>
         <Grid item xs={12}>
@@ -62,8 +65,8 @@ export default function Users() {
               <Card
                 key={user?._id}
                 style={{
-                  marginLeft: {perc},
-                  marginRight: {perc},
+                  marginLeft: perc,
+                  marginRight: perc,
                   marginTop: "2%",
                 }}
               >

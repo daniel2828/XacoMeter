@@ -57,7 +57,8 @@ export default function Hashtags({isKeyword}) {
       deleteHashtag(_id, accessToken);
       callGetHashtags();
     };
-    const perc = isMobile ? "20%":"40%";
+    const perc = isMobile ? "15%":"35%";
+ 
   return (
     <Grid container spacing={3}>
         <Grid item xs={12}>
@@ -66,8 +67,8 @@ export default function Hashtags({isKeyword}) {
               <Card
                 key={hashtag?._id}
                 style={{
-                  marginLeft: {perc},
-                  marginRight: {perc},
+                  marginLeft: perc,
+                  marginRight: perc,
                   marginTop: "2%",
                 }}
               >
