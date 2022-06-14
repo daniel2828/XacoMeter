@@ -10,8 +10,7 @@ import MenuItem from "@mui/material/MenuItem";
 import Typography from '@mui/material/Typography';
 
 import useXaco from "../../hooks/useXaco";
-import { useEffect } from "react";
-import { Redirect } from "react-router-dom";
+
 import { useHistory } from "react-router-dom";
 import { logoutUser } from "../../utils/utils";
 
@@ -19,8 +18,9 @@ import Avatar from "@mui/material/Avatar";
 import CaminoImage from  "../../assets/img/concha.jpg";
 export default function NavBar() {
   const history = useHistory();
-  
-  const { user, isLoading } = useXaco();
+
+  const { user, isLoading ,widthScreen} = useXaco();
+  const isMobile = widthScreen <=768;
   const { t, i18n } = useTranslation();
 
   const handleChangeLanguage = (e = undefined) => {
@@ -36,33 +36,38 @@ export default function NavBar() {
   const handleChangeMain = ()=>{  
       history.push("/data")
   }
-  return (
-    <Box sx={{ flexGrow: 1 }}>
-      <AppBar position="static">
-        <Toolbar>
-          <Avatar sx={{ m: 1, bgcolor: "secondary.main" }}>
-              <img src={CaminoImage} alt="Logo"  width="50" height="50" />;
-            </Avatar>
-          <Typography variant="h6" component="div" sx={{ flexGrow: 1 }}>
-              XacoMeter
-          </Typography>
-          <Select
-            labelId="select-language"
-            id="select-language"
-            value={i18n.language ? i18n.language.substring(0,2) : "es"}
-            label="Language"
-            onChange={handleChangeLanguage}
-            style={{backgroundColor:"gainsboro", border:"1px solid", overflow:"hidden"}}
-          >
-            <MenuItem style={{overflow:"hidden"}} value="es">{t("Spanish")}</MenuItem>
-            <MenuItem style={{overflow:"hidden"}} value="en">{t("English")}</MenuItem>
-          </Select>
-          {!user && (<Button color="inherit">Login</Button>)}
-          {user && (<Button onClick={logoutUser} color="inherit">Logout</Button>)}
-          <Button onClick={handleChangeMain} color="inherit">Tweets</Button>
-          {user?.role =="admin" && (<Button onClick={handleChangePage} color="inherit">Admin</Button>)}
-        </Toolbar>
-      </AppBar>
-    </Box>
-  );
+  if (!isMobile){
+    return (
+      <Box sx={{ flexGrow: 1 }}>
+        <AppBar position="static">
+          <Toolbar>
+            <Avatar sx={{ m: 1, bgcolor: "secondary.main" }}>
+                <img src={CaminoImage} alt="Logo"  width="50" height="50" />;
+              </Avatar>
+            <Typography variant="h6" component="div" sx={{ flexGrow: 1 }}>
+                XacoMeter
+            </Typography>
+            <Select
+              labelId="select-language"
+              id="select-language"
+              value={i18n.language ? i18n.language.substring(0,2) : "es"}
+              label="Language"
+              onChange={handleChangeLanguage}
+              style={{backgroundColor:"gainsboro", border:"1px solid", overflow:"hidden"}}
+            >
+              <MenuItem style={{overflow:"hidden"}} value="es">{t("Spanish")}</MenuItem>
+              <MenuItem style={{overflow:"hidden"}} value="en">{t("English")}</MenuItem>
+            </Select>
+            {!user && (<Button color="inherit">Login</Button>)}
+            {user && (<Button onClick={logoutUser} color="inherit">Logout</Button>)}
+            <Button onClick={handleChangeMain} color="inherit">Tweets</Button>
+            {user?.role =="admin" && (<Button onClick={handleChangePage} color="inherit">Admin</Button>)}
+          </Toolbar>
+        </AppBar>
+      </Box>
+    );
+  }else{
+    return(<></>);
+  }
+  
 }

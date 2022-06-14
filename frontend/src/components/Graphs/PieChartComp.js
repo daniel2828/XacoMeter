@@ -31,11 +31,12 @@ export default function PieChartComp({ tweetData }) {
     {languageCountsExtended?.length}
   </h2>
     <PieChart
-      style={{marginLeft:"40%"}}
+      
       overflow={"visible"}
-      width={300}
+      width={250}
       height={400}
-     
+      display="block"
+      position="center"
       onMouseEnter={onPieEnter}
     >
       <Pie

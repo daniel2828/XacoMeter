@@ -10,8 +10,10 @@ import { useTranslation } from "react-i18next";
 import BarChartComp from "../Graphs/BarChartComp";
 import "./TabGraphs.scss";
 import {TabPanel, a11yProps} from "../../utils/utils";
-
+import useXaco from "../../hooks/useXaco";
 export default function TabGraphs({ tweetData }) {
+  const {widthScreen} = useXaco();
+  const isMobile = widthScreen <=768;
   const [value, setValue] = React.useState(0);
   const { t } = useTranslation();
   const handleChange = (event, newValue) => {
@@ -35,6 +37,7 @@ export default function TabGraphs({ tweetData }) {
           value={value}
           onChange={handleChange}
           aria-label="basic tabs example"
+          orientation={isMobile ? "vertical" : "horizontal"}
         >
           <Tab label={t("History of tweets")} {...a11yProps(0)} />
           <Tab label={t("Language distribution")} {...a11yProps(1)} />

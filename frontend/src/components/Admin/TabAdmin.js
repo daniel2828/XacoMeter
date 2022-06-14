@@ -6,11 +6,15 @@ import { useTranslation } from "react-i18next";
 import Hashtags from "./Hashtags";
 import Users from "./Users";
 import {TabPanel, a11yProps} from "../../utils/utils";
+import useXaco from "../../hooks/useXaco";
+
 /**
  * Tab admin page
  * @returns Tab for admin
  */
 export default function TabAdmin() {
+  const {widthScreen} = useXaco();
+  const isMobile = widthScreen <=768;
   const [valueAdmin, setValueAdmin] = useState(0);
   const { t } = useTranslation();
   /**
@@ -35,6 +39,7 @@ export default function TabAdmin() {
           value={valueAdmin}
           onChange={handleChangeAdmin}
           aria-label="Admin tab"
+          orientation={isMobile ? "vertical" : "horizontal"}
         >
           <Tab label={t("Hashtags")} {...a11yProps(0)} />
           <Tab label={t("Keywords")} {...a11yProps(1)} />
@@ -49,7 +54,7 @@ export default function TabAdmin() {
         <Hashtags isKeyword={true}/>
       </TabPanel>
       <TabPanel className="tab-graph" value={valueAdmin} index={2}>
-        <Users/>
+        <Users isUser={true}/>
       </TabPanel>
     </Box>
   );

@@ -11,7 +11,7 @@ function singUp(req, res) {
   user.lastname = lastName;
   user.email = email.toLowerCase();
   //Default values
-  user.role = "admin";
+  user.role = "basic";
   user.active = true;
   console.log(req.body);
   if (!password || !repeatPassword) {
@@ -63,6 +63,9 @@ function singIn(req, res) {
       res.status(404).send({ message: "Email no encontrado." });
     } else {
       // Check password
+      if(!userStored.active){
+        res.status(404).send({ message: "Usuario inactivo." });
+      }else{
       bcrypt.compare(password, userStored.password, (err, check) => {
         if (err) {
           res.status(500).send({ message: "Error de servidor." });
@@ -76,7 +79,20 @@ function singIn(req, res) {
         }
       });
     }
+    }
   });
+}
+async function createUser(req, res) {
+  const  {name,lastName,email, password, adminUser} = req.body;
+  const user = new User();
+  user.name = name;
+  user.lastname = lastName;
+  user.active = true;
+  user.role = (adminUser ? "admin" : "basic");
+  user.email = email;
+  user.password = password;
+  const response = await user.save();
+  res.status(200).send(response);
 }
 async function getUsers(_req, res) {
  
@@ -85,7 +101,20 @@ async function getUsers(_req, res) {
   res.status(200).send(users);
 }
 
+async function modify_user(req, res) {
 
+  const {_id, active} = req.body;
+  let response = await User.findByIdAndUpdate(_id, {$set: {active: active}});
+
+  res.status(200).send(response);
+}
+async function deleteUser(req, res) {
+  const {id} = req.params;
+ 
+  let response = await User.findByIdAndDelete(id);
+
+  res.status(200).send(response);
+}
 // async..await is not allowed in global scope, must use a wrapper
 async function passRecovery(req, res) {
   // Generate test SMTP service account from ethereal.email
@@ -125,5 +154,9 @@ module.exports = {
   singUp,
   singIn,
   getUsers,
-  passRecovery
+  passRecovery,
+  modify_user,
+  createUser,
+  deleteUser
+
 };

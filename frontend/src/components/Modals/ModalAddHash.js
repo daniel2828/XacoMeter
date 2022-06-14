@@ -6,9 +6,11 @@ import Modal from '@mui/material/Modal';
 import { Input } from '@mui/material';
 import { Grid } from '@mui/material';
 import { createHashtag } from '../../api/hashtags';
+import { createUser } from '../../api/users';
 import { getAccessTokenApi } from '../../api/auth';
 import { useTranslation } from 'react-i18next';
-
+import Switch from "@mui/material/Switch";
+import Notification from "../Notification";
 const style = {
   position: 'absolute',
   top: '50%',
@@ -21,16 +23,25 @@ const style = {
   p: 4,
   marginTop: '10%',
 };
-export default function ModalAddHash({callGetHashtags,isKeyword}) {
+export default function ModalAddHash({callGetHashtags,isKeyword, isUser}) {
       const {t} = useTranslation();
-      const [hashName, setHashName] = useState("")
+      const [hashName, setHashName] = useState("");
+      const [lastName, setLastname] = useState("")
+      const [email, setEmail] = useState("")
+      
+      const [password, setPassword] = useState("")
+      const [adminUser, setAdminUser] = useState(false);
       const [open, setOpen] = useState(false);
       const handleOpen = () => setOpen(true);
       const handleClose = () => setOpen(false);
       const accessToken = getAccessTokenApi();
       const handleCreate = async()=> {
-        await createHashtag(hashName, accessToken,isKeyword );
-    
+        if(isUser){
+          await createUser(hashName,lastName, email,password, adminUser,accessToken );
+        }else{
+          await createHashtag(hashName, accessToken,isKeyword );
+        }
+        
         handleClose();
         callGetHashtags();
       }
@@ -49,9 +60,25 @@ export default function ModalAddHash({callGetHashtags,isKeyword}) {
               <>
               <Box sx={style}>
                   <Grid container spacing={3}>
-                      <Grid item xs={12}><Input type='text' name='HashtagName' placeholder='Hashtag name' value={hashName} onChange={handleChangeHashtag}/></Grid>
+                      <Grid item xs={12}><Input type='text' name='HashtagName' placeholder='Name' value={hashName} onChange={handleChangeHashtag}/></Grid>
+                      {isUser && (
+                        <>
+                          <Grid item xs={12}><Input type='text' name='UserLastname' placeholder='Lastname' value={lastName} onChange={(e)=>setLastname(e.target.value)}/></Grid>
+                          <Grid item xs={12}><Input type='text' name='UserEmail' placeholder='Email' value={email} onChange={(e)=>setEmail(e.target.value)}/></Grid>
+                          <Grid item xs={12}><Input type='password' name='UserPassword' placeholder='Password' value={password} onChange={(e)=>setPassword(e.target.value)}/> </Grid>
+                     
+                         <Grid item xs={5}><p>{t("Is Admin?")}</p></Grid>
+                         <Grid item xs={3}>
+                         <Switch
+                         onChange={(e) => setAdminUser(e.target.checked)}
+                         defaultChecked={false}
+                       ></Switch>
+                       </Grid>
+                       <Grid item xs={3}></Grid>
+                       </>
+                      )}
                       <Grid item xs={12}><Button name="create" variant='outlined' onClick={handleCreate}>{t("Create")}</Button> </Grid>
-                   
+
                   </Grid>
                 
               </Box>
