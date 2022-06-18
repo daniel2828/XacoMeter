@@ -4,7 +4,7 @@ import React, { useEffect, useState } from "react";
 import { getAccessTokenApi } from "../../api/auth";
 import { getHashtags, updateHashtag, deleteHashtag } from "../../api/hashtags";
 import Switch from "@mui/material/Switch";
-
+import "./Admin.scss";
 import { Grid } from "@mui/material";
 import DeleteIcon from "@mui/icons-material/Delete";
 import { IconButton } from "@mui/material";
@@ -13,12 +13,16 @@ import ModalAddHash from "../../components/Modals/ModalAddHash";
 import Card from "@mui/material/Card";
 import CardActions from "@mui/material/CardActions";
 import CardContent from "@mui/material/CardContent";
+import useXaco from "../../hooks/useXaco";
+
 /**
  * Hashtags component, shows a list of hashtags in card format
  * @param {Boolean} isKeyword - if true, it will show only keywords 
  * @returns List of hashtags in card format
  */
 export default function Hashtags({isKeyword}) {
+     const {widthScreen} = useXaco();
+    const isMobile = widthScreen <=768;
     const [hashtags, setHashtags] = useState([]);
     const accessToken = getAccessTokenApi();
     //Effect to get hashtags from api
@@ -53,6 +57,8 @@ export default function Hashtags({isKeyword}) {
       deleteHashtag(_id, accessToken);
       callGetHashtags();
     };
+    const perc = isMobile ? "15%":"35%";
+ 
   return (
     <Grid container spacing={3}>
         <Grid item xs={12}>
@@ -61,8 +67,8 @@ export default function Hashtags({isKeyword}) {
               <Card
                 key={hashtag?._id}
                 style={{
-                  marginLeft: "40%",
-                  marginRight: "40%",
+                  marginLeft: perc,
+                  marginRight: perc,
                   marginTop: "2%",
                 }}
               >

@@ -10,6 +10,8 @@ import TabMain from "../components/Tabs/TabMain";
 import { useTranslation } from "react-i18next";
 import CircularProgress from "@mui/material/CircularProgress";
 import "./CommonPages.scss";
+import MobileDrawer from "../components/Mobile/MobileDrawer";
+import useXaco from "../hooks/useXaco";
 import { getHashtags } from "../api/hashtags";
 /**
  * Main page where the data of tweets is displayed
@@ -25,6 +27,8 @@ export default function MainPage() {
   const [languageData, setLanguageData] = useState([]);
   const [tweetDataForSentiment, setTweetDataForSentiment] = useState([]);
   const [hashtags, setHashtags] = useState([]);
+  const {widthScreen} = useXaco();
+  const isMobile = widthScreen <=768;
   // Handle changes into the hashtag
   const handleChange = async (e) => {
     setIsSearching(true);
@@ -108,6 +112,7 @@ export default function MainPage() {
       </div>
     );
   } else {
+    
     return (
       <div className="controll-page">
         <h1>{t("Select the hashtag to display data.")}</h1>
@@ -131,11 +136,13 @@ export default function MainPage() {
             }
           })}
         </Select>
-        {tweetData?.length > 0 && (
+      
+       
+        {tweetData?.length  > 0  && (
           <>
             <h2>
               {t("Number of tweets registered since")}{" "}
-              {daysData[daysData.length - 1]?.name}:
+              {daysData[0]?.name}:
             </h2>
             <h2> {tweetData?.length}</h2>
             <TabMain

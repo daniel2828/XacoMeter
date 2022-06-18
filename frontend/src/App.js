@@ -6,11 +6,10 @@ import MainPage from "./pages/MainPage";
 
 import NavBar from "./components/NavBar/NavBar";
 import XacoProvider from "./providers/XacoProvider";
-
 import AdminPage from "./pages/AdminPage";
 
 function App() {
-  
+
   return (
     <XacoProvider>
    
@@ -23,11 +22,15 @@ function App() {
         <AuthPage />
     </Route>
     <Route path="/data" exact={true}>
-        <NavBar/>
+         <NavBar/>
+ 
+        
         <MainPage />
     </Route>
     <Route path="/admin" exact={true}>
+
         <NavBar/>
+   
         <AdminPage/>
     </Route>
     </Switch>

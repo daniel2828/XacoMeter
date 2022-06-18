@@ -2,9 +2,8 @@
 
 import React, { useEffect, useState } from "react";
 import { getAccessTokenApi } from "../../api/auth";
-import {  updateHashtag, deleteHashtag } from "../../api/hashtags";
 import Switch from "@mui/material/Switch";
-import {getUsers} from "../../api/users"
+import {getUsers,activeUser,deleteUser} from "../../api/users"
 import { Grid } from "@mui/material";
 import DeleteIcon from "@mui/icons-material/Delete";
 import { IconButton } from "@mui/material";
@@ -13,7 +12,11 @@ import ModalAddHash from "../../components/Modals/ModalAddHash";
 import Card from "@mui/material/Card";
 import CardActions from "@mui/material/CardActions";
 import CardContent from "@mui/material/CardContent";
+import { t } from "i18next";
+import useXaco from "../../hooks/useXaco";
 export default function Users() {
+   const {widthScreen} = useXaco();
+    const isMobile = widthScreen <=768;
     const [users, setUsers] = useState([]);
     const accessToken = getAccessTokenApi();
     //Effect to get hashtags from api
@@ -28,7 +31,7 @@ export default function Users() {
      */
     const callGetUsers = async () => {
       const usersRes = await getUsers(accessToken);
-      
+      console.log("USER" , usersRes)
       setUsers(usersRes.data);
     };
   /**
@@ -36,18 +39,24 @@ export default function Users() {
    * @param {Event} event 
    * @param {Integer} _id 
    */
-    const handleChange = (event, _id) => {
-      updateHashtag(_id, event.target.checked, accessToken);
+    const handleChange =async (event, _id) => {
+      console.log("ADWA")
+      await activeUser({_id: _id, active: event.target.checked}, accessToken);
       callGetUsers();
     };
     /**
      * Handle delete hashtag
      * @param {Integer} _id 
      */
-    const handleDelete = (_id) => {
-      deleteHashtag(_id, accessToken);
+    const handleDelete = async(_id) => {
+     await deleteUser(_id, accessToken);
       callGetUsers();
     };
+    
+    const perc = isMobile ? "15%":"35%";
+ 
+    
+    
   return (
     <Grid container spacing={3}>
         <Grid item xs={12}>
@@ -56,8 +65,8 @@ export default function Users() {
               <Card
                 key={user?._id}
                 style={{
-                  marginLeft: "40%",
-                  marginRight: "40%",
+                  marginLeft: perc,
+                  marginRight: perc,
                   marginTop: "2%",
                 }}
               >
@@ -65,7 +74,9 @@ export default function Users() {
                   <Grid item xs={9}>
                     <CardContent>
                       <p>{user?.name} {user?.lastname}</p>
-
+                      {user?.role ==="admin" && (
+                        <p>{t("Admin user")}</p>
+                      )}
                       <Switch
                         data-testid={`${user?.name}Update`}
                         onChange={(e) => handleChange(e, user._id)}
@@ -91,7 +102,7 @@ export default function Users() {
           })}
         </Grid>
         <Grid item xs={12}>
-          <ModalAddHash callGetHashtags={callGetUsers}    />
+          <ModalAddHash callGetHashtags={callGetUsers}  isUser={true}  />
         </Grid>
       </Grid>
   )

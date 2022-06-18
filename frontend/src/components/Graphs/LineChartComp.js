@@ -11,6 +11,7 @@ import {
     Legend
   } from "recharts";
 
+  import "./Chart.scss";
 import useXaco from "../../hooks/useXaco";
 import moment from "moment";
 import { useTranslation } from "react-i18next";
@@ -110,13 +111,8 @@ export default function LineChartComp({tweetData}) {
       width={500}
       height={300}
       data={monthlyLine}
-      margin={{
-        top: 20,
-        right: 30,
-        left: 20,
-        bottom: 5,
-      }}
-      style={{marginLeft:"20%"}}
+    
+      style={{overflowX:"scroll", scrollbarWidth: "thin", left:"30%"}}
     >
       <CartesianGrid strokeDasharray="3 3" />
       <XAxis dataKey="name" />
@@ -138,7 +134,7 @@ export default function LineChartComp({tweetData}) {
 const LineChartResumed = ({tweetData}) => { 
   const {widthScreen} = useXaco();
    return(
-    <LineChart style={{marginLeft:"20%"}} width={widthScreen>= 768 ? 600:320} height={widthScreen>= 768 ? 300:200} data={tweetData}>
+    <LineChart   style={{overflowX:"scroll", scrollbarWidth: "thin", left:"30%"}} width={widthScreen>= 768 ? 600:320} height={widthScreen>= 768 ? 300:200} data={tweetData}>
     <Line type="monotone" dataKey="tweets" stroke="#8884d8" />
     <CartesianGrid stroke="#ccc" strokeDasharray="5 5" />
     <XAxis dataKey="name" />

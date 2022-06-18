@@ -12,16 +12,15 @@ import LastTweets from "../LastTweets/LastTweets";
 import {TabPanel, a11yProps} from "../../utils/utils";
 
 export default function TabMain({ tweetData, tweetDataForSentiment }) {
-  const [value, setValue] = useState(0);
-  const { t } = useTranslation();
   const {widthScreen} = useXaco();
   const isMobile = widthScreen <=768;
+  const [value, setValue] = useState(0);
+  const { t } = useTranslation();
+
   const handleChange = (event, newValue) => {
     setValue(newValue);
   };
-  if (isMobile){
-    return (<MobileDrawer tweetData={tweetData} tweetDataForSentiment={tweetDataForSentiment}/>)
-  }else{
+ 
     return (
       <Box sx={{ width: "80%", marginLeft: "10%", marginRight: "10%" }}>
         <Box sx={{ borderBottom: 1, borderColor: "divider" }}>
@@ -29,6 +28,8 @@ export default function TabMain({ tweetData, tweetDataForSentiment }) {
             value={value}
             onChange={handleChange}
             aria-label="basic tabs example"
+            orientation={isMobile ? "vertical" : "horizontal"}
+            allowScrollButtonsMobile={true}
           >
             <Tab label={t("Graphs")} {...a11yProps(0)} />
             <Tab label={t("Last tweets")} {...a11yProps(1)} />
@@ -50,6 +51,6 @@ export default function TabMain({ tweetData, tweetDataForSentiment }) {
        
       </Box>
     );
-  }
+  
   
 }
