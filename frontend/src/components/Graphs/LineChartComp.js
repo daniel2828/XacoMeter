@@ -94,9 +94,11 @@ export default function LineChartComp({tweetData}) {
    
     return countsExtended;
   }
+  const {widthScreen} = useXaco();
   const dailyLine = getTemporalyLine(0,10);
   const monthlyLine = getTemporalyLine(0,7);
   const dayOfWeek = getTemporalyLineWeekly(0,10);
+  const isMobile = widthScreen <=768;
   //setDaysData(countsExtended);
   return (
     <>
@@ -108,11 +110,11 @@ export default function LineChartComp({tweetData}) {
       {t("Montly activty")}
     </p>
     <BarChart
-      width={500}
-      height={300}
+      width={widthScreen>= 768 ? 650:320}
+      height={widthScreen>= 768 ? 350:200} 
       data={monthlyLine}
     
-      style={{overflowX:"scroll", scrollbarWidth: "thin", left:"30%"}}
+      style={{marginBottom:"10px" , overflowX:isMobile ? "scroll": "visible", scrollbarWidth: "thin", left:"25%"}}
     >
       <CartesianGrid strokeDasharray="3 3" />
       <XAxis dataKey="name" />
@@ -133,8 +135,9 @@ export default function LineChartComp({tweetData}) {
 }
 const LineChartResumed = ({tweetData}) => { 
   const {widthScreen} = useXaco();
+  const isMobile = widthScreen <=768;
    return(
-    <LineChart   style={{overflowX:"scroll", scrollbarWidth: "thin", left:"30%"}} width={widthScreen>= 768 ? 600:320} height={widthScreen>= 768 ? 300:200} data={tweetData}>
+    <LineChart   style={{marginBottom:"10px",overflowX:isMobile ? "scroll": "visible", scrollbarWidth: "thin", left:"25%"}} width={widthScreen>= 768 ? 650:320} height={widthScreen>= 768 ? 350:200} data={tweetData}>
     <Line type="monotone" dataKey="tweets" stroke="#8884d8" />
     <CartesianGrid stroke="#ccc" strokeDasharray="5 5" />
     <XAxis dataKey="name" />

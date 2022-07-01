@@ -2,9 +2,12 @@ import React from "react";
 import { PieChart, Pie, Cell } from "recharts";
 import { useTranslation } from "react-i18next";
 import "./Chart.scss";
+import useXaco from "../../hooks/useXaco";
 const COLORS = ["#0088FE", "#00C49F", "#FFBB28", "#FF8042"];
 
 export default function PieChartComp({ tweetData }) {
+  const {widthScreen} = useXaco();
+  const isMobile = widthScreen <=768;
   const {t} = useTranslation();
   let languageCounts = tweetData?.reduce((p, c) => {
     let name = c.tweet.lang;
@@ -33,8 +36,8 @@ export default function PieChartComp({ tweetData }) {
   </h2>
     <PieChart
       
-      style={{overflowX:"scroll", scrollbarWidth: "thin", left:"30%"}}
-      width={250}
+      style={{overflowX:isMobile ? "scroll": "visible", scrollbarWidth: "thin", left:"30%"}}
+      width={400}
       height={400}
       display="block"
       position="center"

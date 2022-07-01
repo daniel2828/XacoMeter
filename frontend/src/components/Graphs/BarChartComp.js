@@ -10,8 +10,11 @@ import {
 } from "recharts";
 import { MenuItem, Select } from "@mui/material/";
 import { useTranslation } from "react-i18next";
+import useXaco from "../../hooks/useXaco";
 import "./Chart.scss";
 export default function BarChartComp({ tweetData }) {
+  const {widthScreen} = useXaco();
+  const isMobile = widthScreen <=768;
   const {t} = useTranslation();
   const [numTweets, setNumTweets] = useState(100)
   let dictData = {};
@@ -76,7 +79,7 @@ export default function BarChartComp({ tweetData }) {
         <BarChart
       width={400}
       height={300}
-      style={{overflowX:"scroll", scrollbarWidth: "thin", left:"30%"}}
+      style={{overflowX:isMobile ? "scroll": "visible", scrollbarWidth: "thin", left:"30%"}}
   
       data={dataPrint}
       // margin={{
