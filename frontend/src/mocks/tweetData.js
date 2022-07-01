@@ -1,4 +1,4 @@
- [{
+ export const tweetData = [{
     "_id": "627d61f3c404693c368a2b17",
     "id_tweet": "1524720894265860096",
     "hashtag": "BuenCamino",
