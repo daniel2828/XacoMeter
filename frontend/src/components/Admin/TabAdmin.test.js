@@ -7,9 +7,10 @@ import {
 
 } from "@testing-library/react";
 import TabAdmin from "./TabAdmin";
+import XacoProvider from "../../providers/XacoProvider";
 describe("Basic tests for component", () => {
     test("Basic example", async () => {
-      render(<TabAdmin />);
+      render(<TabAdmin />,{wrapper: XacoProvider});
       //await act(async()=>await render(<Hashtags/>));
     
      
