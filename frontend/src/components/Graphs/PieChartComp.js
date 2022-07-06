@@ -27,7 +27,7 @@ export default function PieChartComp({ tweetData }) {
   const renderLabel = function (entry) {
     return `${entry.name} (${entry.value})`;
   };
-  console.log("GHlad",languageCountsExtended)
+ 
   const onPieEnter = () => {};
   return (
     <>  <h2>

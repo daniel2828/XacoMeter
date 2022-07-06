@@ -31,7 +31,7 @@ export default function Users() {
      */
     const callGetUsers = async () => {
       const usersRes = await getUsers(accessToken);
-      console.log("USER" , usersRes)
+      
       setUsers(usersRes.data);
     };
   /**
@@ -40,7 +40,7 @@ export default function Users() {
    * @param {Integer} _id 
    */
     const handleChange =async (event, _id) => {
-      console.log("ADWA")
+     
       await activeUser({_id: _id, active: event.target.checked}, accessToken);
       callGetUsers();
     };
