@@ -99,6 +99,7 @@ export default function LineChartComp({tweetData}) {
   const monthlyLine = getTemporalyLine(0,7);
   const dayOfWeek = getTemporalyLineWeekly(0,10);
   const isMobile = widthScreen <=768;
+  console.log("Is mobile", isMobile);
   //setDaysData(countsExtended);
   return (
     <>
