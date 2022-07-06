@@ -50,5 +50,7 @@
     "Please notice that the time to load the tweets could be long depending on the volume of data" : "Por favor, tenga en cuenta que el tiempo de carga de los tweets puede ser largo dependiendo del volumen de datos",
     "Number of tweets": "Número de tweets",
     "Is Admin?" : "¿Administrador?",
-    "Admin user": "Usuario administrador"
+    "Admin user": "Usuario administrador",
+    "Confirm": "Confirmar",
+    "Are you sure you want to delete the ": "¿Estas seguro de que quieres borrar el "
 }

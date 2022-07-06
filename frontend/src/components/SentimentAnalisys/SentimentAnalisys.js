@@ -11,7 +11,7 @@ import { Grid } from "@mui/material";
 import { useTranslation } from "react-i18next";
 import {TabPanel, a11yProps} from "../../utils/utils";
 export default function SentimentAnalisys({ dataWithSentiment }) {
-  console.log("Data sent", dataWithSentiment)
+  
   let removeRepeated = []
   let removeRepeatedNeg = []
   const [value, setValue] = useState(0);
