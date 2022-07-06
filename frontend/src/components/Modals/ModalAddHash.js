@@ -41,16 +41,14 @@ export default function ModalAddHash({callGetHashtags,isKeyword, isUser}) {
       const accessToken = getAccessTokenApi();
       const handleCreate = async()=> {
         if(isUser){
-          try{
+         
             createUser(hashName,lastName, email,password, adminUser,accessToken ).then(response=>{
               handleClose();
               callGetHashtags();
             }).catch(err=>{
               setAlertOpen(true);
             })
-          }catch(error      ){
-            setAlertOpen(true);
-          }
+         
           
         }else{
           await createHashtag(hashName, accessToken,isKeyword );

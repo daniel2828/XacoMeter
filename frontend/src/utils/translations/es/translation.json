@@ -52,5 +52,8 @@
     "Is Admin?" : "¿Administrador?",
     "Admin user": "Usuario administrador",
     "Confirm": "Confirmar",
-    "Are you sure you want to delete the ": "¿Estas seguro de que quieres borrar el "
+    "Are you sure you want to delete the ": "¿Estas seguro de que quieres borrar el ",
+    "Add": "Añadir",
+    "Create": "Crear",
+    "LOGOUT" :"SALIR"
 }
