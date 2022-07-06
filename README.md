@@ -3,7 +3,7 @@
 XacoMeter - An App to monitor the Camino de Santiago based on tweets information, and get relevant statistics about it.  
 
 <a href="https://xacometerfront.herokuapp.com/">
-  <img src="../frontend/src/assets/img/concha.jpg" height="60">
+ 
   Go to the XacoMeter App deployed online.
 </a>
 
