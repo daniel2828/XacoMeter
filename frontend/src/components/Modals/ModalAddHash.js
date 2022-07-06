@@ -11,6 +11,7 @@ import { getAccessTokenApi } from '../../api/auth';
 import { useTranslation } from 'react-i18next';
 import Switch from "@mui/material/Switch";
 import Notification from "../Notification";
+
 const style = {
   position: 'absolute',
   top: '50%',
@@ -24,6 +25,7 @@ const style = {
   marginTop: '10%',
 };
 export default function ModalAddHash({callGetHashtags,isKeyword, isUser}) {
+      const [alertOpen, setAlertOpen] = useState(false);
       const {t} = useTranslation();
       const [hashName, setHashName] = useState("");
       const [lastName, setLastname] = useState("")
@@ -33,17 +35,30 @@ export default function ModalAddHash({callGetHashtags,isKeyword, isUser}) {
       const [adminUser, setAdminUser] = useState(false);
       const [open, setOpen] = useState(false);
       const handleOpen = () => setOpen(true);
-      const handleClose = () => setOpen(false);
+      const handleClose = () => {
+        setHashName("");
+        setOpen(false)};
       const accessToken = getAccessTokenApi();
       const handleCreate = async()=> {
         if(isUser){
-          await createUser(hashName,lastName, email,password, adminUser,accessToken );
+          try{
+            createUser(hashName,lastName, email,password, adminUser,accessToken ).then(response=>{
+              handleClose();
+              callGetHashtags();
+            }).catch(err=>{
+              setAlertOpen(true);
+            })
+          }catch(error      ){
+            setAlertOpen(true);
+          }
+          
         }else{
           await createHashtag(hashName, accessToken,isKeyword );
+          handleClose();
+          callGetHashtags();
         }
         
-        handleClose();
-        callGetHashtags();
+       
       }
       const handleChangeHashtag= (event) => {
         setHashName(event.target.value)
@@ -58,6 +73,12 @@ export default function ModalAddHash({callGetHashtags,isKeyword, isUser}) {
             aria-describedby="modal-modal-description"
           >
               <>
+              <Notification
+              alertOpen={alertOpen}
+            
+              status={"alert"}
+              message={t("Email already exists")}
+            />
               <Box sx={style}>
                   <Grid container spacing={3}>
                       <Grid item xs={12}><Input type='text' name='HashtagName' placeholder='Name' value={hashName} onChange={handleChangeHashtag}/></Grid>

@@ -14,6 +14,8 @@ import CardActions from "@mui/material/CardActions";
 import CardContent from "@mui/material/CardContent";
 import { t } from "i18next";
 import useXaco from "../../hooks/useXaco";
+
+import DeleteDialog from "../Modals/DeleteDialog";
 export default function Users() {
    const {widthScreen} = useXaco();
     const isMobile = widthScreen <=768;
@@ -48,15 +50,17 @@ export default function Users() {
      * Handle delete hashtag
      * @param {Integer} _id 
      */
-    const handleDelete = async(_id) => {
-     await deleteUser(_id, accessToken);
+    const handleDelete = async() => {
+       const response = await deleteUser(user, accessToken);
+    
       callGetUsers();
     };
     
     const perc = isMobile ? "15%":"35%";
  
     
-    
+  const [openDialog, setOpenDialog] = useState(false)
+const [user, setuser] = useState("")
   return (
     <Grid container spacing={3}>
         <Grid item xs={12}>
@@ -89,7 +93,11 @@ export default function Users() {
                       <IconButton
                       data-testid={`${user.name}Delete`}
                         color="error"
-                        onClick={() => handleDelete(user._id)}
+                        onClick={() => {
+                          setuser(user._id);
+                          setOpenDialog(true);
+
+                        }}
                         name={`${user.name}Delete`}
                       >
                         <DeleteIcon />
@@ -100,6 +108,7 @@ export default function Users() {
               </Card>
             );
           })}
+          <DeleteDialog type={"user"} open={openDialog} setOpen={setOpenDialog} postAction={handleDelete}/>
         </Grid>
         <Grid item xs={12}>
           <ModalAddHash callGetHashtags={callGetUsers}  isUser={true}  />

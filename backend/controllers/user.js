@@ -91,8 +91,23 @@ async function createUser(req, res) {
   user.role = (adminUser ? "admin" : "basic");
   user.email = email;
   user.password = password;
-  const response = await user.save();
-  res.status(200).send(response);
+  user.save((err, userStored) => {
+    if (err) {
+      res.status(500).send({ message: "El usuario ya existe" });
+    } else {
+      if (!userStored) {
+        res.status(500).send({ message: "Error al crear usuario." });
+      } else {
+        res
+          .status(200)
+          .send({
+            user: userStored,
+            message: "Usuario creado crrectamente.",
+          });
+      }
+    }
+  });
+
 }
 async function getUsers(_req, res) {
  
