@@ -115,7 +115,7 @@ export default function MainPage() {
     
     return (
       <div className="controll-page">
-        <h1>{t("Select the hashtag to display data.")}</h1>
+        <h1>{t("Select the hashtag or keyword to display data.")}</h1>
 
         <Select
           labelId="select-hashtag"
@@ -151,6 +151,11 @@ export default function MainPage() {
             ></TabMain>
           </>
         )}
+        {tweetData?.length  === 0 && hashtag!==""  && ( <>
+          <p>{t("Twitter data not found related with this hashtag. If you have added this hashtag recently, please wait 24 hours to get the first set of data.")} </p>
+          <p>{t("Please make sure that the hashtag is related to the Santiago's road. Our algorithms skips tweets that doesn't contains at least one word related with it.")} </p>
+         
+        </> )}
       </div>
     );
   }

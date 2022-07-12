@@ -1,7 +1,7 @@
 {
     "welcome": "Test ES",
     "History of tweets": "Linea temporal de tweets",
-    "Select the hashtag to display data.": "Selecciona el hashtag para mostrar los datos",
+    "Select the hashtag or keyword to display data.": "Selecciona el hashtag o palabra clave para mostrar los datos",
     "Spanish": "Español",
     "English":"Inglés",
     
@@ -55,5 +55,8 @@
     "Are you sure you want to delete the ": "¿Estas seguro de que quieres borrar el ",
     "Add": "Añadir",
     "Create": "Crear",
-    "LOGOUT" :"SALIR"
+    "LOGOUT" :"SALIR",
+    "Twitter data not found related with this hashtag. If you have added this hashtag recently, please wait 24 hours to get the first set of data." : "No se encontraron datos de Twitter para este hashtag. Si lo has añadido recientemente, espera 24 horas a que el sistema obtenga los datos.",
+    "Please make sure that the hashtag is related to the Santiago's road. Our algorithms skips tweets that doesn't contains at least one word related with it.": "Asegurate de que el hashtag está relacionado con el Camino de Santiago. Nuestros algoritmos detectan que los tweets contengan al menos una palabra relacionada con el."
+
 }
