@@ -16,7 +16,7 @@ const hashtagRoutes = require("./routes/hashtags");
 const logger = require("./logging/winstonLogger");
 const {MONGO_DB_URI, MONGO_DB_URI_TEST, NODE_ENV} = process.env;
 logger.info(`MONGO_DB_URI ${MONGO_DB_URI}, MONGO_DB_URI_TEST, NODE_ENV`);
-const connectionString = NODE_ENV ==='test'? MONGO_DB_URI_TEST : MONGO_DB_URI;
+const connectionString =  MONGO_DB_URI;
 const { createCronJobs } = require("./cronjobs/cronjobs");
 
 var cors = require('cors')
@@ -63,9 +63,5 @@ let server = null;
     });
   })
   .catch((err) => logger.info(err));
-  if (process.env.NODE_ENV === 'test') {
-    mongoose.connection.close(function () {
-      console.log('Mongoose connection disconnected');
-    });
-  }
+ 
 module.exports = {app, server,mongoose };
