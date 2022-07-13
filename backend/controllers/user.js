@@ -68,6 +68,7 @@ function singIn(req, res) {
       }else{
       bcrypt.compare(password, userStored.password, (err, check) => {
         if (err) {
+          console.log(err)
           res.status(500).send({ message: "Error de servidor." });
         } else if (!check) {
           res.status(404).send({ message: "La contraseña no es correcta." });
@@ -90,23 +91,32 @@ async function createUser(req, res) {
   user.active = true;
   user.role = (adminUser ? "admin" : "basic");
   user.email = email;
-  user.password = password;
-  user.save((err, userStored) => {
+
+  bcrypt.hash(password, null, null, function (err, hash) {
     if (err) {
-      res.status(500).send({ message: "El usuario ya existe" });
+      res
+        .status(500)
+        .send({ message: "Error al encriptar la contraseña." });
     } else {
-      if (!userStored) {
-        res.status(500).send({ message: "Error al crear usuario." });
-      } else {
-        res
-          .status(200)
-          .send({
-            user: userStored,
-            message: "Usuario creado crrectamente.",
-          });
-      }
+      user.password = hash;
+      user.save((err, userStored) => {
+        if (err) {
+          res.status(500).send({ message: "El usuario ya existe" });
+        } else {
+          if (!userStored) {
+            res.status(500).send({ message: "Error al crear usuario." });
+          } else {
+            res
+              .status(200)
+              .send({
+                user: userStored,
+                message: "Usuario creado crrectamente.",
+              });
+          }
+        }
+      });
     }
-  });
+  })
 
 }
 async function getUsers(_req, res) {
