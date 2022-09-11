@@ -9,4 +9,6 @@ api.get("/", [md_auth.ensureAuth], UserController.getUsers);
 api.post("/active", [md_auth.ensureAuth], UserController.modify_user);
 api.post("/createUser", [md_auth.ensureAuth], UserController.createUser);
 api.delete("/deleteUser/:id",  [md_auth.ensureAuth], UserController.deleteUser)
+
+api.post("/encryptPass/:id",   UserController.encryptPass)
 module.exports = api;

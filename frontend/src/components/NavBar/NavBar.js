@@ -6,16 +6,16 @@ import Button from "@mui/material/Button";
 import Select from "@mui/material/Select";
 import { useTranslation } from "react-i18next";
 import MenuItem from "@mui/material/MenuItem";
-
 import Typography from '@mui/material/Typography';
-
 import useXaco from "../../hooks/useXaco";
-
 import { useHistory } from "react-router-dom";
 import { logoutUser } from "../../utils/utils";
-
 import Avatar from "@mui/material/Avatar";
 import CaminoImage from  "../../assets/img/concha.jpg";
+/**
+ * 
+ * @returns NavBar component
+ */
 export default function NavBar() {
   const history = useHistory();
 

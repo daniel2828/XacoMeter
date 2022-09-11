@@ -1,11 +1,17 @@
 const User = require("../models/user");
 const bcrypt = require("bcrypt-nodejs");
 const jwt = require("../services/jwt");
-const nodemailer = require("nodemailer");
+
+const logger = require("../logging/winstonLogger");
+/**
+ * 
+ * @param {*} req 
+ * @param {*} res 
+ */
 function singUp(req, res) {
   const user = new User();
   const { name, lastName, email, password, repeatPassword } = req.body;
-  console.log(lastName);
+  
 
   user.name = name;
   user.lastname = lastName;
@@ -13,7 +19,7 @@ function singUp(req, res) {
   //Default values
   user.role = "basic";
   user.active = true;
-  console.log(req.body);
+ 
   if (!password || !repeatPassword) {
     res.status(400).send({ message: "Las contraseñas son obligatorias" });
   } else {
@@ -68,7 +74,7 @@ function singIn(req, res) {
       }else{
       bcrypt.compare(password, userStored.password, (err, check) => {
         if (err) {
-          console.log(err)
+          
           res.status(500).send({ message: "Error de servidor." });
         } else if (!check) {
           res.status(404).send({ message: "La contraseña no es correcta." });
@@ -141,13 +147,26 @@ async function deleteUser(req, res) {
   res.status(200).send(response);
 }
 // async..await is not allowed in global scope, must use a wrapper
-
+async function encryptPass(req, res) {
+  const {id} = req.params;
+  User.findById(id,async (err, userStored) => {
+    bcrypt.hash(userStored.password, null, null, async function (err, hash) {
+      let response = await User.findByIdAndUpdate(id, {$set: {password: hash}});
+      res.status(200).send(response);
+    })
+    
+  })
+ 
+  
+ 
+}
 module.exports = {
   singUp,
   singIn,
   getUsers,
   modify_user,
   createUser,
-  deleteUser
+  deleteUser,
+  encryptPass
 
 };

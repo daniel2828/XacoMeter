@@ -10,7 +10,6 @@ import TabMain from "../components/Tabs/TabMain";
 import { useTranslation } from "react-i18next";
 import CircularProgress from "@mui/material/CircularProgress";
 import "./CommonPages.scss";
-import MobileDrawer from "../components/Mobile/MobileDrawer";
 import useXaco from "../hooks/useXaco";
 import { getHashtags } from "../api/hashtags";
 /**
@@ -28,7 +27,6 @@ export default function MainPage() {
   const [tweetDataForSentiment, setTweetDataForSentiment] = useState([]);
   const [hashtags, setHashtags] = useState([]);
   const {widthScreen} = useXaco();
-  const isMobile = widthScreen <=768;
   // Handle changes into the hashtag
   const handleChange = async (e) => {
     setIsSearching(true);

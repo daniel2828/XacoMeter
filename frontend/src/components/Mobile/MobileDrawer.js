@@ -15,12 +15,8 @@ import ChevronRightIcon from "@mui/icons-material/ChevronRight";
 import ListItem from "@mui/material/ListItem";
 import ListItemIcon from "@mui/material/ListItemIcon";
 import ListItemText from "@mui/material/ListItemText";
-import InboxIcon from "@mui/icons-material/MoveToInbox";
-import MailIcon from "@mui/icons-material/Mail";
 import SignalCellularAltIcon from "@mui/icons-material/SignalCellularAlt";
 import { t } from "i18next";
-import TabGraphs from "../Tabs/TabGraphs";
-import Button from "@mui/material/Button";
 import Menu from "@mui/material/Menu";
 import MenuItem from "@mui/material/MenuItem";
 import LineChartComp from "../Graphs/LineChartComp";
@@ -204,14 +200,7 @@ export default function MobileDrawer({ tweetData, tweetDataForSentiment }) {
            <ListItemText primary={t("Sentiment analisys")} />
           
          </ListItem>
-          {/* {['Inbox', 'Starred', 'Send email', 'Drafts'].map((text, index) => (
-            <ListItem button key={text}>
-              <ListItemIcon>
-                {index % 2 === 0 ? <InboxIcon /> : <MailIcon />}
-              </ListItemIcon>
-              <ListItemText primary={text} />
-            </ListItem>
-          ))} */}
+ 
         </List>
         <Divider />
         <ListItem button key={"Admin"}  onClick={handleChangeAdmin}>

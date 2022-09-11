@@ -30,7 +30,6 @@ export default function ModalAddHash({callGetHashtags,isKeyword, isUser}) {
       const [hashName, setHashName] = useState("");
       const [lastName, setLastname] = useState("")
       const [email, setEmail] = useState("")
-      
       const [password, setPassword] = useState("")
       const [adminUser, setAdminUser] = useState(false);
       const [open, setOpen] = useState(false);

@@ -4,7 +4,11 @@ export  const logoutUser= ()=>{
     window.location.reload();
   }
 
-
+/**
+ * Generic tabpanel
+ * @param {*} props 
+ * @returns 
+ */
  export function TabPanel(props) {
     const { children, value, index, ...other } = props;
   

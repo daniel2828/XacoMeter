@@ -7,10 +7,13 @@ import TabGraphs from "./TabGraphs";
 
 import SentimentAnalisys from "../SentimentAnalisys/SentimentAnalisys";
 import useXaco from "../../hooks/useXaco";
-import MobileDrawer from "../Mobile/MobileDrawer";
 import LastTweets from "../LastTweets/LastTweets";
 import {TabPanel, a11yProps} from "../../utils/utils";
-
+/**
+ * Main tab
+ * @param {*} param0 
+ * @returns 
+ */
 export default function TabMain({ tweetData, tweetDataForSentiment }) {
   const {widthScreen} = useXaco();
   const isMobile = widthScreen <=768;

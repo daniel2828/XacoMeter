@@ -5,7 +5,9 @@ import LanguageDetector from "i18next-browser-languagedetector";
 import translationEN from "./utils/translations/en/translation.json";
 import translationES from "./utils/translations/es/translation";
 import translationFR from "./utils/translations/fr/translation";
-
+/**
+ * I18 translations
+ */
 const fallbackLng = ["en"];
 const availableLanguages = ["en", "es", "fr"];
 

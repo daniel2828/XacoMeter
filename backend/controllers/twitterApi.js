@@ -1,7 +1,9 @@
 const Tweets = require("../models/tweets");
 const {processHashtags} = require("../utils/reusable");
-let sentiment = require("multilang-sentiment");
+const sentiment = require("multilang-sentiment");
 
+
+const logger = require("../logging/winstonLogger");
 async function testAPI(req, res) {
   res.status(200).json({ name: 'john' });
 }
@@ -17,7 +19,7 @@ async function searchByQuery(req, res) {
   const newTweets = await processHashtags(hashtag);
 
 
-  console.log("NT", newTweets);
+  logger("Nuevos tweets", newTweets);
   let tweets = await Tweets.find({ hashtag: hashtag.toString() });
 
   if (newTweets?.length > 0) {
@@ -68,7 +70,7 @@ async function getSentimentAnalysis(req, res) {
         { sentiment: sentimentData },
         { multi: true },
         function (err, numberAffected) {
-          console.log("Actualiza");
+          logger("Tweets actualizados", numberAffected);
         }
       );
       tweet.sentiment = sentiment;
@@ -78,12 +80,11 @@ async function getSentimentAnalysis(req, res) {
     }
   });
   res.status(200).send(tweetsRet);
-  // let tweetsArray = [];
 }
 async function modifyRecordsArray(req, res) {
   const { hashtag } = req.body;
   const tweets = await Tweets.find({ hashtag: hashtag.toString() }).sort({ id_tweet: 1 });
-  let tweetsRet = [];
+
   tweets.forEach((tweet) => {
     if (tweet.sentiment != undefined) {
       let sentimentWords = tweet.sentiment.words;
@@ -116,7 +117,7 @@ async function modifyRecordsArray(req, res) {
           { multi: true },
           function (err, numberAffected) {
             if (err) {
-              console.log("ERROR", err);
+              logger("ERROR actualizando", err);
             }else{
   
         
@@ -125,29 +126,17 @@ async function modifyRecordsArray(req, res) {
         );
       }
       
-     
-      //tweet.sentiment = sentiment;
-      //tweetsRet.push(tweet);
     }
   });
   res.status(200).send("OK");
-  // let tweetsArray = [];
-}
-// async function getGrouped(req, res) {
-//   const tweets = await Tweets.aggregate( [
-//     {
-//       $group: {
-//          _id: {},
-//       }
-//     }
-//   ] )
 
-// }
+}
+
 module.exports = {
   testAPI,
   searchByQuery,
   getSentimentAnalysis,
   modifyRecordsArray,
   getByHashtag
-  // getGrouped
+  
 };

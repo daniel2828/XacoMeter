@@ -14,7 +14,7 @@ const userRoutes = require("./routes/user");
 const twitterRoutes = require("./routes/twitterApi");
 const hashtagRoutes = require("./routes/hashtags");
 const logger = require("./logging/winstonLogger");
-const {MONGO_DB_URI, MONGO_DB_URI_TEST, NODE_ENV} = process.env;
+const {MONGO_DB_URI} = process.env;
 logger.info(`MONGO_DB_URI ${MONGO_DB_URI}, MONGO_DB_URI_TEST, NODE_ENV`);
 const connectionString =  MONGO_DB_URI;
 const { createCronJobs } = require("./cronjobs/cronjobs");

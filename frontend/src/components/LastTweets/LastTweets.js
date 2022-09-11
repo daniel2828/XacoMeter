@@ -4,16 +4,7 @@ import { Grid } from "@mui/material";
 import React, { useState, useEffect } from "react";
 import { useTranslation } from "react-i18next";
 import {
-  TwitterTimelineEmbed,
-  TwitterShareButton,
-  TwitterFollowButton,
-  TwitterHashtagButton,
-  TwitterMentionButton,
   TwitterTweetEmbed,
-  TwitterMomentShare,
-  TwitterDMButton,
-  TwitterVideoEmbed,
-  TwitterOnAirButton,
 } from "react-twitter-embed";
 import moment from "moment";
 export default function LastTweets({ tweetData }) {

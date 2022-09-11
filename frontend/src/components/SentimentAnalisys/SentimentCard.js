@@ -3,22 +3,12 @@ import Box from '@mui/material/Box';
 import Card from '@mui/material/Card';
 import CardActions from '@mui/material/CardActions';
 import CardContent from '@mui/material/CardContent';
-import Button from '@mui/material/Button';
-import Typography from '@mui/material/Typography';
 import CircularProgress from '@mui/material/CircularProgress';
-import Grid from "@mui/material/Grid";
 import { useTranslation } from "react-i18next";
 import {
-    TwitterTimelineEmbed,
-    TwitterShareButton,
-    TwitterFollowButton,
-    TwitterHashtagButton,
-    TwitterMentionButton,
+
     TwitterTweetEmbed,
-    TwitterMomentShare,
-    TwitterDMButton,
-    TwitterVideoEmbed,
-    TwitterOnAirButton,
+
   } from "react-twitter-embed";
   import { useState } from 'react';
 import SentimentModal from './SentimentModal';
@@ -31,6 +21,11 @@ const bull = (
   </Box>
 );
 
+/**
+ * Sentiment card
+ * @param {*} param0 
+ * @returns 
+ */
 export default function SentimentCard({ data }) {
   const [loadingTweet, setLoadingTweet] = useState(true)
  const {t} = useTranslation();

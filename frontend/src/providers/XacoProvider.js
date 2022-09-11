@@ -8,7 +8,11 @@ import {
 import jwtDecode from "jwt-decode";
 
 export const XacoContext = createContext();
-
+/**
+ * Xacometer provider
+ * @param {*} props 
+ * @returns 
+ */
 export default function XacoProvider(props) {
   // Auth
   const { children } = props;
@@ -33,6 +37,10 @@ export default function XacoProvider(props) {
   
   return <XacoContext.Provider value={state}>{children}</XacoContext.Provider>;
 }
+/**
+ * Handle the size of the windows
+ * @param {function} setState 
+ */
 function handleWindowSizeChange(setState) {
   setState((prevState ) => ({
    
@@ -43,6 +51,10 @@ function handleWindowSizeChange(setState) {
   }));
   
 }
+/**
+ * Check if user is logged
+ * @param {Function} setState 
+ */
 function checkUserLogin(setState) {
   const accessToken = getAccessTokenApi();
   if (!accessToken) {

@@ -10,6 +10,11 @@ import { Grid } from "@mui/material";
 
 import { useTranslation } from "react-i18next";
 import {TabPanel, a11yProps} from "../../utils/utils";
+/**
+ * Sentiment Analysis component
+ * @param {*} param0 
+ * @returns 
+ */
 export default function SentimentAnalisys({ dataWithSentiment }) {
   
   let removeRepeated = []

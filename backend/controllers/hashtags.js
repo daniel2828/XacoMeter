@@ -21,6 +21,11 @@ async function deleteHashtag(req, res) {
 
     res.status(200).send(response);
 }
+/**
+ * 
+ * @param {*} req 
+ * @param {*} res 
+ */
 async function updateHashtag(req, res) {
     const {_id, active} = req.body;
     let response = await Hashtags.findByIdAndUpdate(_id, {$set: {active: active}});
@@ -31,6 +36,6 @@ module.exports = {
     getHashtags,
     deleteHashtag,
     updateHashtag
-    // getGrouped
+   
   };
   
